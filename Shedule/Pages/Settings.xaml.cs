@@ -72,7 +72,7 @@ namespace Shedule.Pages
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Excel files(*.xlsx;*.xls)|*.xlsx;*.xls";
+                openFileDialog.Filter = "Excel files(*.xlsx)|*.xlsx";
                 if (openFileDialog.ShowDialog() == true)
                 {
                     filename.Content = (openFileDialog.FileName);

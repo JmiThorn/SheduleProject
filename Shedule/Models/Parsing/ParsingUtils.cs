@@ -1,4 +1,5 @@
 ﻿using LearningProcessesAPIClient.api;
+using LearningProcessesAPIClient.exceptions;
 using LearningProcessesAPIClient.model.parsing;
 using OfficeOpenXml;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Shedule.Models.Parsing
 {
@@ -22,7 +24,7 @@ namespace Shedule.Models.Parsing
 
         private static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public static void ParseFile(string fileName)
+        public static async Task ParseFile(string fileName)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -69,13 +71,27 @@ namespace Shedule.Models.Parsing
                             );
                         }
                     }
-                    LearningProcessesAPI.addParsedSubjects(parsedSubjects);
+                    try
+                    {
+                        var result = await LearningProcessesAPI.addParsedSubjects(parsedSubjects);
+                        if(result.Count == parsedSubjects.Count)
+                        {
+                            MessageBox.Show($"Добавлено {result.Count} предметов", "Импорт завершен успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Добавлено {result.Count}/{parsedSubjects.Count} предметов", "Ошибка импорта", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }catch(Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                    }
+
                 }
             }
 
         }
 
-       
         private static GroupModel parseNewTable(ExcelWorksheet worksheet)
         {
             GroupModel group = new GroupModel();
@@ -240,6 +256,13 @@ namespace Shedule.Models.Parsing
                         name = "Производственная практика";
                         isPractise = true;
                     }
+                }
+                //Убираем множественные пробелы
+                Regex regex = new Regex("\\s{2,}");
+                var matchesEnum = regex.Matches(name).GetEnumerator();
+                while (matchesEnum.MoveNext())
+                {
+                    name = name.Replace((matchesEnum.Current as Match).Value, " ");
                 }
                 SubjectModel subject = new SubjectModel
                 {
