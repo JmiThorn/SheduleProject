@@ -1,0 +1,240 @@
+﻿<Page x:Class="Shedule.ViewPages.SheduleView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Shedule.ViewPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1500"
+      Title="SheduleView">
+    <Grid x:Name="Grid" ShowGridLines="False" Background="#F6F6FC" Visibility="Visible">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" x:Name="Frame" ShowGridLines="False" Grid.Row="1" Background="White" Margin="10,10,10,70">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--<StackPanel Grid.Column="1" Margin="46,10,0,5" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="365">
+                
+            </StackPanel>-->
+            <Border Grid.Column="5" Grid.Row="2" Grid.RowSpan="7" BorderBrush="#E9E9E9" BorderThickness="2,0,2,0"/>
+            <Border Grid.Column="4" Grid.Row="2" Grid.RowSpan="7" BorderBrush="#E9E9E9" BorderThickness="2,0,2,0"/>
+            <Border Grid.Column="3" Grid.Row="2" Grid.RowSpan="7" BorderBrush="#E9E9E9" BorderThickness="2,0,2,0"/>
+            <Border Grid.Column="2" Grid.Row="2" Grid.RowSpan="7" BorderBrush="#E9E9E9" BorderThickness="2,0,2,0"/>
+            <Border Grid.Column="1" Grid.Row="2" Grid.RowSpan="7" BorderBrush="#E9E9E9" BorderThickness="2,0,2,0"/>
+
+            <StackPanel x:Name="nav" Margin="0,10,0,5" Orientation="Horizontal" Grid.ColumnSpan="6">
+                <Button x:Name="previous" BorderThickness="2,2,2,2" Background="White" BorderBrush="#E9E9E9" Content="&lt;" VerticalAlignment="Top" Height="40" FontSize="20" HorizontalAlignment="Left" Width="50" Click="previous_Click"/>
+                <ComboBox SelectedValuePath="Id" DisplayMemberPath="Codename" x:Name="groupsList" BorderThickness="2,2,2,2" IsEditable="False" BorderBrush="#E9E9E9" VerticalAlignment="Top" FontSize="24" Height="40" HorizontalAlignment="Left" Width="150" SelectionChanged="groupsList_SelectionChanged"/>
+                <Button x:Name="next" BorderThickness="2,2,2,2" Background="White" BorderBrush="#E9E9E9" Content="&gt;" VerticalAlignment="Top" Height="40" FontSize="20" HorizontalAlignment="Left" Width="50" Click="next_Click"/>
+                <Viewbox Height="20" Margin="50,0,0,0">
+                    <RadioButton x:Name="red" Background="Red" Checked="red_Checked" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="" HorizontalAlignment="Right" Width="15" Height="15"/>
+                </Viewbox>
+                <Viewbox Height="20">
+                    <RadioButton x:Name="blue" Checked="blue_Checked" Background="Blue" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" Content="" FontSize="10" HorizontalAlignment="Right" Width="15" Height="15"/>
+                </Viewbox>
+                <Label x:Name="labelWeek" VerticalContentAlignment="Center" Content="" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Width="170"/>
+                <Label x:Name="Semestres" VerticalContentAlignment="Center" Content="Cеместр:" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Width="100"/>
+                <ComboBox DisplayMemberPath="Number" x:Name="semesters" BorderThickness="2,2,2,2" IsEditable="False" BorderBrush="#E9E9E9" VerticalAlignment="Top" FontSize="24" Height="40" HorizontalAlignment="Left" Width="70" SelectionChanged="semesters_SelectionChanged"/>
+                <Label Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="Количество недель:" Width="200"/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="{Binding SelectedValue.WeeksCount, ElementName=semesters}" Width="40"/>
+            </StackPanel>
+            <Border BorderBrush="#E9E9E9" BorderThickness="0,0,0,2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"/>
+            <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="Понедельник"/>
+            <Label Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="Вторник"/>
+            <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="Среда"/>
+            <Label Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="Четверг"/>
+            <Label Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="Пятница"/>
+            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="1"/>
+            <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="2"/>
+            <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="3"/>
+            <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="4"/>
+            <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="5"/>
+            <Label Grid.Row="7" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="6"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="Часов:" FontSize="20"/>
+                <Label Content="0" FontSize="20"/>
+            </StackPanel>
+        </Grid>
+        <!--<StackPanel Grid.Row="2" Grid.Column="1" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+            <ComboBox SelectedValue ="{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "18" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id">
+                <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding  StringFormat="{}{0} {1:C}">
+                                        <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
+                                        <Binding Path="Teaching.Teacher.Surname"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <ItemsControl BorderBrush="white" ItemsSource = "{Binding MainSchedulesInTheSameTime}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation = "Horizontal">
+                                                <TextBlock>
+                                        <Run Text="{Binding Teaching.SpecialitySubject.Subject.Name}"/>
+                                        <Run Text="{Binding ClassNumber}"/>
+                                        <Run Text="{Binding Teaching.Teacher.Surname}"/>                
+                                        <Run Text="{Binding Teaching.TeacherId}"/>                
+                                        <Run Text="{Binding Teaching.Teacher.Name}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl >
+                        </StackPanel>
+                        <StackPanel>
+                            <Image Margin="10,0,0,0" Width="20" Height="20">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Image\bad.png"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
+                                                <Setter Property="Source" Value="/Image\good.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox 
+        SelectedValue ="{Binding ClassroomId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+        Padding="0" 
+        SelectedValuePath = "Classroom.Id" 
+        IsEditable="False" 
+        MinWidth = "60" 
+        FontSize = "18" 
+        Height = "20" 
+        Margin = "0" 
+        FontFamily = "Global User Interface" 
+        HorizontalContentAlignment = "Center" 
+        VerticalContentAlignment = "Center" 
+        HorizontalAlignment = "Center">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding  StringFormat="{}{0} {1}">
+                                            <Binding Path="Classroom.Number"/>
+                                            <Binding Path="Classroom.Building"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <ItemsControl BorderBrush="white" ItemsSource = "{Binding MainSchedulesInTheSameClassroom}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation = "Horizontal">
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <MultiBinding  StringFormat="{}{0} {1}">
+                                                            <Binding Path="Teaching.Id"/>
+                                                            <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
+                                                            <Binding Path="Teaching.Group.Codename"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl >
+                            </StackPanel>
+                            <Image Margin="10,0,0,0" Width="20" Height="20">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Image\bad.png"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
+                                                <Setter Property="Source" Value="/Image\good.png"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RecommendationLevel}" Value="1">
+                                                <Setter Property="Source" Value="{x:Null}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        </StackPanel>-->
+
+        <Grid Grid.Row='1' Grid.Column="1" Background="White" Margin="10,10,10,70">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"></RowDefinition>
+                <RowDefinition Height="70*"></RowDefinition>
+                <RowDefinition Height="10*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Row="0" FontSize="20" FontWeight="Bold">Учебный план</Label>
+            <Border BorderBrush="#E9E9E9" BorderThickness="0,0,0,2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"/>
+            <ListView IsEnabled="True" x:Name="sujectsOverview" Grid.Row="1">
+                <!--<ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <Setter Property="Focusable" Value="false"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                <Setter Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </ListView.ItemContainerStyle>-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="{Binding SpecialitySubject.Subject.Name}" VerticalContentAlignment="Center"  FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0" FontFamily="Global User Interface"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding AllocatedHours}" FontWeight="DemiBold" x:Name="current" Padding="3" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
+                                <TextBlock Text="/" Margin="5,0" FontFamily="Global User Inerface" VerticalAlignment="Center" FontSize="30"/>
+                                <TextBlock Text="{Binding PlannedHours}" FontWeight="DemiBold" x:Name="total" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
+                            </StackPanel>
+                            <ProgressBar Width="230" MinWidth="50" Minimum="0" Maximum="{Binding PlannedHours}" Value="{Binding AllocatedHours}" Height="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Label VerticalContentAlignment="Center"  FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0" FontFamily="Global User Interface">Часов в неделю:</Label>
+                <TextBlock FontWeight="DemiBold" x:Name="current" Padding="3" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
+                <TextBlock Text="/" Margin="5,0" FontFamily="Global User Inerface" VerticalAlignment="Center" FontSize="30"/>
+                <TextBlock FontWeight="DemiBold" x:Name="total" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface" Text="{Binding SelectedItem.Speciality.MaxWeeklyHours, ElementName=groupsList}"/>
+            </StackPanel>
+
+        </Grid>
+        <Label HorizontalContentAlignment="Center" Content="Расписание" HorizontalAlignment="Center" Margin="10,52" VerticalAlignment="Center" Width="1480" FontSize="64" FontWeight="Bold" Height="96" Grid.ColumnSpan="2"/>
+        <Button Click="Shed_save_Click" x:Name="Shed_save" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Width="130" Height="50" Grid.Column="1"/>
+    </Grid>
+</Page>

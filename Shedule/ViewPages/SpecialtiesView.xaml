@@ -1,0 +1,43 @@
+﻿<Page x:Class="Shedule.ViewPages.SpecialtiesView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Shedule.ViewPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1200"
+      Title="SpecialtiesView">
+
+    <Grid  x:Name="Grid" Background="#F6F6FC" Margin="0,0,0,-148" Height="Auto" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="571"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Специльности" FontWeight="Bold" FontSize="64" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Margin="371,50" Width="458"/>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="436" Margin="257,63,257,72" Width="686">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="152*"/>
+            </Grid.RowDefinitions>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Код" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,8,0,0" Width="272" Height="50" FontSize="24" Grid.RowSpan="2"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Наименование" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,53,0,0" Width="272" Height="50" FontSize="24" Grid.Row="1"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Кодовое имя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,118,0,0" Width="272" Height="50" FontSize="24" Grid.Row="1"/>
+
+            <TextBox x:Name="name" IsEnabled="False" Text="{Binding Surname}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="277,0,0,0" VerticalAlignment="Top" Width="400" FontSize="36" Grid.RowSpan="2"/>
+            <TextBox x:Name="surname" IsEnabled="False" Text="{Binding Name}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="277,45,0,0"  VerticalAlignment="Top" Width="400" FontSize="36" Grid.Row="1"/>
+            <TextBox x:Name="patronymic" IsEnabled="False" Text="{Binding Patronymic}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="277,110,0,0"  VerticalAlignment="Top" Width="400" FontSize="36" Grid.Row="1"/>
+            <ComboBox x:Name="departmentsCB" SelectedValue="{Binding DepartmentId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="Name" IsEnabled="False" Margin="277,183,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left" Grid.Row="1"/>
+            <TextBox x:Name="day" IsEnabled="False" Text="{Binding}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="277,250,0,0"  VerticalAlignment="Top" Width="400" FontSize="36" Grid.Row="1"/>
+            <TextBox x:Name="week" IsEnabled="False" Text="{Binding}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="277,250,0,0"  VerticalAlignment="Top" Width="400" FontSize="36" Grid.Row="1"/>
+            <!--<TextBox x:Name="patronymic" IsEnabled="False" Text="{Binding Pat3ronymic}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="156,132,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>-->
+            <!--<TextBox x:Name="patronymic" IsEnabled="False" Text="{Binding Pat2ronymic}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="156,132,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>-->
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Отделение" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,183,0,0" Width="272" Height="50" FontSize="24" Grid.Row="1"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Дневная нагрузка" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,250,0,0" Width="272" Height="50" FontSize="24" Grid.Row="1"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Недельная нагрузка" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,326,0,0" Width="272" Height="50" FontSize="24" Grid.Row="1"/>
+            <Button x:Name="edit_butt" Click="edit_butt_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="✎" VerticalAlignment="Center" FontFamily="Global User Interface" Margin="277,357,0,10" HorizontalAlignment="Left" Grid.Row="1"/>
+            <Button x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="582,357,0,0" VerticalAlignment="Top" Width="94" Height="40" Grid.Row="1"/>
+        </Grid>
+
+    </Grid>
+</Page>

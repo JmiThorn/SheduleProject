@@ -1,0 +1,75 @@
+﻿<Page x:Class="Shedule.ViewPages.SpecialitiesView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Shedule.ViewPages"
+      mc:Ignorable="d" 
+            d:DesignHeight="1750" d:DesignWidth="1200"
+      Title="SpecialitiesView" GotFocus="Page_GotFocus">
+
+    <Grid x:Name="Grid" Background="#F6F6FC" Visibility="Visible" OpacityMask="{x:Null}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="497"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Специальности" FontWeight="Bold" FontSize="64" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="96" Margin="354,52" Width="492"/>
+        <Grid Margin="252,23,252,10" Grid.Row="1" HorizontalAlignment="Center" Width="696">
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Код" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,12,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Наименование" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,79,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Кодовое имя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,144,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Отделение" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,217,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Дневная нагрузка" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,286,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Недельная нагрузка" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,354,0,0" Width="244" Height="50" FontSize="24"/>
+
+            <TextBox x:Name="code" IsEnabled="False" Text="{Binding Code, Mode=TwoWay,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,12,0,0" VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <TextBox x:Name="name" IsEnabled="False" Text="{Binding Name,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,79,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <TextBox x:Name="codename" IsEnabled="False" Text="{Binding Codename,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,144,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <ComboBox x:Name="departmentCB" SelectedValue="{Binding DepartmentId, Mode=TwoWay,UpdateSourceTrigger=Explicit}" SelectedValuePath="Id" DisplayMemberPath="Name" IsEnabled="False" Margin="260,217,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left"/>
+            <TextBox x:Name="day" IsEnabled="False" Text="{Binding MaxDailyHours,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,286,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <TextBox x:Name="week" IsEnabled="False" Text="{Binding MaxWeeklyHours,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="259,354,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <Button x:Name="edit_butt" Click="edit_butt_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="&#9998;" VerticalAlignment="Top" FontFamily="Global User Interface" Margin="260,414,0,0" HorizontalAlignment="Left" RenderTransformOrigin="0.525,2.675"/>
+            <Button x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,413,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
+            <Button x:Name="back" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,413,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+        </Grid>
+        <TabControl Grid.Row="2" FontSize="20" FontFamily="Global User Interface">
+            <TabItem Header="Дисциплины специальности">
+                <Grid Background="white">
+                    <ListView ItemsSource="{Binding SpecialitySubjects}" x:Name="SpecSubjectView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Код предмета">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Margin="0,0,20,0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="✖" Click="Button_Click" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="15"/>
+                                                <TextBlock x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                            </StackPanel>
+                                            
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn  Width="550" Header="Наименование">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  x:Name="OneStr2" TextWrapping="Wrap" MouseDown="OneStr_MouseDown"  Text="{Binding Subject.Name, Mode=OneWay}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button FontWeight="DemiBold" x:Name="addNew" 
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                        BorderThickness="0" Width="144" Padding="0" HorizontalContentAlignment="Center" 
+                        VerticalContentAlignment="Center" Height="40"  Content="+ Добавить" Click="addNew_Click" 
+                        VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="25" HorizontalAlignment="Left"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Дисциплины специальности" FontSize="20" FontFamily="Global User Interface">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

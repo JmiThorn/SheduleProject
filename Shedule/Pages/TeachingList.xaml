@@ -1,0 +1,46 @@
+﻿<Page x:Class="Shedule.Pages.TeachingList"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Shedule.Pages"
+      mc:Ignorable="d" 
+     d:DesignHeight="750" d:DesignWidth="1200"
+      Title="TeachingList">
+
+    <Grid  x:Name="Grid" Background="#F6F6FC" Visibility="Visible">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Background="White" BorderBrush="#000000" BorderThickness="0,1,0,1" Grid.Row="1" Margin="0">
+            <StackPanel Orientation="Horizontal">
+                <Image Width="56" Height="56" Source="/Image\search.png" Margin="50,0,0,0" />
+                <Image x:Name="myImage"/>
+                <Label Content="Поиск" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
+                <TextBox BorderBrush="Black" TextWrapping="Wrap" Width="600" VerticalAlignment="Center" FontSize="36" Height="49" HorizontalAlignment="Center" Margin="0,21"/>
+            </StackPanel>
+        </Border>
+        <Label Content="Обучение" FontWeight="Bold" FontSize="64" Height="100" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ListView x:Name="TeachList" Grid.Row="2" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock MaxWidth="1200" x:Name="OneStr"  Text=""/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Page>

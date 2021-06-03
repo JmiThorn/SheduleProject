@@ -1,0 +1,85 @@
+﻿<Window x:Class="Shedule.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Shedule"
+        mc:Ignorable="d"
+        Title="Главная" MinHeight="600" MinWidth="1600" Height="900" Width="1600"
+        Icon="Image\logo.ico"
+        WindowState="Maximized"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="55"></RowDefinition>
+            <RowDefinition Height="55"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="55"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MaxWidth="300" Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="109*"></ColumnDefinition>
+            <ColumnDefinition Width="387*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="Chang_but" Click="Chang_but_Click" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="55">Изменения</Button>
+        <Button x:Name="Shed_but" Click="Button_Click" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="55">Расписание</Button>
+        <TextBlock Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center" Height="56" Margin="0,2,0,12">Учебная часть</TextBlock>
+        <ScrollViewer Grid.Column="0" Grid.Row="4" VerticalScrollBarVisibility="Hidden" Margin="0,0,0,10">
+            <StackPanel>
+                <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Преподаватели</TextBlock>
+                </Border>
+                <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="spec_butt_MouseLeftButtonDown" x:Name='spec_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Специальности</TextBlock>
+                </Border>
+                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="teachers_butt_MouseLeftButtonDown" x:Name='teachers_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Преподавание</TextBlock>
+                </Border>-->
+                <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="aud_butt_MouseLeftButtonDown" x:Name='aud_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Аудитории</TextBlock>
+                </Border>
+                <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="groups_butt_MouseLeftButtonDown" x:Name='groups_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Группы</TextBlock>
+                </Border>
+                <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="plan_butt_MouseLeftButtonDown" x:Name='plan_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Учебный план</TextBlock>
+                </Border>
+                <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="disciplines_butt_MouseLeftButtonDown" x:Name='disciplines_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Дисциплины</TextBlock>
+                </Border>
+                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock x:Name='work_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Типы работ</TextBlock>
+                </Border>-->
+                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="semesters_butt_MouseLeftButtonDown" x:Name='semesters_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Семестры</TextBlock>
+                </Border>-->
+                <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock MouseLeftButtonDown="department_butt_MouseLeftButtonDown" x:Name='department_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Отделения</TextBlock>
+                </Border>
+                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                    <TextBlock  Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1">Импорт номативов</TextBlock>
+                </Border>-->
+            </StackPanel>
+        </ScrollViewer>
+        <Button x:Name="Settings_butt" Click="Settings_butt_Click" Background="White" BorderThickness="0,0,0,0" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="36" Grid.Column="0" Grid.Row="5" VerticalAlignment="Top" Height="55" Width="300" HorizontalAlignment="Center">
+            Настройки
+        </Button>
+        <Image Grid.Row="0" Grid.Column="0" Source="image 2.png" Margin="85,35"/>
+
+        <Border BorderBrush="#2D2D2D" Opacity="0.7" BorderThickness="4,0,0,0" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="2">
+            <Frame Background="#F6F6FC" x:Name="MainFrame" Grid.Row="0" Grid.Column="1" NavigationUIVisibility="Hidden" Content="" Grid.RowSpan="17"/>
+        </Border>
+        <!--<Border BorderBrush="#D8D8D8" BorderThickness="0,0,0,4" Grid.Column="1" Margin="5,0,0,0">
+            <Button Background=""  Padding="5" Margin="60,46,1349,52">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="component/Images/help.png" />
+                    <TextBlock FontSize="36">Экспорт</TextBlock>
+                </StackPanel>
+            </Button>
+        </Border>-->
+
+    </Grid>
+</Window>

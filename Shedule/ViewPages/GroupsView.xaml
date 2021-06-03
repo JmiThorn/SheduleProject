@@ -1,0 +1,119 @@
+﻿<Page x:Class="Shedule.ViewPages.GroupsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Shedule.ViewPages"
+      mc:Ignorable="d" 
+       d:DesignHeight="750" d:DesignWidth="1200"
+      Title="GroupsView">
+
+    <Grid x:Name="Grid" Background="#F6F6FC" Visibility="Visible" OpacityMask="{x:Null}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="373"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Группы" FontWeight="Bold" FontSize="64" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Margin="0,0,0,0.2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="326" Width="695">
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Кодовое имя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,20,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Подгруппа" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,87,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Курс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,152,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,217,0,0" Width="244" Height="50" FontSize="24"/>
+
+            <TextBox x:Name="codename" IsEnabled="False" Text="{Binding Codename,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,12,0,0" VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <TextBox x:Name="subgroup" IsEnabled="False" Text="{Binding Subgroup,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,79,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <TextBox x:Name="course" IsEnabled="False" Text="{Binding Course,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,144,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <ComboBox x:Name="specialityCB" SelectedValue="{Binding SpecialityId, Mode=TwoWay,UpdateSourceTrigger=Explicit}" SelectedValuePath="Id" DisplayMemberPath="Name" IsEnabled="False" Margin="260,217,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left"/>
+            <Button x:Name="edit_butt" Click="edit_butt_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="&#9998;" VerticalAlignment="Center" FontFamily="Global User Interface" Margin="260,274,0,12" HorizontalAlignment="Left"/>
+            <Button x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,273,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
+            <Button x:Name="back" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+        </Grid>
+        <TabControl Grid.Row="2" FontSize="20" FontFamily="Global User Interface">
+            <TabItem Header="Семестры">
+                <Grid Background="white">
+                    <ListView x:Name="SemesterListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Номер семестра">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Margin="0,0,20,0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="✖" Click="Button_Click" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="15"/>
+                                                <TextBlock x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding Number}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn  Width="250" Header="Дата начала">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding StartDate, StringFormat=\{0:d\}}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="250"  Header="Количество недель">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding WeeksCount}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button FontWeight="DemiBold" x:Name="addNew" 
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                        BorderThickness="0" Width="144" Padding="0" HorizontalContentAlignment="Center" 
+                        VerticalContentAlignment="Center" Height="40"  Content="+ Добавить" Click="addNew_Click" 
+                        VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="25" HorizontalAlignment="Left"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Изучаемые дисциплины" FontSize="20" FontFamily="Global User Interface">
+                <Grid Background="#FFE5E5E5">
+                    <ListView x:Name="TeachingListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="400px" Header="Код предмета">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Margin="0,0,20,0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="✖" Click="delete_teaching" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="15"/>
+                                                <TextBlock x:Name="OneStr" MouseDown="TwoStr_MouseDown"  Text="{Binding SpecialitySubject.SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="400px" Header="Предмет">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                 <TextBlock x:Name="OneStr" MouseDown="TwoStr_MouseDown"  Text="{Binding SpecialitySubject.Subject.Name}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn  Width="450" Header="Преподаватель">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Margin="0,0,10,0" x:Name="OneStr" MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Surname}"/>
+                                                <TextBlock  Margin="0,0,10,0" MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Name}"/>
+                                                <TextBlock MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Patronimyc}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button FontWeight="DemiBold" x:Name="teaching" 
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                        BorderThickness="0" Width="144" Padding="0" HorizontalContentAlignment="Center" 
+                        VerticalContentAlignment="Center" Height="40"  Content="+ Добавить" Click="addNew_teaching" 
+                        VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="25" HorizontalAlignment="Left"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

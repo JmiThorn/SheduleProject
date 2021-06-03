@@ -1,0 +1,45 @@
+﻿<Page x:Class="Shedule.Pages.Semesters"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Shedule.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1200"
+      Title="Semesters" SizeChanged="Page_SizeChanged">
+
+    <Grid  x:Name="Grid" Background="#F6F6FC" Visibility="Visible">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Семестры" FontWeight="Bold" FontSize="64" Height="100" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ListView x:Name="SemestrListView" Grid.Row="2" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Номер семестра">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  x:Name="OneStr"  Text="{Binding Number}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  Width="250" Header="Дата начала">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  x:Name="OneStr"  Text="{Binding StartDate}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="250"  Header="Количество недель">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  x:Name="OneStr"  Text="{Binding WeeksCount}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

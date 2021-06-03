@@ -1,0 +1,36 @@
+﻿<Page x:Class="Shedule.ViewPages.ClassroomsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Shedule.ViewPages"
+      mc:Ignorable="d" 
+     d:DesignHeight="750" d:DesignWidth="1200"
+      Title="ClassroomsView">
+
+    <Grid x:Name="Grid" Background="#F6F6FC" Visibility="Visible" OpacityMask="{x:Null}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="373"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Аудитории" FontWeight="Bold" FontSize="64" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Margin="0,0,0,0.2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="326" Width="695">
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Аудитория" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,20,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Корпус" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,87,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Принадлежность" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,152,0,0" Width="244" Height="50" FontSize="24"/>
+            <!--<Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,217,0,0" Width="244" Height="50" FontSize="24"/>-->
+
+            <TextBox PreviewTextInput="number_PreviewTextInput" x:Name="number" IsEnabled="False" Text="{Binding Number,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,12,0,0" VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <ComboBox x:Name="building" IsEnabled="False" SelectedValue="{Binding Building,UpdateSourceTrigger=Explicit}" SelectedValuePath="Content" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,79,0,0"  VerticalAlignment="Top" Width="400" FontSize="36">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="affiliationCB" SelectedValue="{Binding TeacherId, Mode=TwoWay,UpdateSourceTrigger=Explicit}" SelectedValuePath="Id" DisplayMemberPath="Surname" IsEnabled="False" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,144,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <!--<ComboBox x:Name="specialityCB" SelectedValue="{Binding SpecialityId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="Name" IsEnabled="False" Margin="260,217,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left"/>-->
+            <Button x:Name="edit_butt" Click="edit_butt_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="&#9998;" VerticalAlignment="Center" FontFamily="Global User Interface" Margin="260,274,0,12" HorizontalAlignment="Left"/>
+            <Button x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,273,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
+            <Button x:Name="back" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+        </Grid>
+    </Grid>
+</Page>
