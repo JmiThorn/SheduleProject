@@ -1,5 +1,7 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Microsoft.Win32;
+using Shedule.Models.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -172,7 +174,20 @@ namespace Shedule.ViewPages
 
         private void import_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Excel files(*.xlsx;)|*.xlsx;*.xls";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    ParsingUtils.ParseFile(openFileDialog.FileName);
 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
