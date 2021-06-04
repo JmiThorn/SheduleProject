@@ -241,6 +241,12 @@ namespace Shedule.Models.Parsing
                         isPractise = true;
                     }
                 }
+                Regex regex = new Regex("\\s{2,}");
+                var matchesEnum = regex.Matches(name).GetEnumerator();
+                while (matchesEnum.MoveNext())
+                {
+                    name = name.Replace((matchesEnum.Current as Match).Value, " ");
+                }
                 SubjectModel subject = new SubjectModel
                 {
                     index = indexCell.Value.ToString().Trim(),
