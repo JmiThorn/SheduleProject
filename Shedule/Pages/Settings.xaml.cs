@@ -76,7 +76,7 @@ namespace Shedule.Pages
                 if (openFileDialog.ShowDialog() == true)
                 {
                     filename.Content = (openFileDialog.FileName);
-                    ParsingUtils.ParseFile(openFileDialog.FileName);
+               //     ParsingUtils.ParseFile(openFileDialog.FileName);
 
                 }
             }

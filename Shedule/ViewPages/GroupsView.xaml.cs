@@ -180,7 +180,11 @@ namespace Shedule.ViewPages
                 openFileDialog.Filter = "Excel files(*.xlsx)|*.xlsx";
                 if (openFileDialog.ShowDialog() == true)
                 {
+<<<<<<< Updated upstream
                     ParsingUtils.ParseFile(openFileDialog.FileName, (DataContext as Group).Id);
+=======
+                    ParsingUtils.ParseFile(openFileDialog.FileName, ((DataContext as Group).Id));
+>>>>>>> Stashed changes
 
                 }
             }
