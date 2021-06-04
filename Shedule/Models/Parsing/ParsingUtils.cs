@@ -22,7 +22,7 @@ namespace Shedule.Models.Parsing
 
         private static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public static void ParseFile(string fileName)
+        public static void ParseFile(string fileName, int Id)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -59,7 +59,7 @@ namespace Shedule.Models.Parsing
                                     SemesterWeeks = semester.weeks,
                                     Name = subject.name,
                                     Index = subject.index,
-                                    GroupId = 142,
+                                    GroupId = Id,
                                     IsPractise = subject.isPractise,
                                     SemesterStart = DateTime.MinValue, //TODO просить пользователя заполнить их в разделе семестров
                                     PractiseStart = null, //TODO просить пользователя заполнить их в разделе курриколумов

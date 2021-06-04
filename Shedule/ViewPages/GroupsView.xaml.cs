@@ -177,10 +177,10 @@ namespace Shedule.ViewPages
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Excel files(*.xlsx;)|*.xlsx;*.xls";
+                openFileDialog.Filter = "Excel files(*.xlsx)|*.xlsx";
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    ParsingUtils.ParseFile(openFileDialog.FileName);
+                    ParsingUtils.ParseFile(openFileDialog.FileName, (DataContext as Group).Id);
 
                 }
             }
