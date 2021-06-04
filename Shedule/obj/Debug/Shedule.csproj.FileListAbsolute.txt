@@ -342,3 +342,5 @@ G:\Попытка в расписание\Shedule repo\Shedule\obj\Debug\Shedule
 G:\Попытка в расписание\Shedule repo\Shedule\obj\Debug\Shedule.csproj.CopyComplete
 G:\Попытка в расписание\Shedule repo\Shedule\obj\Debug\Shedule.exe
 G:\Попытка в расписание\Shedule repo\Shedule\obj\Debug\Shedule.pdb
+G:\Попытка в расписание\Shedule repo\Shedule\obj\Debug\Controls\MainScheduleItemControl.g.cs
+G:\Попытка в расписание\Shedule repo\Shedule\obj\Debug\Controls\MainScheduleItemControl.baml
