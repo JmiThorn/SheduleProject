@@ -349,6 +349,13 @@ namespace Shedule.ViewPages
         private async Task loadCommonData()
         {
             allMainSchedules = await LearningProcessesAPI.getAllMainSchedules();
+            foreach(var mainSch in allMainSchedules)
+            {
+                if (mainSch.TeachingId != null)
+                {
+                    mainSch.Teaching = await LearningProcessesAPI.getTeaching((int)mainSch.TeachingId);
+                }
+            }
             allMainSchedulesBeforeUpdate = allMainSchedules.ToList();
 
             allClassrooms = await LearningProcessesAPI.getAllClassrooms();
@@ -1140,5 +1147,7 @@ namespace Shedule.ViewPages
         #endregion
 
     }
+
+    
 
 }
