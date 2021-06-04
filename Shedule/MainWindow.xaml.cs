@@ -59,10 +59,10 @@ namespace Shedule
             MainFrame.Navigate(new TeachersList());
         }
 
-        private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
-        {
-            MainFrame.Navigate(new Import());
-        }
+        //private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        //{
+        //    MainFrame.Navigate(new Import());
+        //}
 
         private void Chang_but_Click(object sender, RoutedEventArgs e)
         {

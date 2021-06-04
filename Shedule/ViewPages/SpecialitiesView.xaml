@@ -46,7 +46,7 @@
                                                 <Button Margin="0,0,20,0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="✖" Click="Button_Click" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="15"/>
                                                 <TextBlock x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
                                             </StackPanel>
-                                            
+
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -66,9 +66,6 @@
                         VerticalContentAlignment="Center" Height="40"  Content="+ Добавить" Click="addNew_Click" 
                         VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="25" HorizontalAlignment="Left"/>
                 </Grid>
-            </TabItem>
-            <TabItem Header="Дисциплины специальности" FontSize="20" FontFamily="Global User Interface">
-                <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
     </Grid>

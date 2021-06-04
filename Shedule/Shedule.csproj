@@ -224,10 +224,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Import.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -302,9 +298,6 @@
     </Compile>
     <Compile Include="Pages\GroupsList.xaml.cs">
       <DependentUpon>GroupsList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Import.xaml.cs">
-      <DependentUpon>Import.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>

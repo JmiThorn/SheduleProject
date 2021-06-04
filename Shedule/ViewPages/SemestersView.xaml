@@ -104,7 +104,7 @@
                             x:Name="specSub"
                             SelectedValue="{Binding SpecialitySubjectId}"
                             DisplayMemberPath="Subject.Name"
-                            SelectedValuePath="SpecialitySubjectId" 
+                            SelectedValuePath="Id" 
                             HorizontalAlignment="Left" 
                             VerticalAlignment="Top" 
                             Width="200" Height="40"/>

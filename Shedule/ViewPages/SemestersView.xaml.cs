@@ -23,6 +23,8 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class SemestersView : Page
     {
+
+        List<Curriculum> currentCurriculums = new List<Curriculum>();
         public SemestersView(Semester semester)
         {
             InitializeComponent();
@@ -52,17 +54,26 @@ namespace Shedule.ViewPages
                 weekscount.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 Semester semester  = (Semester)DataContext;
                 var result = await LearningProcessesAPI.updateSemester(semester.Id, semester);
-                MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                foreach (Curriculum cur in CurriculumsListView.Items)
+                if(result != null)
                 {
-
-                    
-                 var cur_result = await LearningProcessesAPI.updateCommonCurriculum(cur.Id,cur);
-                    if (cur_result==null)
+                    foreach (Curriculum cur in CurriculumsListView.Items)
                     {
-                        await LearningProcessesAPI.createCommonCurriculumItem(cur.PlannedHours, cur.UsedHours, cur.SemesterId, cur.SpecialitySubjectId);
+                        var cur_result = await LearningProcessesAPI.updateCommonCurriculum(cur.Id, cur);
+                        if (cur_result == null)
+                        {
+                            await LearningProcessesAPI.createCommonCurriculumItem(cur.PlannedHours, cur.UsedHours, cur.SemesterId, cur.SpecialitySubjectId);
+                        }
                     }
+                    ((Semester)DataContext).Group = result.Group;
+                    ((Semester)DataContext).Curricula = result.Curricula;
+                    ((Semester)DataContext).MainSchedules = result.MainSchedules;
+                    MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+                else
+                {
+                    MessageBox.Show("Семестр не найден!","Ошбика обновления данных", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                
 
 
             }
@@ -126,10 +137,18 @@ namespace Shedule.ViewPages
             cur = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise!=true);
  
             CurriculumsListView.ItemsSource = cur;
-                var sub = await LearningProcessesAPI.getSpecialitySubjects(semester.Group.SpecialityId);
-                sub = sub.AsQueryable().Except(cur.Select(c => c.SpecialitySubject),new spec()).ToList();
-                specSub.ItemsSource = sub;
+            currentCurriculums = cur;
+            loadSpecSubjects();
         }
+
+        public async Task loadSpecSubjects()
+        {
+            var sub = await LearningProcessesAPI.getSpecialitySubjects(((Semester)DataContext).Group.SpecialityId);
+            sub = sub.AsQueryable().Except(currentCurriculums.Select(c => c.SpecialitySubject), new spec()).ToList();
+            specSub.ItemsSource = sub;
+            specSub.Items.Refresh();
+        }
+
         public async Task loadCurriculumPractice(Semester semester)
         {
 
@@ -143,9 +162,30 @@ namespace Shedule.ViewPages
 
             CurriculumsPracticeListView.ItemsSource = cur;
         }
+
+        public async Task deleteCurriculum(Curriculum curriculum)
+        {
+            try
+            {
+                List<Curriculum> list = (List<Curriculum>)CurriculumsListView.ItemsSource;
+                var result = await LearningProcessesAPI.deleteCurriculum(curriculum.Id);
+                list.Remove(curriculum);
+                CurriculumsListView.Items.Refresh();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+            }
+
+            //MessageBox.Show(result.Count + "");
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBoxResult result = MessageBox.Show("Это действие приведёт к удалению, без возможности восстановления.\nПродолжить?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (MessageBoxResult.Yes == result)
+            {
+                deleteCurriculum((Curriculum)((Button)sender).DataContext);
+            }
         }
 
         private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
@@ -155,8 +195,20 @@ namespace Shedule.ViewPages
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-            Curriculum curriculum = (Curriculum)DataContext;
-            CurriculumsListView.Items.Add("2");
+
+            Curriculum curriculum = new Curriculum()
+            {
+                PlannedHours = 0,
+                UsedHours = 0,
+                Semester = (Semester)DataContext,
+                SemesterId = ((Semester)DataContext).Id,
+                SpecialitySubjectId = (int)specSub.SelectedValue,
+                SpecialitySubject = (SpecialitySubject)specSub.SelectedItem
+            };
+            currentCurriculums.Add(curriculum);
+            CurriculumsListView.ItemsSource = currentCurriculums;
+            CurriculumsListView.Items.Refresh();
+            loadSpecSubjects();
         }
 
         private void addNewPractice_Click(object sender, RoutedEventArgs e)
