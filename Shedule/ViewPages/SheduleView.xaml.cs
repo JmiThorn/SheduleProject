@@ -737,18 +737,51 @@ namespace Shedule.ViewPages
         {
             if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value) || isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
             {
+                Dictionary<int, int> elementsBounds = new Dictionary<int, int>();
+                for(int i = 0; i < DAYS; i++)
+                {
+                    elementsBounds.Add(i, 0);
+                }
                 foreach (var e in Frame.Children)
                 {
                     if (!(e is MainScheduleItemControl))
                         continue;
                     int x = getDayOfWeekFromGridColumn(Grid.GetColumn((UIElement)e));
                     int y = getClassNumberFromGridRow(Grid.GetRow((UIElement)e));
-                    if (x >= 0 && x < DAYS && y >= 0 && y < 6)
+                    if(value == true)
                     {
-                        if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value))
-                            ((MainScheduleItemControl)e).StackPanel.Children[1].IsEnabled = value;
-                        if (isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
-                            ((MainScheduleItemControl)e).StackPanel.Children[0].IsEnabled = value;
+                        if(((ComboBox)((MainScheduleItemControl)e).StackPanel.Children[0]).SelectedIndex != -1)
+                        {
+                            if(elementsBounds[x] < y)
+                            {
+                                elementsBounds[x] = y;
+                                if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value))
+                                    ((MainScheduleItemControl)e).StackPanel.Children[1].IsEnabled = value;
+                                if (isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
+                                    ((MainScheduleItemControl)e).StackPanel.Children[0].IsEnabled = value;
+                            }
+
+                        }
+                        else
+                        {
+                            if (elementsBounds[x] == y-1)
+                            {
+                                if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value))
+                                    ((MainScheduleItemControl)e).StackPanel.Children[1].IsEnabled = value;
+                                if (isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
+                                    ((MainScheduleItemControl)e).StackPanel.Children[0].IsEnabled = value;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (x >= 0 && x < DAYS && y >= 0 && y < 6)
+                        {
+                            if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value))
+                                ((MainScheduleItemControl)e).StackPanel.Children[1].IsEnabled = value;
+                            if (isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
+                                ((MainScheduleItemControl)e).StackPanel.Children[0].IsEnabled = value;
+                        }
                     }
                 }
             }
@@ -1054,6 +1087,7 @@ namespace Shedule.ViewPages
                 list.Sort((t1, t2) => t1.RecommendationLevel - t2.RecommendationLevel);
                 classroomsCB.ItemsSource = list;
                 setControlsEnabled(true, InfluenceLevel.CLASSROOM_SELECTION, Grid.GetColumn(((MainScheduleItemControl)((StackPanel)classroomsCB.Parent).Parent)), Grid.GetRow(((MainScheduleItemControl)((StackPanel)classroomsCB.Parent).Parent)));
+                setControlsEnabled(true, InfluenceLevel.TEACHING_SELECTION, Grid.GetColumn(((MainScheduleItemControl)((StackPanel)classroomsCB.Parent).Parent)), Grid.GetRow(((MainScheduleItemControl)((StackPanel)classroomsCB.Parent).Parent))+1);
                 //Вызываем валидацию
                 classroomsCB.SelectedIndex = 0;
                 classroomsCB.SelectedIndex = -1;
