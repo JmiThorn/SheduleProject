@@ -16,15 +16,15 @@
         </Grid.RowDefinitions>
         <Label Content="Добавление группы" FontWeight="Bold" FontSize="64" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Grid Margin="0,0,0,0.2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="326" Width="695">
-            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Кодовое имя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,12,0,0" Width="244" Height="50" FontSize="24"/>
-            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Подгруппа" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,79,0,0" Width="244" Height="50" FontSize="24"/>
-            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Курс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,144,0,0" Width="244" Height="50" FontSize="24"/>
-            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,217,0,0" Width="244" Height="50" FontSize="24"/>
+            <!--<Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Кодовое имя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,12,0,0" Width="244" Height="50" FontSize="24"/>-->
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Подгруппа" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,12,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Курс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,79,0,0" Width="244" Height="50" FontSize="24"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,144,0,0" Width="244" Height="50" FontSize="24"/>
 
-            <TextBox x:Name="codename" Text="{Binding Codename}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,12,0,0" VerticalAlignment="Top" Width="400" FontSize="36"/>
-            <TextBox PreviewTextInput="DigitCheck_PreviewTextInput" x:Name="subgroup" Text="{Binding Subgroup}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,79,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
-            <TextBox PreviewTextInput="DigitCheck_PreviewTextInput" x:Name="course" Text="{Binding Course}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,144,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
-            <ComboBox x:Name="specialityCB" SelectedValue="{Binding SpecialityId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="Name" Margin="260,217,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left"/>
+            <!--<TextBox x:Name="codename" Text="{Binding Codename}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,12,0,0" VerticalAlignment="Top" Width="400" FontSize="36"/>-->
+            <TextBox PreviewTextInput="DigitCheck_PreviewTextInput" x:Name="subgroup" Text="{Binding Subgroup}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,12,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <TextBox PreviewTextInput="DigitCheck_PreviewTextInput" x:Name="course" Text="{Binding Course}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,79,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
+            <ComboBox x:Name="specialityCB" SelectedValue="{Binding SpecialityId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="Name" Margin="260,144,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left"/>
             <Button x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,273,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
         </Grid>
     </Grid>

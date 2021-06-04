@@ -169,5 +169,10 @@ namespace Shedule.ViewPages
         {
             MainWindow.Instance.MainFrame.Navigate(new AddGroupTeachingView((Group)DataContext, loadTeachings));
         }
+
+        private void import_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

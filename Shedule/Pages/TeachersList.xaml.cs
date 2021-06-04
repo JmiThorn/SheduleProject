@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -111,6 +112,19 @@ namespace Shedule.Pages
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.MainFrame.Navigate(new AddTeachersView());
+        }
+
+        private void TeacherListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as Track;
+            if (item != null)
+            {
+                MessageBox.Show("Item's Double Click handled!");
+            }
         }
     }
 }

@@ -62,11 +62,42 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button FontWeight="DemiBold" x:Name="addNew" 
+                    <StackPanel Orientation="Horizontal">
+                    <Button
+                        Width="144"
+                        Padding="0"
+                        Height="40"
+                        FontSize="25"
+                        x:Name="addNew" 
+                        BorderThickness="0"
+                        Click="addNew_Click" 
+                        Content="+ Добавить"
+                        FontWeight="DemiBold" 
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Global User Interface"
+                        HorizontalContentAlignment="Center" 
                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
-                        BorderThickness="0" Width="144" Padding="0" HorizontalContentAlignment="Center" 
-                        VerticalContentAlignment="Center" Height="40"  Content="+ Добавить" Click="addNew_Click" 
-                        VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="25" HorizontalAlignment="Left"/>
+                    />
+                    <Button
+                        Width="144"
+                        Padding="0"
+                        Height="40"
+                        FontSize="25"
+                        x:Name="import" 
+                        Content="+ Импорт"
+                        BorderThickness="0"
+                        Click="import_Click" 
+                        FontWeight="DemiBold"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Global User Interface"
+                        HorizontalContentAlignment="Center" 
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                    />
+                    </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="Изучаемые дисциплины" FontSize="20" FontFamily="Global User Interface">

@@ -104,10 +104,10 @@ namespace Shedule
             MainFrame.Navigate(new DisciplinesList());
         }
 
-        private void semesters_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MainFrame.Navigate(new Semesters());
-        }
+        //private void semesters_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    MainFrame.Navigate(new Semesters());
+        //}
 
         private void department_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

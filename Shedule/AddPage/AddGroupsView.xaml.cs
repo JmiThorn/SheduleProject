@@ -30,7 +30,7 @@ namespace Shedule.ViewPages
 
         private void edit_butt_Click(object sender, RoutedEventArgs e)
         {
-            codename.IsEnabled = true;
+           // codename.IsEnabled = true;
             course.IsEnabled = true;
             subgroup.IsEnabled = true;
             specialityCB.IsEnabled = true;
@@ -55,7 +55,7 @@ namespace Shedule.ViewPages
         }
         private void DigitCheck_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if ((e.Text) == null || !(e.Text).All(char.IsDigit) || subgroup.Text.Length >= 1 || course.Text.Length >=1)
+            if ((e.Text) == null || !(e.Text).All(char.IsDigit) || (sender as TextBox).Text.Length >= 1)
             {
                 e.Handled = true;
             }

@@ -23,7 +23,16 @@
             </StackPanel>
         </Border>
         <Label Content="Список преподавателей" FontWeight="Bold" FontSize="64" Height="100" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <ListView HorizontalAlignment="Stretch" x:Name="TeacherListView" Grid.Row="2" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" IsSynchronizedWithCurrentItem="True" MouseDown="OneStr_MouseDown" Margin="0,0,0,55">
+        <ListView HorizontalAlignment="Stretch"
+                  x:Name="TeacherListView"
+                  Grid.Row="2" FontSize="25"
+                  BorderBrush="#FFC5C7CD"
+                  Background="#FFF6F6FC"
+                  Opacity="1"
+                  IsSynchronizedWithCurrentItem="True"
+                  MouseDown="OneStr_MouseDown"
+                  Margin="0,0,0,55"
+                  SelectionChanged="TeacherListView_SelectionChanged">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed"/>

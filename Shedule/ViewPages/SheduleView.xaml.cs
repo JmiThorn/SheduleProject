@@ -172,8 +172,8 @@ namespace Shedule.ViewPages
                                         <Run Text=""{Binding Teaching.SpecialitySubject.Subject.Name}""/>
                                         <Run Text=""{Binding ClassNumber}""/>
                                         <Run Text=""{Binding Teaching.Teacher.Surname}""/>                
-                                        <Run Text=""{Binding Teaching.TeacherId}""/>                
                                         <Run Text=""{Binding Teaching.Teacher.Name}""/>
+                                        <Run Text=""{Binding Teaching.TeacherId}""/>                
                                                 </TextBlock>
                                             </StackPanel>
                                         </DataTemplate>
