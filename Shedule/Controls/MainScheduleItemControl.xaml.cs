@@ -50,9 +50,22 @@ namespace Shedule.Controls
                 return "";
             if(value is int)
             {
-                if(value == 0) //TODO
+                if((int)value == 0)
+                {
+                    return "Старый";
+                }else if((int)value == 1)
+                {
+                    return "Новый";
+                }
+                else
+                {
+                    return "Неизвестный";
+                }
             }
-            return value.ToString().Substring(0, 1);
+            else
+            {
+                return "Неизвестный";
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

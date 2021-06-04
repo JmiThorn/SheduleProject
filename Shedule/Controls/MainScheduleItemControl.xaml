@@ -9,6 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800" Grid.Row="2" Grid.Column="1">
     <UserControl.Resources>
         <local:FirstLetterFromStrConverter x:Key="FirstLetterFromStrConverter"/>
+        <local:BuildingConverter x:Key="BuildingConverter"/>
     </UserControl.Resources>
     <StackPanel x:Name="StackPanel" x:FieldModifier="public">
         <ComboBox SelectedValue ="{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "18" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id">
@@ -80,7 +81,7 @@
                                 <TextBlock.Text>
                                     <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="X">
                                         <Binding Path="Classroom.Number"/>
-                                        <Binding Path="Classroom.Building"/>
+                                        <Binding Path="Classroom.Building" Converter="{StaticResource BuildingConverter}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
