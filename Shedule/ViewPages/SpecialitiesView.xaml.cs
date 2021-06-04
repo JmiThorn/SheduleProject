@@ -20,7 +20,7 @@ namespace Shedule.ViewPages
             InitializeComponent();
             DataContext = speciality;
             loadDepartment();
-            // loadSubject(speciality);
+           // loadSubject(speciality);
 
         }
         public async Task loadDepartment()
@@ -67,14 +67,14 @@ namespace Shedule.ViewPages
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.MainFrame.Navigate(new AddSpecialitiesSubjectView((Speciality)DataContext));
+            MainWindow.Instance.MainFrame.Navigate(new AddSpecialitiesSubjectView((Speciality)DataContext, loadSubject));
         }
         public async Task deleteSpecialitySubject(SpecialitySubject subject)
         {
             //LearningProcessesAPI.updateTeacher();
             try
             {
-                List<SpecialitySubject> list = (List<SpecialitySubject>)SpecSubjectView.ItemsSource;
+                HashSet<SpecialitySubject> list = (HashSet<SpecialitySubject>)SpecSubjectView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteSpecialitySubject(subject.Id);
                 list.Remove(subject);
                 SpecSubjectView.Items.Refresh();
@@ -94,10 +94,17 @@ namespace Shedule.ViewPages
                 deleteSpecialitySubject((SpecialitySubject)((Button)sender).DataContext);
             }
         }
-        public async Task loadSubject(Speciality speciality)
+        public async Task loadSubject()
         {
-            var semesters = await LearningProcessesAPI.getSpecialitySubjects(speciality.Id);
-            SpecSubjectView.ItemsSource = semesters;
+            HashSet<SpecialitySubject> Ss;
+            Ss = new HashSet<SpecialitySubject>();
+            var s2 = await (LearningProcessesAPI.getSpecialitySubjects(((Speciality)DataContext).Id));
+
+            s2.ForEach(n => Ss.Add(n));
+
+            ((Speciality)DataContext).SpecialitySubjects = Ss;
+            SpecSubjectView.GetBindingExpression(ListView.ItemsSourceProperty)?.UpdateTarget();
+
         }
 
         private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)

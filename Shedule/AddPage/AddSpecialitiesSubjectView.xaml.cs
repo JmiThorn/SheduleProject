@@ -14,13 +14,15 @@ namespace Shedule.ViewPages
     public partial class AddSpecialitiesSubjectView : Page
     {
 
-       
+        public delegate Task Updater();
+        public event Updater UpdateParent;
 
-        public AddSpecialitiesSubjectView(Speciality speciality)
+        public AddSpecialitiesSubjectView(Speciality speciality, Updater updater)
         {
             InitializeComponent();
             DataContext = speciality;
-            loadSubject();  
+            loadSubject();
+            UpdateParent += updater;
         }
         public async Task loadSubject()
         {
@@ -40,7 +42,8 @@ namespace Shedule.ViewPages
               
                 var result = await LearningProcessesAPI.createSpecialitySubject(((Speciality)(DataContext)).Id, Convert.ToInt32(nameCB.SelectedValue),code.Text);
                 MessageBox.Show("Дисциплина успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                
+                UpdateParent?.Invoke();
+
             }
             catch (Exception error)
             {
