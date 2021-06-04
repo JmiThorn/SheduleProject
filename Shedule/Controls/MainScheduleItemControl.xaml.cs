@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,40 @@ namespace Shedule.Controls
         public MainScheduleItemControl()
         {
             InitializeComponent();
+        }
+    }
+
+    public class FirstLetterFromStrConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return "";
+            return value.ToString().Substring(0, 1);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DependencyProperty.UnsetValue;
+        }
+    }
+
+    public class BuildingConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return "";
+            if(value is int)
+            {
+                if(value == 0) //TODO
+            }
+            return value.ToString().Substring(0, 1);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DependencyProperty.UnsetValue;
         }
     }
 }

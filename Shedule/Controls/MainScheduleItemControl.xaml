@@ -7,6 +7,9 @@
              xmlns:local="clr-namespace:Shedule.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Grid.Row="2" Grid.Column="1">
+    <UserControl.Resources>
+        <local:FirstLetterFromStrConverter x:Key="FirstLetterFromStrConverter"/>
+    </UserControl.Resources>
     <StackPanel x:Name="StackPanel" x:FieldModifier="public">
         <ComboBox SelectedValue ="{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "18" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id">
             <ComboBox.ItemTemplate>
@@ -15,9 +18,11 @@
                         <StackPanel>
                             <TextBlock>
                                 <TextBlock.Text>
-                                    <MultiBinding  StringFormat="{}{0} {1:C}">
+                                    <MultiBinding  StringFormat="{}{0} {1} {2}. {3}." TargetNullValue="Нет пары">
                                         <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
                                         <Binding Path="Teaching.Teacher.Surname"/>
+                                        <Binding Path="Teaching.Teacher.Name" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                                        <Binding Path="Teaching.Teacher.Patronymic" Converter="{StaticResource FirstLetterFromStrConverter}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -26,12 +31,11 @@
                                     <DataTemplate>
                                         <StackPanel Orientation = "Horizontal">
                                             <TextBlock>
-                                            <Run Text="{Binding Teaching.SpecialitySubject.Subject.Name}"/>
-                                            <Run Text="{Binding ClassNumber}"/>
-                                            <Run Text="{Binding Teaching.Teacher.Surname}"/>                
-                                            <Run Text="{Binding Teaching.TeacherId}"/>                
-                                            <Run Text="{Binding Teaching.Teacher.Name}"/>
-                                                    </TextBlock>
+                                            <Run Text="{Binding Teaching.SpecialitySubject.Subject.Name, StringFormat='{}{0} - '}"/>
+                                            <Run Text="{Binding Teaching.Teacher.Surname}"/>
+                                            <Run Text="{Binding Teaching.Teacher.Name, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
+                                            <Run Text="{Binding Teaching.Teacher.Patronymic, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
+                                            </TextBlock>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -74,7 +78,7 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock>
                                 <TextBlock.Text>
-                                    <MultiBinding  StringFormat="{}{0} {1}">
+                                    <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="X">
                                         <Binding Path="Classroom.Number"/>
                                         <Binding Path="Classroom.Building"/>
                                     </MultiBinding>
@@ -86,8 +90,7 @@
                                         <StackPanel Orientation = "Horizontal">
                                             <TextBlock>
                                                 <TextBlock.Text>
-                                                    <MultiBinding  StringFormat="{}{0} {1}">
-                                                        <Binding Path="Teaching.Id"/>
+                                                    <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="Не выбрано">
                                                         <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
                                                         <Binding Path="Teaching.Group.Codename"/>
                                                     </MultiBinding>
