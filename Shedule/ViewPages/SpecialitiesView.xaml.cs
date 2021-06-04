@@ -20,7 +20,7 @@ namespace Shedule.ViewPages
             InitializeComponent();
             DataContext = speciality;
             loadDepartment();
-             loadSubject(speciality);
+            // loadSubject(speciality);
 
         }
         public async Task loadDepartment()

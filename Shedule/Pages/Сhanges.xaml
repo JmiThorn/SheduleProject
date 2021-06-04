@@ -12,14 +12,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="200"></RowDefinition>
             <RowDefinition></RowDefinition>
-            
-
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Content="Изменения на" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontSize="66" FontWeight="Bold"/>
-
+        <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="60">В разработке</Label>
     </Grid>
 </Page>
