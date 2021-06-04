@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-G:\Попытка в расписание\Shedule repo\Shedule\obj\Debug\
+D:\4ПР1\Семенов Михаил\Shedule repo\Shedule\obj\Debug\
 Shedule
 none
 false
 DEBUG;TRACE
-G:\Попытка в расписание\Shedule repo\Shedule\App.xaml
+D:\4ПР1\Семенов Михаил\Shedule repo\Shedule\App.xaml
 32655082373
 12000524285
 45184838196
-23341713694
+231801164555
 AddPage\AddTeachersView.xaml;AddPage\AddSpecialitiesView.xaml;AddPage\AddSubjectsView.xaml;AddPage\AddDepartmentsView.xaml;AddPage\AddGroupsView.xaml;AddPage\AddClassroomsView.xaml;AddPage\AddSemestersView.xaml;AddPage\AddSpecialitiesSubjectView.xaml;AddPage\AddGroupTeachingView.xaml;Controls\MainScheduleItemControl.xaml;MainWindow.xaml;Pages\BranchesList.xaml;Pages\DisciplinesList.xaml;Pages\GroupsList.xaml;Pages\Import.xaml;Pages\Semesters.xaml;Pages\Settings.xaml;Pages\SpecialtiesList.xaml;Pages\TeachersList.xaml;Pages\TeachingList.xaml;Pages\АudiencesList.xaml;Pages\Сhanges.xaml;ViewPages\ClassroomsView.xaml;ViewPages\DepartmentsView.xaml;ViewPages\GroupsView.xaml;ViewPages\GroupTeachingView.xaml;ViewPages\SemestersView.xaml;ViewPages\SheduleView.xaml;ViewPages\SpecialitiesSubjectView.xaml;ViewPages\SpecialitiesView.xaml;ViewPages\SubjectsView.xaml;ViewPages\TeachersView.xaml;
 
 False
