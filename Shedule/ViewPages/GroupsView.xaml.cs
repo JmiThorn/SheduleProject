@@ -2,6 +2,7 @@
 using LearningProcessesAPIClient.model;
 using Microsoft.Win32;
 using Shedule.Models.Parsing;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

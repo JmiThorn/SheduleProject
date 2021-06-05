@@ -755,40 +755,12 @@ namespace Shedule.ViewPages
                         continue;
                     int x = getDayOfWeekFromGridColumn(Grid.GetColumn((UIElement)e));
                     int y = getClassNumberFromGridRow(Grid.GetRow((UIElement)e));
-                    if (value == true)
+                    if (x >= 0 && x < DAYS && y >= 0 && y < 6)
                     {
-                        if (((ComboBox)((MainScheduleItemControl)e).StackPanel.Children[0]).SelectedIndex != -1)
-                        {
-                            if (elementsBounds[x] < y)
-                            {
-                                elementsBounds[x] = y;
-                                if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value))
-                                    ((MainScheduleItemControl)e).StackPanel.Children[1].IsEnabled = value;
-                                if (isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
-                                    ((MainScheduleItemControl)e).StackPanel.Children[0].IsEnabled = value;
-                            }
-
-                        }
-                        else
-                        {
-                            if (elementsBounds[x] == y - 1 || y == 0)
-                            {
-                                if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value))
-                                    ((MainScheduleItemControl)e).StackPanel.Children[1].IsEnabled = value;
-                                if (isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
-                                    ((MainScheduleItemControl)e).StackPanel.Children[0].IsEnabled = value;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (x >= 0 && x < DAYS && y >= 0 && y < 6)
-                        {
-                            if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value))
-                                ((MainScheduleItemControl)e).StackPanel.Children[1].IsEnabled = value;
-                            if (isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
-                                ((MainScheduleItemControl)e).StackPanel.Children[0].IsEnabled = value;
-                        }
+                        if (isLevelAffected(InfluenceLevel.CLASSROOM_SELECTION, level, value))
+                            ((MainScheduleItemControl)e).StackPanel.Children[1].IsEnabled = value;
+                        if (isLevelAffected(InfluenceLevel.TEACHING_SELECTION, level, value))
+                            ((MainScheduleItemControl)e).StackPanel.Children[0].IsEnabled = value;
                     }
                 }
             }

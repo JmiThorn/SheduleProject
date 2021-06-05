@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Shedule.Models.Parsing
+namespace Shedule.Utils
 {
     public class ParsingUtils
     {
