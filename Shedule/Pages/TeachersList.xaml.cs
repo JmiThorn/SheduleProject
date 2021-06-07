@@ -36,6 +36,7 @@ namespace Shedule.Pages
             {
             var result = await LearningProcessesAPI.getAllTeachers();
                 TeacherListView.ItemsSource = result;
+                totalCount.Content = TeacherListView.Items.Count;
             }
             catch(Exception e)
             {
@@ -91,6 +92,7 @@ namespace Shedule.Pages
                 list.Remove(teacher);
                 //TeacherListView.Items.Remove(teacher);
                 TeacherListView.Items.Refresh();
+                totalCount.Content = TeacherListView.Items.Count;
             }
             catch (Exception error)
             {
@@ -111,7 +113,7 @@ namespace Shedule.Pages
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.MainFrame.Navigate(new AddTeachersView());
+            MainWindow.Instance.MainFrame.Navigate(new AddTeachersView(sss));
         }
 
         private void TeacherListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

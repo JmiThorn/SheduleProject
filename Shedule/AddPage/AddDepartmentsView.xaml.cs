@@ -22,9 +22,12 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class AddDepartmentsView : Page
     {
-        public AddDepartmentsView()
+        public delegate Task Updater();
+        public event Updater UpdateParent;
+        public AddDepartmentsView(Updater updater)
         {
             InitializeComponent();
+            UpdateParent += updater;
         }
 
 
@@ -35,6 +38,7 @@ namespace Shedule.ViewPages
             {
                 var result = await LearningProcessesAPI.createDepartment(name.Text);
                 MessageBox.Show("Отделение успешно добавлено", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                UpdateParent?.Invoke();
             }
             catch (Exception error)
             {

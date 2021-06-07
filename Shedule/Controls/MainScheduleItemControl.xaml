@@ -12,7 +12,7 @@
         <local:BuildingConverter x:Key="BuildingConverter"/>
     </UserControl.Resources>
     <StackPanel x:Name="StackPanel" x:FieldModifier="public">
-        <ComboBox SelectedValue ="{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "18" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id">
+        <ComboBox SelectedValue ="{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "18" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id" MouseDoubleClick="ComboBox_MouseDoubleClick">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

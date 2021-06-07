@@ -47,7 +47,7 @@
                                 <TextBlock x:Name="OneStr" TextWrapping="Wrap">
                                     <TextBlock.Text>
                                         <MultiBinding  StringFormat="{}{0} - {1:C}">
-                                            <Binding Path="Speciality.Codename"/>
+                                            <Binding Path="Speciality.Code"/>
                                             <Binding Path="Speciality.Name"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
@@ -77,5 +77,7 @@
                         BorderThickness="0" Width="144" Padding="0" HorizontalContentAlignment="Center" 
                         VerticalContentAlignment="Center" Height="40"  Content="+ Добавить" Click="addNew_Click" 
                         VerticalAlignment="Bottom" FontFamily="Global User Interface" FontSize="25" HorizontalAlignment="Left" Grid.Row="2"/>
+        <Label VerticalContentAlignment="Center" Content="Общее количество:" HorizontalAlignment="Left" Margin="180,0,0,10" Grid.Row="2" VerticalAlignment="Bottom" Height="40" FontSize="20" FontFamily="Global User Interface"/>
+        <Label x:Name="totalCount" VerticalContentAlignment="Center" Content="" HorizontalAlignment="Left" Margin="374,0,0,10" Grid.Row="2" VerticalAlignment="Bottom" Height="40" FontSize="20" FontFamily="Global User Interface"/>
     </Grid>
 </Page>

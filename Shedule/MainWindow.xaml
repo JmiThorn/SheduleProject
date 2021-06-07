@@ -35,9 +35,6 @@
                 <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
                     <TextBlock MouseLeftButtonDown="spec_butt_MouseLeftButtonDown" x:Name='spec_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Специальности</TextBlock>
                 </Border>
-                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
-                    <TextBlock MouseLeftButtonDown="teachers_butt_MouseLeftButtonDown" x:Name='teachers_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Преподавание</TextBlock>
-                </Border>-->
                 <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
                     <TextBlock MouseLeftButtonDown="aud_butt_MouseLeftButtonDown" x:Name='aud_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Аудитории</TextBlock>
                 </Border>
@@ -50,18 +47,9 @@
                 <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
                     <TextBlock MouseLeftButtonDown="disciplines_butt_MouseLeftButtonDown" x:Name='disciplines_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Дисциплины</TextBlock>
                 </Border>
-                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
-                    <TextBlock x:Name='work_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Типы работ</TextBlock>
-                </Border>-->
-                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
-                    <TextBlock MouseLeftButtonDown="semesters_butt_MouseLeftButtonDown" x:Name='semesters_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Семестры</TextBlock>
-                </Border>-->
                 <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
                     <TextBlock MouseLeftButtonDown="department_butt_MouseLeftButtonDown" x:Name='department_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Отделения</TextBlock>
                 </Border>
-                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
-                    <TextBlock  Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1">Импорт номативов</TextBlock>
-                </Border>-->
             </StackPanel>
         </ScrollViewer>
         <Button x:Name="Settings_butt" Click="Settings_butt_Click" Background="White" BorderThickness="0,0,0,0" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="36" Grid.Column="0" Grid.Row="5" VerticalAlignment="Top" Height="55" Width="300" HorizontalAlignment="Center">

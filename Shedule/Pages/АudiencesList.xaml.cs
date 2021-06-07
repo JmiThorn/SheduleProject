@@ -33,7 +33,8 @@ namespace Shedule.Pages
             try
             {
                 var result = await LearningProcessesAPI.getAllClassrooms();
-                ClassroomsListView.ItemsSource = result;
+                ClassroomsListView.ItemsSource = result; 
+                totalCount.Content = ClassroomsListView.Items.Count;
             }
             catch (Exception e)
             {
@@ -45,7 +46,7 @@ namespace Shedule.Pages
         {
             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                MainWindow.Instance.MainFrame.Navigate(new ClassroomsView((Classroom)ClassroomsListView.SelectedItem));
+                MainWindow.Instance.MainFrame.Navigate(new ClassroomsView((Classroom)ClassroomsListView.SelectedItem,sss));
                 //MessageBox.Show("fgfgfg");
             }
         }
@@ -59,6 +60,7 @@ namespace Shedule.Pages
                 var result = await LearningProcessesAPI.deleteClassroom(classroom.Id);
                 list.Remove(classroom);
                 ClassroomsListView.Items.Refresh();
+                totalCount.Content = ClassroomsListView.Items.Count;
             }
             catch (Exception error)
             {
@@ -82,15 +84,15 @@ namespace Shedule.Pages
 
             if (remainingSpace > 0)
             {
-                (ClassroomsListView.View as GridView).Columns[1].Width = Math.Ceiling(remainingSpace / 4);
-                (ClassroomsListView.View as GridView).Columns[2].Width = Math.Ceiling(remainingSpace / 4);
-                (ClassroomsListView.View as GridView).Columns[3].Width = Math.Ceiling(remainingSpace / 4);
+                (ClassroomsListView.View as GridView).Columns[0].Width = Math.Ceiling(remainingSpace / 3);
+                (ClassroomsListView.View as GridView).Columns[1].Width = Math.Ceiling(remainingSpace / 3);
+                (ClassroomsListView.View as GridView).Columns[2].Width = Math.Ceiling(remainingSpace / 3);
             }
         }
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.MainFrame.Navigate(new AddClassroomsView());
+            MainWindow.Instance.MainFrame.Navigate(new AddClassroomsView(sss));
         }
         private void search_box_TextChanged(object sender, TextChangedEventArgs e)
         {

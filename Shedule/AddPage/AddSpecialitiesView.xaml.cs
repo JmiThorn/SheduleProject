@@ -22,10 +22,13 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class AddSpecialitiesView : Page
     {
-        public AddSpecialitiesView()
+        public delegate Task Updater();
+        public event Updater UpdateParent;
+        public AddSpecialitiesView(Updater updater)
         {
             InitializeComponent();
             loadDepartment();
+            UpdateParent += updater;
         }
         public async Task loadDepartment()
         {
@@ -37,8 +40,17 @@ namespace Shedule.ViewPages
         {
             try
             {
+                if (Convert.ToInt32(week.Text) > 168 || Convert.ToInt32(day.Text) > 24)
+                {
+                    MessageBox.Show("Неправильное количество выставленных часов","Предупреждение",MessageBoxButton.OK,MessageBoxImage.Warning);
+                }
+                else
+                {
+
                 var result = await LearningProcessesAPI.createSpeciality(name.Text,Convert.ToInt32(day.Text),Convert.ToInt32(week.Text), Convert.ToInt32(departmentCB.SelectedValue), code.Text,codename.Text);
                 MessageBox.Show("Специльность успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                UpdateParent?.Invoke();
+                }
             }
             catch (Exception error)
             {
@@ -59,6 +71,22 @@ namespace Shedule.ViewPages
         private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void day_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if ((e.Text) == null || !(e.Text).All(char.IsDigit) || (sender as TextBox).Text.Length >= 2)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void week_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+                if ((e.Text) == null || !(e.Text).All(char.IsDigit) || (sender as TextBox).Text.Length >= 3)
+                {
+                    e.Handled = true;
+            }
         }
     }
 }

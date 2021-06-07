@@ -23,16 +23,20 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class AddTeachersView : Page
     {
-        public AddTeachersView()
+        public delegate Task Updater();
+        public event Updater UpdateParent;
+        public AddTeachersView(Updater updater)
         {
             InitializeComponent();
             loadDepartments();
+            UpdateParent += updater;
         }
 
         public async Task loadDepartments()
         {
             var departments = await LearningProcessesAPI.getAllDepartments();
             departmentsCB.ItemsSource = departments;
+
         }
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
@@ -41,6 +45,7 @@ namespace Shedule.ViewPages
             {
                 var result = await LearningProcessesAPI.createTeacher(name.Text,surname.Text,patronymic.Text,Convert.ToInt32(departmentsCB.SelectedValue));
                 MessageBox.Show("Преподаватель успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                UpdateParent?.Invoke();
             }
             catch (Exception error)
             {

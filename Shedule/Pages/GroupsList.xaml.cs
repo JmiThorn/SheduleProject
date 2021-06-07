@@ -34,6 +34,7 @@ namespace Shedule.Pages
             {
                 var result = await LearningProcessesAPI.getAllGroups();
                 GroupsListView.ItemsSource = result;
+                totalCount.Content = GroupsListView.Items.Count;
             }
             catch (Exception e)
             {
@@ -64,6 +65,7 @@ namespace Shedule.Pages
                 list.Remove(group);
                 //TeacherListView.Items.Remove(teacher);
                 GroupsListView.Items.Refresh();
+                totalCount.Content = GroupsListView.Items.Count;
             }
             catch (Exception error)
             {
@@ -92,7 +94,7 @@ namespace Shedule.Pages
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.MainFrame.Navigate(new AddGroupsView());
+            MainWindow.Instance.MainFrame.Navigate(new AddGroupsView(sss));
         }
 
         private void search_box_TextChanged(object sender, TextChangedEventArgs e)

@@ -63,6 +63,13 @@ namespace Shedule.ViewPages
             //var list = await LearningProcessesAPI.ge
         }
 
+        private void DigitCheck_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if ((e.Text) == null || !(e.Text).All(char.IsDigit) || (sender as TextBox).Text.Length >= 1)
+            {
+                e.Handled = true;
+            }
+        }
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
             try

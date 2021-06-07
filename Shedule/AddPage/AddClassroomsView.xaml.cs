@@ -22,10 +22,13 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class AddClassroomsView : Page
     {
-        public AddClassroomsView()
+        public delegate Task Updater();
+        public event Updater UpdateParent;
+        public AddClassroomsView(Updater updater)
         {
             InitializeComponent();
             loadTeachers();
+            UpdateParent += updater;
         }
 
         public async Task loadTeachers()
@@ -38,8 +41,20 @@ namespace Shedule.ViewPages
         {
             try
             {
-                var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text),Convert.ToInt32(building.SelectedValue), Convert.ToInt32(affiliationCB.SelectedValue));
+                Teacher classroom;
+                classroom = null;
+                if ((affiliationCB.SelectedIndex)==-1)
+                {
+                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedValue), classroom);
+                    MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    UpdateParent?.Invoke();
+                }
+                else
+                {
+
+                var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text),Convert.ToInt32(building.SelectedValue), Convert.ToInt32(affiliationCB.SelectedIndex));
                 MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             catch (Exception error)
             {

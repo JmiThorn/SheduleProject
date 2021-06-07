@@ -36,6 +36,7 @@ namespace Shedule.Pages
                 var result = await LearningProcessesAPI.getAllSubjects();
 
                 DisciplinesListView.ItemsSource = result;
+                totalCount.Content = DisciplinesListView.Items.Count;
             }
             catch (Exception e)
             {
@@ -56,6 +57,7 @@ namespace Shedule.Pages
                 list.Remove(subject);
                 //TeacherListView.Items.Remove(teacher);
                 DisciplinesListView.Items.Refresh();
+                totalCount.Content = DisciplinesListView.Items.Count;
             }
             catch (Exception error)
             {
@@ -85,7 +87,7 @@ namespace Shedule.Pages
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.MainFrame.Navigate(new AddSubjectsView());
+            MainWindow.Instance.MainFrame.Navigate(new AddSubjectsView(sss));
         }
 
         private void search_box_TextChanged(object sender, TextChangedEventArgs e)

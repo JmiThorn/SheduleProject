@@ -35,6 +35,9 @@ namespace Shedule.Pages
             {
                 var result = await LearningProcessesAPI.getAllDepartments();
                 DepartmentListView.ItemsSource = result;
+                DepartmentListView.Items.Refresh();
+                totalCount.Content = DepartmentListView.Items.Count;
+
             }
             catch (Exception e)
             {
@@ -52,10 +55,11 @@ namespace Shedule.Pages
                 list.Remove(department);
                 //TeacherListView.Items.Remove(teacher);
                 DepartmentListView.Items.Refresh();
+                totalCount.Content = DepartmentListView.Items.Count;
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message);
+                MessageBox.Show("Произошла ошибка удаления, у данного отделения имеется привязка.\nДля удаления отвяжите специальность и повторите попытку","Ошибка удаления",MessageBoxButton.OK,MessageBoxImage.Error);
             }
 
             //MessageBox.Show(result.Count + "");
@@ -67,6 +71,7 @@ namespace Shedule.Pages
             if (MessageBoxResult.Yes == result)
             {
                 deleteDepartment((Department)((Button)sender).DataContext);
+
             }
 
            
@@ -83,7 +88,7 @@ namespace Shedule.Pages
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.MainFrame.Navigate(new AddDepartmentsView());
+            MainWindow.Instance.MainFrame.Navigate(new AddDepartmentsView(sss));
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)

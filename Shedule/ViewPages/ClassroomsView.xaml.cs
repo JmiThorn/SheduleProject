@@ -22,11 +22,14 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class ClassroomsView : Page
     {
-        public ClassroomsView(Classroom classroom)
+        public delegate Task Updater();
+        public event Updater UpdateParent;
+        public ClassroomsView(Classroom classroom, Updater updater)
         {
             InitializeComponent();
             DataContext = classroom;
             loadTeachers();
+            UpdateParent += updater;
         }
 
         public async Task loadTeachers()
@@ -52,6 +55,7 @@ namespace Shedule.ViewPages
                 Classroom classroom = (Classroom)DataContext;
                 var result = await LearningProcessesAPI.updateClassroom(classroom.Id, classroom);
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                UpdateParent?.Invoke();
             }
             catch (Exception error)
             {

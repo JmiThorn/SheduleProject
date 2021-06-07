@@ -22,10 +22,13 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class AddGroupsView : Page
     {
-        public AddGroupsView()
+        public delegate Task Updater();
+        public event Updater UpdateParent;
+        public AddGroupsView(Updater updater)
         {
             InitializeComponent();
             loadSpeciality();
+            UpdateParent += updater;
         }
 
         private void edit_butt_Click(object sender, RoutedEventArgs e)
@@ -45,8 +48,19 @@ namespace Shedule.ViewPages
         {
             try
             {   
+                if(subgroup.Text == "")
+                {
+                    var result = await LearningProcessesAPI.createGroup(Convert.ToInt32(course.Text),null, true, Convert.ToInt32(specialityCB.SelectedValue));
+                    MessageBox.Show("Группа добавлена успешно", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    UpdateParent?.Invoke();
+                }
+                else
+                {
+
                 var result = await LearningProcessesAPI.createGroup(Convert.ToInt32(course.Text),Convert.ToInt32(subgroup.Text),true, Convert.ToInt32(specialityCB.SelectedValue));
                 MessageBox.Show("Группа добавлена успешно", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    UpdateParent?.Invoke();
+                }
             }
             catch (Exception error)
             {
@@ -59,6 +73,11 @@ namespace Shedule.ViewPages
             {
                 e.Handled = true;
             }
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

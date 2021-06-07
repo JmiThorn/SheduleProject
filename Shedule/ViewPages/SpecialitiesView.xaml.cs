@@ -2,6 +2,7 @@
 using LearningProcessesAPIClient.model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,12 +16,15 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class SpecialitiesView : Page
     {
-        public SpecialitiesView(Speciality speciality)
+        public delegate Task Updater();
+        public event Updater UpdateParent;
+        public SpecialitiesView(Speciality speciality, Updater updater)
         {
             InitializeComponent();
             DataContext = speciality;
             loadDepartment();
-           // loadSubject(speciality);
+            // loadSubject(speciality);
+            UpdateParent += updater;
 
         }
         public async Task loadDepartment()
@@ -33,16 +37,24 @@ namespace Shedule.ViewPages
         {
             try
             {
-                name.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                code.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                codename.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                day.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                week.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                departmentCB.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
-                Speciality speciality = (Speciality)DataContext;
-                var result = await LearningProcessesAPI.updateSpeciality(speciality.Id, speciality);
-                MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                DataContext = result;
+                if (Convert.ToInt32(week.Text) > 168 || Convert.ToInt32(day.Text) > 24)
+                {
+                    MessageBox.Show("Неправильное количество выставленных часов", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    name.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                    code.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                    codename.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                    day.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                    week.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                    departmentCB.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
+                    Speciality speciality = (Speciality)DataContext;
+                    var result = await LearningProcessesAPI.updateSpeciality(speciality.Id, speciality);
+                    MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    DataContext = result;
+                    UpdateParent?.Invoke();
+                }
             }
             catch (Exception error)
             {
@@ -59,7 +71,21 @@ namespace Shedule.ViewPages
             day.IsEnabled = true;
             week.IsEnabled = true;
         }
+        private void day_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if ((e.Text) == null || !(e.Text).All(char.IsDigit) || (sender as TextBox).Text.Length >= 2)
+            {
+                e.Handled = true;
+            }
+        }
 
+        private void week_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if ((e.Text) == null || !(e.Text).All(char.IsDigit) || (sender as TextBox).Text.Length >= 3)
+            {
+                e.Handled = true;
+            }
+        }
         private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();

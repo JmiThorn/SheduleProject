@@ -22,9 +22,12 @@ namespace Shedule.ViewPages
     /// </summary>
     public partial class AddSubjectsView : Page
     {
-        public AddSubjectsView()
+        public delegate Task Updater();
+        public event Updater UpdateParent;
+        public AddSubjectsView(Updater updater)
         {
             InitializeComponent();
+            UpdateParent += updater;
         }
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
@@ -33,6 +36,7 @@ namespace Shedule.ViewPages
               
                 var result = await LearningProcessesAPI.createSubject(name.Text, false);
                 MessageBox.Show("Предмет успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                UpdateParent?.Invoke();
             }
             catch (Exception error)
             {

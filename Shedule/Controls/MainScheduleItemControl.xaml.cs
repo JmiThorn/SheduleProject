@@ -25,6 +25,11 @@ namespace Shedule.Controls
         {
             InitializeComponent();
         }
+
+        private void ComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            (sender as ComboBox).SelectedIndex = -1;
+        }
     }
 
     public class FirstLetterFromStrConverter : IValueConverter
@@ -50,10 +55,10 @@ namespace Shedule.Controls
                 return "";
             if(value is int)
             {
-                if((int)value == 0)
+                if((int)value == 1)
                 {
                     return "Старый";
-                }else if((int)value == 1)
+                }else if((int)value == 2)
                 {
                     return "Новый";
                 }

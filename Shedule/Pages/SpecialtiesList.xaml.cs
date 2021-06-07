@@ -35,6 +35,7 @@ namespace Shedule.Pages
             {
                 var result = await LearningProcessesAPI.getAllSpecialities();
                 SpecialtiesListView.ItemsSource = result;
+                totalCount.Content = SpecialtiesListView.Items.Count;
             }
             catch (Exception e)
             {
@@ -62,7 +63,7 @@ namespace Shedule.Pages
         {
             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                MainWindow.Instance.MainFrame.Navigate(new SpecialitiesView((Speciality)SpecialtiesListView.SelectedItem)); ;
+                MainWindow.Instance.MainFrame.Navigate(new SpecialitiesView((Speciality)SpecialtiesListView.SelectedItem,sss)); ;
                 //MessageBox.Show("fgfgfg");
             }
         }
@@ -76,6 +77,7 @@ namespace Shedule.Pages
                 list.Remove(speciality);
                 //TeacherListView.Items.Remove(teacher);
                 SpecialtiesListView.Items.Refresh();
+                totalCount.Content = SpecialtiesListView.Items.Count;
             }
             catch (Exception error)
             {
@@ -95,7 +97,7 @@ namespace Shedule.Pages
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.MainFrame.Navigate(new AddSpecialitiesView());
+            MainWindow.Instance.MainFrame.Navigate(new AddSpecialitiesView(sss));
         }
     }
 }
