@@ -44,7 +44,7 @@ namespace Shedule.Pages
         {
             Person k = new Person();
             k.Name = 1;
-            Frame.RowDefinitions.Add(new RowDefinition());
+            Frame.RowDefinitions.Add(new RowDefinition().Height = 5);
             ComboBox combo = new ComboBox();
             Frame.Children.Add(combo);
             Grid.SetRow(combo, 2);
