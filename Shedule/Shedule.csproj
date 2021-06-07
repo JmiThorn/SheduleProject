@@ -356,8 +356,6 @@
     <Resource Include="Image\good.png" />
     <Resource Include="Image\search.png" />
     <Resource Include="Image\bad.png" />
-    <Resource Include="Image1.png" />
-    <Resource Include="Image2.png" />
     <Content Include="Image\search.svg" />
   </ItemGroup>
   <ItemGroup>
