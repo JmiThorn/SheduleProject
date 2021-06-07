@@ -26,6 +26,20 @@ namespace Shedule.Models
             }
         }
 
+        //public new int NotAllocatedHours //TODO заменить на вычитание AllocatedHours из PlannedHours
+        //{
+        //    get
+        //    {
+        //        return allocatedHours;
+        //    }
+        //    set
+        //    {
+        //        allocatedHours = value;
+        //        OnPropertyChanged("AllocatedHours");
+        //    }
+        //}
+
+
         public void setCurriculum(Curriculum curriculum)
         {
 

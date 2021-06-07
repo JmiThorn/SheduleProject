@@ -18,6 +18,7 @@ using System;
 using LearningProcessesAPIClient.exceptions;
 using System.Globalization;
 using Shedule.Controls;
+using Shedule.Utils;
 
 namespace Shedule.ViewPages
 {
@@ -675,8 +676,8 @@ namespace Shedule.ViewPages
                 return;
             int semesterId = ((Semester)semesters.SelectedItem)?.Id ?? -1;
             bool isBlueWeek = !red.IsChecked.Value;
-            int redWeeks = (int)Math.Ceiling((double)((Semester)semesters.SelectedItem).WeeksCount / 2);
-            int blueWeeks = (((Semester)semesters.SelectedItem).WeeksCount) - redWeeks;
+            int redWeeks = WeeksColoringUtils.getRedWeeksCount((Semester)semesters.SelectedItem);
+            int blueWeeks = WeeksColoringUtils.getBlueWeeksCount((Semester)semesters.SelectedItem);
             //Выбираем данные из того-же семестра, но для другой недели
             //Для этой недели будем перебирать комбобоксы
             var mainSchedules = allMainSchedules.Where(m =>

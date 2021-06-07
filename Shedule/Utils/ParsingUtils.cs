@@ -1,6 +1,7 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model.parsing;
 using OfficeOpenXml;
+using Shedule.Models.Parsing;
 using System;
 using System.Collections.Generic;
 using System.IO;
