@@ -21,21 +21,21 @@
                 <TextBox x:Name="Password_field" VerticalContentAlignment="Center" Height="40" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0" FontSize="20" HorizontalAlignment="Left" Width="305"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="Импорт" Margin="10,286,0,0" Height="154" VerticalAlignment="Top" HorizontalAlignment="Left" Width="337">
+        <!--<GroupBox Header="Импорт" Margin="10,286,0,0" Height="154" VerticalAlignment="Top" HorizontalAlignment="Left" Width="337">
             <StackPanel Margin="10,0,0,0">
                 <Button x:Name="import" Click="import_Click" Margin="0,10,0,0" Content="Импорт нормативов" HorizontalAlignment="Left" VerticalAlignment="Top" Width="305" Height="40" FontSize="20"/>
                 <Label x:Name="filename" Height="40" Margin="0,0,10,0" FontSize="20" FontFamily="Global User Interface"></Label>
             </StackPanel>
-        </GroupBox>
-        <GroupBox Header="Друге настройки" HorizontalAlignment="Left" Height="271" Margin="365,10,0,0" VerticalAlignment="Top" Width="337">
+        </GroupBox>-->
+        <!--<GroupBox Header="Друге настройки" HorizontalAlignment="Left" Height="271" Margin="365,10,0,0" VerticalAlignment="Top" Width="337">
             <StackPanel Margin="10,0,0,0" Height="250">
                 <Label Content="Рабочих дней в неделе" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="229" Height="40" FontSize="20"/>
                 <ComboBox Name="WorkDays" FontSize="20" Height="40" Margin="0,0,0,0">
-                    <!--<ComboBoxItem Content="4"/>
+                    --><!--<ComboBoxItem Content="4"/>
                     <ComboBoxItem Content="5"/>
-                    <ComboBoxItem Content="6"/>-->
+                    <ComboBoxItem Content="6"/>--><!--
                 </ComboBox>
             </StackPanel>
-        </GroupBox>
+        </GroupBox>-->
     </Grid>
 </Page>

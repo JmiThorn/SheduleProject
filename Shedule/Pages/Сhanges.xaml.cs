@@ -20,9 +20,34 @@ namespace Shedule.Pages
     /// </summary>
     public partial class Сhanges : Page
     {
+        class Person
+        {
+            private int name; // field
+            public int Name   // property
+            {
+                get { return name; }
+                set { name = value; }
+            }
+        }
         public Сhanges()
         {
             InitializeComponent();
+            loadGroups();
+        }
+        async Task loadGroups()
+        {
+            var rezult = await LearningProcessesAPIClient.api.LearningProcessesAPI.getAllGroups();
+            tet.ItemsSource = rezult;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Person k = new Person();
+            k.Name = 1;
+            Frame.RowDefinitions.Add(new RowDefinition());
+            ComboBox combo = new ComboBox();
+            Frame.Children.Add(combo);
+            Grid.SetRow(combo, 2);
         }
     }
 }

@@ -58,7 +58,8 @@ namespace Shedule.ViewPages
 
 
         //TODO вынести число рабочих дней в настройки
-        private int DAYS = Convert.ToInt32(Properties.Settings.Default.WorkDays);
+        const int DAYS = 5;
+        //const int DAYS = Convert.ToInt32(Properties.Settings.Default.WorkDays);
 
         public SheduleView()
         {

@@ -21,11 +21,11 @@ namespace Shedule.Pages
             Login_field.Text = Properties.Settings.Default.Login;
             Password_field.Text = Properties.Settings.Default.Password;
 
-            string days = Properties.Settings.Default.WorkDays;
-            WorkDays.Items.Add("4");
-            WorkDays.Items.Add("5");
-            WorkDays.Items.Add("6");
-            WorkDays.SelectedItem = days;
+            //string days = Properties.Settings.Default.WorkDays;
+            //WorkDays.Items.Add("4");
+            //WorkDays.Items.Add("5");
+            //WorkDays.Items.Add("6");
+            //WorkDays.SelectedItem = days;
 
         }
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -36,7 +36,7 @@ namespace Shedule.Pages
                 Properties.Settings.Default.ConnectionString = ConnectionString.Text;
                 Properties.Settings.Default.Login = Login_field.Text;
                 Properties.Settings.Default.Password = Password_field.Text;
-                Properties.Settings.Default.WorkDays = WorkDays.SelectionBoxItem.ToString();
+                //Properties.Settings.Default.WorkDays = WorkDays.SelectionBoxItem.ToString();
                 Properties.Settings.Default.Save();
                 MessageBox.Show("Данные успешно обновлены");
             }
@@ -67,24 +67,24 @@ namespace Shedule.Pages
             }
         }
 
-        private void import_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Excel files(*.xlsx;*.xls)|*.xlsx;*.xls";
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    filename.Content = (openFileDialog.FileName);
-               //     ParsingUtils.ParseFile(openFileDialog.FileName);
+        //private void import_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        OpenFileDialog openFileDialog = new OpenFileDialog();
+        //        openFileDialog.Filter = "Excel files(*.xlsx;*.xls)|*.xlsx;*.xls";
+        //        if (openFileDialog.ShowDialog() == true)
+        //        {
+        //            filename.Content = (openFileDialog.FileName);
+        //       //     ParsingUtils.ParseFile(openFileDialog.FileName);
 
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+        //        }
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
            
-        }
+        //}
     }
 }
