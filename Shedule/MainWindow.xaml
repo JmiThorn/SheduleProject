@@ -60,14 +60,5 @@
         <Border BorderBrush="#2D2D2D" Opacity="0.7" BorderThickness="4,0,0,0" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="2">
             <Frame Background="#F6F6FC" x:Name="MainFrame" Grid.Row="0" Grid.Column="1" NavigationUIVisibility="Hidden" Content="" Grid.RowSpan="17"/>
         </Border>
-        <!--<Border BorderBrush="#D8D8D8" BorderThickness="0,0,0,4" Grid.Column="1" Margin="5,0,0,0">
-            <Button Background=""  Padding="5" Margin="60,46,1349,52">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="component/Images/help.png" />
-                    <TextBlock FontSize="36">Экспорт</TextBlock>
-                </StackPanel>
-            </Button>
-        </Border>-->
-
     </Grid>
 </Window>

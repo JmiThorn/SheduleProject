@@ -1,23 +1,19 @@
 ﻿using LearningProcessesAPIClient.api;
+using LearningProcessesAPIClient.exceptions;
 using LearningProcessesAPIClient.model;
+using Shedule.Controls;
 using Shedule.Models;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System.IO;
-using System.Windows.Markup;
 using System.Xml;
-using System;
-using LearningProcessesAPIClient.exceptions;
-using System.Globalization;
-using Shedule.Controls;
 
 namespace Shedule.ViewPages
 {
@@ -43,7 +39,7 @@ namespace Shedule.ViewPages
         private List<MainSchedule> currentSchedule = new List<MainSchedule>();
         private Dictionary<(int, int), MainScheduleLiveModel> cellDataContexts = new Dictionary<(int, int), MainScheduleLiveModel>();
         private Dictionary<int, CurriculumFillingInfoModel> specialityHoursItemsSource = new Dictionary<int, CurriculumFillingInfoModel>();
-        private Dictionary<int,Label> hoursInfo = new Dictionary<int, Label>();
+        private Dictionary<int, Label> hoursInfo = new Dictionary<int, Label>();
 
         //Глобальные данные
         private List<MainSchedule> allMainSchedules = new List<MainSchedule>();
@@ -325,10 +321,10 @@ namespace Shedule.ViewPages
 
                 Label hours = ((Label)newStPnl2.Children[1]);
                 hoursInfo.Add(getDayOfWeekFromGridColumn(x), hours);
-                
-                    
+
+
                 Grid.SetColumn(newStPnl2, x);
-                Grid.SetRow(newStPnl2, Frame.RowDefinitions.Count-1);
+                Grid.SetRow(newStPnl2, Frame.RowDefinitions.Count - 1);
                 Frame.Children.Add(newStPnl2);
 
             }
@@ -350,7 +346,7 @@ namespace Shedule.ViewPages
         private async Task loadCommonData()
         {
             allMainSchedules = await LearningProcessesAPI.getAllMainSchedules();
-            foreach(var mainSch in allMainSchedules)
+            foreach (var mainSch in allMainSchedules)
             {
                 if (mainSch.TeachingId != null)
                 {
@@ -373,21 +369,27 @@ namespace Shedule.ViewPages
             groupCurriculums = await LearningProcessesAPI.getCurricula(groupId);
             groupTeachings = await LearningProcessesAPI.getGroupTeachings(groupId);
 
+        }
+        //вызывать при каждой смене семестра
+        private async Task reloadSubjectOverview()
+        {
+            int? semesterId = ((Semester)semesters.SelectedItem)?.Id;
             specialityHoursItemsSource.Clear();
-
-            foreach(var c in groupCurriculums)
+            if (semesterId != null && semesterId != -1)
             {
-                if (c.SpecialitySubject.Subject == null)
+                foreach (var c in groupCurriculums.Where(c=> c.Id==semesterId))
                 {
-                    //Узкое место? TODO
-                    c.SpecialitySubject.Subject = await LearningProcessesAPI.getSubject(c.SpecialitySubject.SubjectId);
+                    if (c.SpecialitySubject.Subject == null)
+                    {
+                        //Узкое место? TODO
+                        c.SpecialitySubject.Subject = await LearningProcessesAPI.getSubject(c.SpecialitySubject.SubjectId);
+                    }
+                    //Заполняем модель учебных планов
+                    CurriculumFillingInfoModel model = new CurriculumFillingInfoModel();
+                    model.setCurriculum(c);
+                    specialityHoursItemsSource.Add(c.SpecialitySubjectId, model);
                 }
-                //Заполняем модель учебных планов
-                CurriculumFillingInfoModel model = new CurriculumFillingInfoModel();
-                model.setCurriculum(c);
-                specialityHoursItemsSource.Add(c.SpecialitySubjectId, model);
             }
-
             sujectsOverview.ItemsSource = specialityHoursItemsSource.Values;
         }
 
@@ -878,9 +880,9 @@ namespace Shedule.ViewPages
                     continue;
                 int x = Grid.GetColumn((UIElement)e);
                 int y = Grid.GetRow((UIElement)e);
-                if (x == getGridColumnFromDayOfWeek(dayOfWeek) && y >= 2 && y < Frame.RowDefinitions.Count -1)
+                if (x == getGridColumnFromDayOfWeek(dayOfWeek) && y >= 2 && y < Frame.RowDefinitions.Count - 1)
                 {
-                    if(((ComboBox)((MainScheduleItemControl)e).StackPanel.Children[0]).SelectedIndex > -1)
+                    if (((ComboBox)((MainScheduleItemControl)e).StackPanel.Children[0]).SelectedIndex > -1)
                     {
                         hours += 2;
                     }
@@ -892,7 +894,7 @@ namespace Shedule.ViewPages
             int sum = 0;
             foreach (KeyValuePair<int, Label> keyValue in hoursInfo)
             {
-               sum += Convert.ToInt32((keyValue.Value).Content);
+                sum += Convert.ToInt32((keyValue.Value).Content);
             }
             current.Text = sum.ToString();
             if (Convert.ToInt32(total.Text) < Convert.ToInt32(current.Text))
@@ -1013,10 +1015,18 @@ namespace Shedule.ViewPages
                         }
                         else
                         {
+
                             setControlsEnabled(false, InfluenceLevel.WEEK_COLOR_SELECTION);
                             //Очистка экрана
                             rebeindAndUpdateCellsContent();
                         }
+                        Dispatcher.Invoke(async () =>
+                        {
+                            reloadSubjectOverview();
+                        }, DispatcherPriority.Background);
+
+
+                       
                     }
                 }
                 else
@@ -1083,7 +1093,7 @@ namespace Shedule.ViewPages
             ComboBox classroomsCB = ((ComboBox)((StackPanel)((ComboBox)sender).Parent).Children[1]);
 
             updateHoursInfo(getDayOfWeekFromGridColumn(Grid.GetColumn(((MainScheduleItemControl)((StackPanel)classroomsCB.Parent).Parent))));
-            
+
             if (((ComboBox)sender).SelectedItem == null)
             {
                 classroomsCB.ItemsSource = null;
@@ -1149,6 +1159,6 @@ namespace Shedule.ViewPages
 
     }
 
-    
+
 
 }
