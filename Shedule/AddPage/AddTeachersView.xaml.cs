@@ -35,7 +35,7 @@ namespace Shedule.ViewPages
 
         public async Task loadDepartments()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var departments = await LearningProcessesAPI.getAllDepartments();
                 departmentsCB.ItemsSource = departments;
@@ -45,7 +45,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createTeacher(name.Text, surname.Text, patronymic.Text, Convert.ToInt32(departmentsCB.SelectedValue));
                 MessageBox.Show("Преподаватель успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);

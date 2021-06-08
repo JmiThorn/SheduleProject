@@ -6,17 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Shedule.Utils
 {
     public class AppUtils
     {
 
-        public static void ProcessClientLibraryRequest(Action action)
+        public static async Task ProcessClientLibraryRequest(Func<Task> action)
         {
             try
             {
-                action.Invoke();
+                await action();
             }
             catch (LibraryErrorException e)
             {
@@ -40,20 +41,24 @@ namespace Shedule.Utils
                         MessageBox.Show("При попытке соединения с сервером возникла следующая ошибка:\n" + e.Message, "Серверная ошибка!",MessageBoxButton.OK,MessageBoxImage.Error);
                         break;
                 }
+                throw;
             }
             catch (ServerErrorException e)
             {
                 MessageBox.Show("При попытке соединения с сервером возникла следующая ошибка:\n" + e.Message, "Серверная ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             }
             catch (RequestErrorException e)
             {
                 MessageBox.Show("При отправке запрроса произошла следующая ошибка:\n" + e.Message, "Ошибка данных!", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             }
             catch (Exception e)
             {
                 MessageBox.Show("При выполнении программы возникла следующая ошибка:\n" + e.Message, "Ошибка приложения!", MessageBoxButton.OK, MessageBoxImage.Error);
-                MessageBox.Show(e.Message);
+                throw;
             }
+            
         }
 
     }

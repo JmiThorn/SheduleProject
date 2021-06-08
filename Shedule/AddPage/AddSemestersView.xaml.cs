@@ -33,7 +33,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createSemester(Convert.ToInt32(weekscount.Text), Convert.ToDateTime(startdate.Text), Convert.ToInt32(number.Text), Convert.ToInt32(((Group)DataContext).Id));
                 MessageBox.Show("Семестр успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);

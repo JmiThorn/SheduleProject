@@ -34,7 +34,7 @@ namespace Shedule.ViewPages
 
         public async Task loadTeachers()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var specialities = await LearningProcessesAPI.getAllTeachers();
                 affiliationCB.ItemsSource = specialities;
@@ -43,7 +43,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 Teacher classroom;
                 classroom = null;

@@ -32,7 +32,7 @@ namespace Shedule.Pages
         public async Task sss()
         {
             //LearningProcessesAPI.updateTeacher();
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.getAllDepartments();
                 DepartmentListView.ItemsSource = result;
@@ -45,7 +45,7 @@ namespace Shedule.Pages
         public async Task deleteDepartment(Department department)
         {
             //LearningProcessesAPI.updateTeacher();
-            AppUtils.ProcessClientLibraryRequest(async () => {
+            await AppUtils.ProcessClientLibraryRequest(async () => {
                 List<Department> list = (List<Department>)DepartmentListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteDepartment(department.Id);
                 list.Remove(department);

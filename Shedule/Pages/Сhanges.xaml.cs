@@ -37,7 +37,7 @@ namespace Shedule.Pages
         }
         async Task loadGroups()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var rezult = await LearningProcessesAPIClient.api.LearningProcessesAPI.getAllGroups();
                 tet.ItemsSource = rezult;

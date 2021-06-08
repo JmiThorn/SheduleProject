@@ -41,7 +41,7 @@ namespace Shedule.ViewPages
 
         public async Task loadDepartments()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var departments = await LearningProcessesAPI.getAllDepartments();
                 departmentsCB.ItemsSource = departments;
@@ -50,7 +50,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 name.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 surname.GetBindingExpression(TextBox.TextProperty).UpdateSource();

@@ -33,7 +33,7 @@ namespace Shedule.ViewPages
         }
         public async Task loadDepartment()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var department = await LearningProcessesAPI.getAllDepartments();
                 departmentCB.ItemsSource = department;
@@ -42,7 +42,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 if (Convert.ToInt32(week.Text) > 168 || Convert.ToInt32(day.Text) > 24)
                 {

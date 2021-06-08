@@ -30,7 +30,7 @@ namespace Shedule.ViewPages
         }
         public async Task loadDepartment()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var department = await LearningProcessesAPI.getAllDepartments();
                 departmentCB.ItemsSource = department;
@@ -39,7 +39,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () => {
+            await AppUtils.ProcessClientLibraryRequest(async () => {
                 if (Convert.ToInt32(week.Text) > 168 || Convert.ToInt32(day.Text) > 24)
                 {
                     MessageBox.Show("Неправильное количество выставленных часов", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -97,7 +97,7 @@ namespace Shedule.ViewPages
         public async Task deleteSpecialitySubject(SpecialitySubject subject)
         {
             //LearningProcessesAPI.updateTeacher();
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 HashSet<SpecialitySubject> list = (HashSet<SpecialitySubject>)SpecSubjectView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteSpecialitySubject(subject.Id);
@@ -117,7 +117,7 @@ namespace Shedule.ViewPages
         }
         public async Task loadSubject()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 HashSet<SpecialitySubject> Ss;
                 Ss = new HashSet<SpecialitySubject>();

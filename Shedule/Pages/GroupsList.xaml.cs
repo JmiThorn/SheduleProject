@@ -31,12 +31,13 @@ namespace Shedule.Pages
         }
         public async Task sss()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.getAllGroups();
                 GroupsListView.ItemsSource = result;
                 totalCount.Content = GroupsListView.Items.Count;
             });
+            int a = 1;
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -55,7 +56,7 @@ namespace Shedule.Pages
         public async Task deleteGroup(Group group)
         {
             //LearningProcessesAPI.updateTeacher();
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Group> list = (List<Group>)GroupsListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteGroup(group.Id);

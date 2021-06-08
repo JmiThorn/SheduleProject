@@ -32,7 +32,7 @@ namespace Shedule.Pages
 
         public async Task sss()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.getAllSpecialities();
                 SpecialtiesListView.ItemsSource = result;
@@ -67,7 +67,7 @@ namespace Shedule.Pages
         public async Task deleteSpeciality(Speciality speciality)
         {
             //LearningProcessesAPI.updateTeacher();
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Speciality> list = (List<Speciality>)SpecialtiesListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteSpeciality(speciality.Id);

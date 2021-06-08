@@ -346,7 +346,7 @@ namespace Shedule.ViewPages
         //TODO не вызывать посе сохранения
         private async Task loadCommonData()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 allMainSchedules = await LearningProcessesAPI.getAllMainSchedules();
                 foreach (var mainSch in allMainSchedules)
@@ -369,7 +369,7 @@ namespace Shedule.ViewPages
         //вызывать при каждой смене группы
         private async Task loadGroupData()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 int groupId = ((Group)groupsList.SelectedItem).Id;
                 groupCurriculums = await LearningProcessesAPI.getCurricula(groupId);
@@ -380,7 +380,7 @@ namespace Shedule.ViewPages
         //вызывать при каждой смене семестра
         private async Task reloadSubjectOverview()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 int? semesterId = ((Semester)semesters.SelectedItem)?.Id;
                 specialityHoursItemsSource.Clear();
@@ -623,7 +623,7 @@ namespace Shedule.ViewPages
                     }
                 }
             });
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 if (newMainSchedules.Count > 0)
                 {

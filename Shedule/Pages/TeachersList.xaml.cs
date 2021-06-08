@@ -38,7 +38,7 @@ namespace Shedule.Pages
 
         public async Task sss()
         {
-            AppUtils.ProcessClientLibraryRequest(async () => {
+            await AppUtils.ProcessClientLibraryRequest(async () => {
                 var result = await LearningProcessesAPI.getAllTeachers();
                 TeacherListView.ItemsSource = result;
                 totalCount.Content = TeacherListView.Items.Count;
@@ -86,7 +86,7 @@ namespace Shedule.Pages
         public async Task deleteTeacher(Teacher teacher)
         {
             //LearningProcessesAPI.updateTeacher();
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Teacher> list = (List<Teacher>)TeacherListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteTeacher(teacher.Id);

@@ -36,7 +36,7 @@ namespace Shedule.ViewPages
         }
         public async Task loadTeacher()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var teacher = await LearningProcessesAPI.getAllTeachers();
                 teacherCB.ItemsSource = teacher;
@@ -44,7 +44,7 @@ namespace Shedule.ViewPages
         }
         public async Task loadSpecSubject()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var subjects = await LearningProcessesAPI.getSpecialitySubjects(((Group)DataContext).SpecialityId);
                 name.ItemsSource = subjects;
@@ -56,7 +56,7 @@ namespace Shedule.ViewPages
         }
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createTeaching(
                     ((Teaching)teachigGrid.DataContext).GroupId,

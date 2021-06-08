@@ -27,7 +27,7 @@ namespace Shedule.ViewPages
         }
         public async Task loadSubject()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var specialities = await LearningProcessesAPI.getAllSubjects();
                 nameCB.ItemsSource = specialities;
@@ -41,7 +41,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createSpecialitySubject(((Speciality)(DataContext)).Id, Convert.ToInt32(nameCB.SelectedValue), code.Text);
                 MessageBox.Show("Дисциплина успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);

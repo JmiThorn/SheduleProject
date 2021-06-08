@@ -23,7 +23,7 @@ namespace Shedule.Models.Parsing
 
         private static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public static void ParseFile(string fileName, int Id)
+        public static async Task ParseFile(string fileName, int Id)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -70,7 +70,7 @@ namespace Shedule.Models.Parsing
                             );
                         }
                     }
-                    AppUtils.ProcessClientLibraryRequest(async () =>
+                    await AppUtils.ProcessClientLibraryRequest(async () =>
                     {
                         LearningProcessesAPI.addParsedSubjects(parsedSubjects);
                     });

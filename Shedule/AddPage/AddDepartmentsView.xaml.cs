@@ -35,7 +35,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createDepartment(name.Text);
                 MessageBox.Show("Отделение успешно добавлено", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);

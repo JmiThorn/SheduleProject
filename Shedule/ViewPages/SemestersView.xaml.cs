@@ -48,7 +48,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 number.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 startdate.GetBindingExpression(TextBox.TextProperty).UpdateSource();
@@ -121,7 +121,7 @@ namespace Shedule.ViewPages
         }
         public async Task loadCurriculum(Semester semester)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var cur = await LearningProcessesAPI.getCurriculaForSemester(semester.Id);
                 foreach (var n in cur)
@@ -139,7 +139,7 @@ namespace Shedule.ViewPages
 
         public async Task loadSpecSubjects()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var sub = await LearningProcessesAPI.getSpecialitySubjects(((Semester)DataContext).Group.SpecialityId);
                 sub = sub.AsQueryable().Except(currentCurriculums.Select(c => c.SpecialitySubject), new spec()).ToList();
@@ -150,7 +150,7 @@ namespace Shedule.ViewPages
 
         public async Task loadCurriculumPractice(Semester semester)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var cur = await LearningProcessesAPI.getCurriculaForSemester(semester.Id);
                 foreach (var n in cur)
@@ -166,7 +166,7 @@ namespace Shedule.ViewPages
 
         public async Task deleteCurriculum(Curriculum curriculum)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Curriculum> list = (List<Curriculum>)CurriculumsListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteCurriculum(curriculum.Id);

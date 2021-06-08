@@ -31,7 +31,7 @@ namespace Shedule.Pages
         }
         public async Task sss()
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.getAllClassrooms();
                 ClassroomsListView.ItemsSource = result;
@@ -51,7 +51,7 @@ namespace Shedule.Pages
         public async Task deleteClassroom(Classroom classroom)
         {
             //LearningProcessesAPI.updateTeacher();
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Classroom> list = (List<Classroom>)ClassroomsListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteClassroom(classroom.Id);

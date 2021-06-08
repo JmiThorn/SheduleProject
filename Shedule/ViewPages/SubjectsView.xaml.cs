@@ -36,7 +36,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            AppUtils.ProcessClientLibraryRequest(async () =>
+            await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 name.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 Subject subject = (Subject)DataContext;
