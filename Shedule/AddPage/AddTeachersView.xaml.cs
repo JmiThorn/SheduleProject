@@ -1,6 +1,7 @@
 ﻿using LearningProcessesAPIClient;
 using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,23 +35,22 @@ namespace Shedule.ViewPages
 
         public async Task loadDepartments()
         {
-            var departments = await LearningProcessesAPI.getAllDepartments();
-            departmentsCB.ItemsSource = departments;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var departments = await LearningProcessesAPI.getAllDepartments();
+                departmentsCB.ItemsSource = departments;
+            });
 
         }
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
-                var result = await LearningProcessesAPI.createTeacher(name.Text,surname.Text,patronymic.Text,Convert.ToInt32(departmentsCB.SelectedValue));
+                var result = await LearningProcessesAPI.createTeacher(name.Text, surname.Text, patronymic.Text, Convert.ToInt32(departmentsCB.SelectedValue));
                 MessageBox.Show("Преподаватель успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
 
         private void back_Click(object sender, RoutedEventArgs e)

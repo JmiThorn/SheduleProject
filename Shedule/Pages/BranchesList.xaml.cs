@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using Shedule.ViewPages;
 using System;
 using System.Collections.Generic;
@@ -31,36 +32,31 @@ namespace Shedule.Pages
         public async Task sss()
         {
             //LearningProcessesAPI.updateTeacher();
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.getAllDepartments();
                 DepartmentListView.ItemsSource = result;
                 DepartmentListView.Items.Refresh();
                 totalCount.Content = DepartmentListView.Items.Count;
 
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            });
 
         }
         public async Task deleteDepartment(Department department)
         {
             //LearningProcessesAPI.updateTeacher();
-            try
-            {
+            AppUtils.ProcessClientLibraryRequest(async () => {
                 List<Department> list = (List<Department>)DepartmentListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteDepartment(department.Id);
                 list.Remove(department);
                 //TeacherListView.Items.Remove(teacher);
                 DepartmentListView.Items.Refresh();
                 totalCount.Content = DepartmentListView.Items.Count;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Произошла ошибка удаления, у данного отделения имеется привязка.\nДля удаления отвяжите специальность и повторите попытку","Ошибка удаления",MessageBoxButton.OK,MessageBoxImage.Error);
-            }
+            });
+            //catch (Exception error)
+            //{
+            //    MessageBox.Show("Произошла ошибка удаления, у данного отделения имеется привязка.\nДля удаления отвяжите специальность и повторите попытку","Ошибка удаления",MessageBoxButton.OK,MessageBoxImage.Error);
+            //}
 
             //MessageBox.Show(result.Count + "");
         }

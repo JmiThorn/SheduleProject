@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,16 +35,12 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createDepartment(name.Text);
                 MessageBox.Show("Отделение успешно добавлено", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
 
         private void back_Click(object sender, RoutedEventArgs e)

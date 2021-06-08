@@ -3,6 +3,7 @@ using LearningProcessesAPIClient.exceptions;
 using LearningProcessesAPIClient.model;
 using Shedule.Controls;
 using Shedule.Models;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -345,52 +346,61 @@ namespace Shedule.ViewPages
         //TODO не вызывать посе сохранения
         private async Task loadCommonData()
         {
-            allMainSchedules = await LearningProcessesAPI.getAllMainSchedules();
-            foreach (var mainSch in allMainSchedules)
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
-                if (mainSch.TeachingId != null)
+                allMainSchedules = await LearningProcessesAPI.getAllMainSchedules();
+                foreach (var mainSch in allMainSchedules)
                 {
-                    mainSch.Teaching = await LearningProcessesAPI.getTeaching((int)mainSch.TeachingId);
+                    if (mainSch.TeachingId != null)
+                    {
+                        mainSch.Teaching = await LearningProcessesAPI.getTeaching((int)mainSch.TeachingId);
+                    }
                 }
-            }
-            allMainSchedulesBeforeUpdate = allMainSchedules.ToList();
+                allMainSchedulesBeforeUpdate = allMainSchedules.ToList();
 
-            allClassrooms = await LearningProcessesAPI.getAllClassrooms();
+                allClassrooms = await LearningProcessesAPI.getAllClassrooms();
 
-            //Группы
-            var groups = await LearningProcessesAPI.getAllGroups();
-            groupsList.ItemsSource = groups;
+                //Группы
+                var groups = await LearningProcessesAPI.getAllGroups();
+                groupsList.ItemsSource = groups;
+            });
         }
 
         //вызывать при каждой смене группы
         private async Task loadGroupData()
         {
-            int groupId = ((Group)groupsList.SelectedItem).Id;
-            groupCurriculums = await LearningProcessesAPI.getCurricula(groupId);
-            groupTeachings = await LearningProcessesAPI.getGroupTeachings(groupId);
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                int groupId = ((Group)groupsList.SelectedItem).Id;
+                groupCurriculums = await LearningProcessesAPI.getCurricula(groupId);
+                groupTeachings = await LearningProcessesAPI.getGroupTeachings(groupId);
+            });
 
         }
         //вызывать при каждой смене семестра
         private async Task reloadSubjectOverview()
         {
-            int? semesterId = ((Semester)semesters.SelectedItem)?.Id;
-            specialityHoursItemsSource.Clear();
-            if (semesterId != null && semesterId != -1)
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
-                foreach (var c in groupCurriculums.Where(c=> c.SemesterId==semesterId))
+                int? semesterId = ((Semester)semesters.SelectedItem)?.Id;
+                specialityHoursItemsSource.Clear();
+                if (semesterId != null && semesterId != -1)
                 {
-                    if (c.SpecialitySubject.Subject == null)
+                    foreach (var c in groupCurriculums.Where(c => c.SemesterId == semesterId))
                     {
-                        //Узкое место? TODO
-                        c.SpecialitySubject.Subject = await LearningProcessesAPI.getSubject(c.SpecialitySubject.SubjectId);
+                        if (c.SpecialitySubject.Subject == null)
+                        {
+                            //Узкое место? TODO
+                            c.SpecialitySubject.Subject = await LearningProcessesAPI.getSubject(c.SpecialitySubject.SubjectId);
+                        }
+                        //Заполняем модель учебных планов
+                        CurriculumFillingInfoModel model = new CurriculumFillingInfoModel();
+                        model.setCurriculum(c);
+                        specialityHoursItemsSource.Add(c.SpecialitySubjectId, model);
                     }
-                    //Заполняем модель учебных планов
-                    CurriculumFillingInfoModel model = new CurriculumFillingInfoModel();
-                    model.setCurriculum(c);
-                    specialityHoursItemsSource.Add(c.SpecialitySubjectId, model);
                 }
-            }
-            sujectsOverview.ItemsSource = specialityHoursItemsSource.Values;
+                sujectsOverview.ItemsSource = specialityHoursItemsSource.Values;
+            });
         }
 
         //вызывать при каждой смене семестра
@@ -613,7 +623,7 @@ namespace Shedule.ViewPages
                     }
                 }
             });
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 if (newMainSchedules.Count > 0)
                 {
@@ -646,23 +656,7 @@ namespace Shedule.ViewPages
 
                 //Новое состояние. Мы сюда не доходим в случае throw
                 allMainSchedulesBeforeUpdate = allMainSchedules.ToList();
-            }
-            catch (ServerErrorException e)
-            {
-                //TODO сохранить состояние в файл или конфиг и попробовать вновь позже
-                MessageBox.Show(e.Message, "Сервенраня ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                errorHappened = true;
-            }
-            catch (RequestErrorException e)
-            {
-                MessageBox.Show(e.Message, "Ошибка составления запроса", MessageBoxButton.OK, MessageBoxImage.Warning);
-                errorHappened = true;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                errorHappened = true;
-            }
+            });
 
             if (!errorHappened)
             {

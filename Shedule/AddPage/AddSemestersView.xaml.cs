@@ -1,6 +1,7 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
 using Shedule.Pages;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,15 +33,11 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
-                var result = await LearningProcessesAPI.createSemester(Convert.ToInt32(weekscount.Text),Convert.ToDateTime(startdate.Text),Convert.ToInt32(number.Text), Convert.ToInt32(((Group)DataContext).Id));
+                var result = await LearningProcessesAPI.createSemester(Convert.ToInt32(weekscount.Text), Convert.ToDateTime(startdate.Text), Convert.ToInt32(number.Text), Convert.ToInt32(((Group)DataContext).Id));
                 MessageBox.Show("Семестр успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
         private void DigitCheck_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

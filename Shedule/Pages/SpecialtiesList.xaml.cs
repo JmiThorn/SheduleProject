@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using Shedule.ViewPages;
 using System;
 using System.Collections.Generic;
@@ -31,16 +32,12 @@ namespace Shedule.Pages
 
         public async Task sss()
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.getAllSpecialities();
                 SpecialtiesListView.ItemsSource = result;
                 totalCount.Content = SpecialtiesListView.Items.Count;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            });
         }
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -70,7 +67,7 @@ namespace Shedule.Pages
         public async Task deleteSpeciality(Speciality speciality)
         {
             //LearningProcessesAPI.updateTeacher();
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Speciality> list = (List<Speciality>)SpecialtiesListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteSpeciality(speciality.Id);
@@ -78,11 +75,7 @@ namespace Shedule.Pages
                 //TeacherListView.Items.Remove(teacher);
                 SpecialtiesListView.Items.Refresh();
                 totalCount.Content = SpecialtiesListView.Items.Count;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
 
             //MessageBox.Show(result.Count + "");
         }

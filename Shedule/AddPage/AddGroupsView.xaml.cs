@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,32 +41,31 @@ namespace Shedule.ViewPages
         }
         public async Task loadSpeciality()
         {
-            var specialities = await LearningProcessesAPI.getAllSpecialities();
-            specialityCB.ItemsSource = specialities;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var specialities = await LearningProcessesAPI.getAllSpecialities();
+                specialityCB.ItemsSource = specialities;
+            });
         }
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {   
-                if(subgroup.Text == "")
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                if (subgroup.Text == "")
                 {
-                    var result = await LearningProcessesAPI.createGroup(Convert.ToInt32(course.Text),null, true, Convert.ToInt32(specialityCB.SelectedValue));
+                    var result = await LearningProcessesAPI.createGroup(Convert.ToInt32(course.Text), null, true, Convert.ToInt32(specialityCB.SelectedValue));
                     MessageBox.Show("Группа добавлена успешно", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateParent?.Invoke();
                 }
                 else
                 {
 
-                var result = await LearningProcessesAPI.createGroup(Convert.ToInt32(course.Text),Convert.ToInt32(subgroup.Text),true, Convert.ToInt32(specialityCB.SelectedValue));
-                MessageBox.Show("Группа добавлена успешно", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var result = await LearningProcessesAPI.createGroup(Convert.ToInt32(course.Text), Convert.ToInt32(subgroup.Text), true, Convert.ToInt32(specialityCB.SelectedValue));
+                    MessageBox.Show("Группа добавлена успешно", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateParent?.Invoke();
                 }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
         private void DigitCheck_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

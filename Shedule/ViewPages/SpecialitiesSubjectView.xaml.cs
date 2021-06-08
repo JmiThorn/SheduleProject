@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,8 +25,11 @@ namespace Shedule.ViewPages
         }
         public async Task loadSubject()
         {
-            var specialities = await LearningProcessesAPI.getAllSubjects();
-            nameCB.ItemsSource = specialities;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var specialities = await LearningProcessesAPI.getAllSubjects();
+                nameCB.ItemsSource = specialities;
+            });
         }
         private void edit_butt_Click(object sender, RoutedEventArgs e)
         {
@@ -40,7 +44,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 code.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 nameCB.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
@@ -49,11 +53,7 @@ namespace Shedule.ViewPages
                 specialitySubject.Subject = result.Subject;
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
     }
 }

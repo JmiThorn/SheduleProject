@@ -2,6 +2,7 @@
 using LearningProcessesAPIClient.model;
 using Microsoft.Win32;
 using Shedule.Models.Parsing;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,23 +44,35 @@ namespace Shedule.ViewPages
         }
         public async Task loadSpeciality()
         {
-            var specialities = await LearningProcessesAPI.getAllSpecialities();
-            specialityCB.ItemsSource = specialities;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var specialities = await LearningProcessesAPI.getAllSpecialities();
+                specialityCB.ItemsSource = specialities;
+            });
         }
         public async Task loadSemesters(Group group)
         {
-            var semesters = await LearningProcessesAPI.getSemesters(group.Id);
-            SemesterListView.ItemsSource = semesters;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var semesters = await LearningProcessesAPI.getSemesters(group.Id);
+                SemesterListView.ItemsSource = semesters;
+            });
         }
         public async Task loadSpecSub(Group group)
         {
-            var getGroupTeachings = await LearningProcessesAPI.getGroupTeachings(group.Id);
-            TeachingListView.ItemsSource = getGroupTeachings;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var getGroupTeachings = await LearningProcessesAPI.getGroupTeachings(group.Id);
+                TeachingListView.ItemsSource = getGroupTeachings;
+            });
         }
         public async Task loadTeachings()
         {
-            var list = await LearningProcessesAPI.getGroupTeachings((DataContext as Group).Id);
-            TeachingListView.ItemsSource = list;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var list = await LearningProcessesAPI.getGroupTeachings((DataContext as Group).Id);
+                TeachingListView.ItemsSource = list;
+            });
             //var list = await LearningProcessesAPI.ge
         }
 
@@ -72,7 +85,7 @@ namespace Shedule.ViewPages
         }
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 //codename.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 course.GetBindingExpression(TextBox.TextProperty).UpdateSource();
@@ -83,11 +96,7 @@ namespace Shedule.ViewPages
                 codename.Text = result.Codename;
                 codename.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
 
 
@@ -95,17 +104,13 @@ namespace Shedule.ViewPages
         public async Task deleteSemester(Semester semester)
         {
             //LearningProcessesAPI.updateTeacher();
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Semester> list = (List<Semester>)SemesterListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteSemester(semester.Id);
                 list.Remove(semester);
                 SemesterListView.Items.Refresh();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
 
             //MessageBox.Show(result.Count + "");
         }
@@ -122,17 +127,13 @@ namespace Shedule.ViewPages
         public async Task delete_teaching(Teaching teaching)
         {
             //LearningProcessesAPI.updateTeacher();
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Teaching> list = (List<Teaching>)TeachingListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteTeaching(teaching.Id);
                 list.Remove(teaching);
                 TeachingListView.Items.Refresh();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
 
             //MessageBox.Show(result.Count + "");
         }

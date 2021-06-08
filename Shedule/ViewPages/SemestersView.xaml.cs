@@ -1,6 +1,7 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
 using Shedule.Pages;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,14 +48,14 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 number.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 startdate.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 weekscount.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                Semester semester  = (Semester)DataContext;
+                Semester semester = (Semester)DataContext;
                 var result = await LearningProcessesAPI.updateSemester(semester.Id, semester);
-                if(result != null)
+                if (result != null)
                 {
                     foreach (Curriculum cur in CurriculumsListView.Items)
                     {
@@ -71,16 +72,9 @@ namespace Shedule.ViewPages
                 }
                 else
                 {
-                    MessageBox.Show("Семестр не найден!","Ошбика обновления данных", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Семестр не найден!", "Ошбика обновления данных", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                
-
-
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
         private void DigitCheck_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -127,55 +121,58 @@ namespace Shedule.ViewPages
         }
         public async Task loadCurriculum(Semester semester)
         {
-
-            var cur = await LearningProcessesAPI.getCurriculaForSemester(semester.Id);
-            foreach(var n in cur)
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
+                var cur = await LearningProcessesAPI.getCurriculaForSemester(semester.Id);
+                foreach (var n in cur)
+                {
 
-                n.SpecialitySubject = await LearningProcessesAPI.getSpecialitySubject(n.SpecialitySubjectId);
-            }
-            cur = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise!=true);
- 
-            CurriculumsListView.ItemsSource = cur;
-            currentCurriculums = cur;
-            loadSpecSubjects();
+                    n.SpecialitySubject = await LearningProcessesAPI.getSpecialitySubject(n.SpecialitySubjectId);
+                }
+                cur = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise != true);
+
+                CurriculumsListView.ItemsSource = cur;
+                currentCurriculums = cur;
+                loadSpecSubjects();
+            });
         }
 
         public async Task loadSpecSubjects()
         {
-            var sub = await LearningProcessesAPI.getSpecialitySubjects(((Semester)DataContext).Group.SpecialityId);
-            sub = sub.AsQueryable().Except(currentCurriculums.Select(c => c.SpecialitySubject), new spec()).ToList();
-            specSub.ItemsSource = sub;
-            specSub.Items.Refresh();
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var sub = await LearningProcessesAPI.getSpecialitySubjects(((Semester)DataContext).Group.SpecialityId);
+                sub = sub.AsQueryable().Except(currentCurriculums.Select(c => c.SpecialitySubject), new spec()).ToList();
+                specSub.ItemsSource = sub;
+                specSub.Items.Refresh();
+            });
         }
 
         public async Task loadCurriculumPractice(Semester semester)
         {
-
-            var cur = await LearningProcessesAPI.getCurriculaForSemester(semester.Id);
-            foreach(var n in cur)
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
+                var cur = await LearningProcessesAPI.getCurriculaForSemester(semester.Id);
+                foreach (var n in cur)
+                {
 
-                n.SpecialitySubject = await LearningProcessesAPI.getSpecialitySubject(n.SpecialitySubjectId);
-            }
-            cur = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise==true);
+                    n.SpecialitySubject = await LearningProcessesAPI.getSpecialitySubject(n.SpecialitySubjectId);
+                }
+                cur = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise == true);
 
-            CurriculumsPracticeListView.ItemsSource = cur;
+                CurriculumsPracticeListView.ItemsSource = cur;
+            });
         }
 
         public async Task deleteCurriculum(Curriculum curriculum)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Curriculum> list = (List<Curriculum>)CurriculumsListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteCurriculum(curriculum.Id);
                 list.Remove(curriculum);
                 CurriculumsListView.Items.Refresh();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
 
             //MessageBox.Show(result.Count + "");
         }

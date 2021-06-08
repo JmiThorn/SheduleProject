@@ -1,6 +1,7 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model.parsing;
 using OfficeOpenXml;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -69,7 +70,10 @@ namespace Shedule.Models.Parsing
                             );
                         }
                     }
-                    LearningProcessesAPI.addParsedSubjects(parsedSubjects);
+                    AppUtils.ProcessClientLibraryRequest(async () =>
+                    {
+                        LearningProcessesAPI.addParsedSubjects(parsedSubjects);
+                    });
                 }
             }
 

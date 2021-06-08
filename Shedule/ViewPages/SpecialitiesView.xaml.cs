@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +30,16 @@ namespace Shedule.ViewPages
         }
         public async Task loadDepartment()
         {
-            var department = await LearningProcessesAPI.getAllDepartments();
-            departmentCB.ItemsSource = department;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var department = await LearningProcessesAPI.getAllDepartments();
+                departmentCB.ItemsSource = department;
+            });
         }
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            AppUtils.ProcessClientLibraryRequest(async () => {
                 if (Convert.ToInt32(week.Text) > 168 || Convert.ToInt32(day.Text) > 24)
                 {
                     MessageBox.Show("Неправильное количество выставленных часов", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -55,11 +58,7 @@ namespace Shedule.ViewPages
                     DataContext = result;
                     UpdateParent?.Invoke();
                 }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
 
         private void edit_butt_Click(object sender, RoutedEventArgs e)
@@ -98,17 +97,13 @@ namespace Shedule.ViewPages
         public async Task deleteSpecialitySubject(SpecialitySubject subject)
         {
             //LearningProcessesAPI.updateTeacher();
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 HashSet<SpecialitySubject> list = (HashSet<SpecialitySubject>)SpecSubjectView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteSpecialitySubject(subject.Id);
                 list.Remove(subject);
                 SpecSubjectView.Items.Refresh();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
 
             //MessageBox.Show(result.Count + "");
         }
@@ -122,15 +117,17 @@ namespace Shedule.ViewPages
         }
         public async Task loadSubject()
         {
-            HashSet<SpecialitySubject> Ss;
-            Ss = new HashSet<SpecialitySubject>();
-            var s2 = await (LearningProcessesAPI.getSpecialitySubjects(((Speciality)DataContext).Id));
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                HashSet<SpecialitySubject> Ss;
+                Ss = new HashSet<SpecialitySubject>();
+                var s2 = await (LearningProcessesAPI.getSpecialitySubjects(((Speciality)DataContext).Id));
 
-            s2.ForEach(n => Ss.Add(n));
+                s2.ForEach(n => Ss.Add(n));
 
-            ((Speciality)DataContext).SpecialitySubjects = Ss;
-            SpecSubjectView.GetBindingExpression(ListView.ItemsSourceProperty)?.UpdateTarget();
-
+                ((Speciality)DataContext).SpecialitySubjects = Ss;
+                SpecSubjectView.GetBindingExpression(ListView.ItemsSourceProperty)?.UpdateTarget();
+            });
         }
 
         private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)

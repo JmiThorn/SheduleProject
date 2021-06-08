@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +35,11 @@ namespace Shedule.ViewPages
 
         public async Task loadTeachers()
         {
-            var specialities = await LearningProcessesAPI.getAllTeachers();
-            affiliationCB.ItemsSource = specialities;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var specialities = await LearningProcessesAPI.getAllTeachers();
+                affiliationCB.ItemsSource = specialities;
+            });
         }
 
         private void edit_butt_Click(object sender, RoutedEventArgs e)
@@ -47,7 +51,7 @@ namespace Shedule.ViewPages
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 building.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
                 number.GetBindingExpression(TextBox.TextProperty).UpdateSource();
@@ -56,11 +60,7 @@ namespace Shedule.ViewPages
                 var result = await LearningProcessesAPI.updateClassroom(classroom.Id, classroom);
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
 
         private void number_PreviewTextInput(object sender, TextCompositionEventArgs e)

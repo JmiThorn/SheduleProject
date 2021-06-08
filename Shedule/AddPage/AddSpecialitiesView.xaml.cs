@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Shedule.Utils;
 
 namespace Shedule.ViewPages
 {
@@ -32,30 +33,29 @@ namespace Shedule.ViewPages
         }
         public async Task loadDepartment()
         {
-            var department = await LearningProcessesAPI.getAllDepartments();
-            departmentCB.ItemsSource = department;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var department = await LearningProcessesAPI.getAllDepartments();
+                departmentCB.ItemsSource = department;
+            });
         }
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 if (Convert.ToInt32(week.Text) > 168 || Convert.ToInt32(day.Text) > 24)
                 {
-                    MessageBox.Show("Неправильное количество выставленных часов","Предупреждение",MessageBoxButton.OK,MessageBoxImage.Warning);
+                    MessageBox.Show("Неправильное количество выставленных часов", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
 
-                var result = await LearningProcessesAPI.createSpeciality(name.Text,Convert.ToInt32(day.Text),Convert.ToInt32(week.Text), Convert.ToInt32(departmentCB.SelectedValue), code.Text,codename.Text);
-                MessageBox.Show("Специльность успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                UpdateParent?.Invoke();
+                    var result = await LearningProcessesAPI.createSpeciality(name.Text, Convert.ToInt32(day.Text), Convert.ToInt32(week.Text), Convert.ToInt32(departmentCB.SelectedValue), code.Text, codename.Text);
+                    MessageBox.Show("Специльность успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    UpdateParent?.Invoke();
                 }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
 
         private void edit_butt_Click(object sender, RoutedEventArgs e)

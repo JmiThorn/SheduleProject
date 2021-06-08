@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shedule.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,8 +37,11 @@ namespace Shedule.Pages
         }
         async Task loadGroups()
         {
-            var rezult = await LearningProcessesAPIClient.api.LearningProcessesAPI.getAllGroups();
-            tet.ItemsSource = rezult;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var rezult = await LearningProcessesAPIClient.api.LearningProcessesAPI.getAllGroups();
+                tet.ItemsSource = rezult;
+            });
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

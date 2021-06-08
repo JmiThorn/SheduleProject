@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,17 +34,20 @@ namespace Shedule.ViewPages
 
         public async Task loadTeachers()
         {
-            var specialities = await LearningProcessesAPI.getAllTeachers();
-            affiliationCB.ItemsSource = specialities;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var specialities = await LearningProcessesAPI.getAllTeachers();
+                affiliationCB.ItemsSource = specialities;
+            });
         }
 
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 Teacher classroom;
                 classroom = null;
-                if ((affiliationCB.SelectedIndex)==-1)
+                if ((affiliationCB.SelectedIndex) == -1)
                 {
                     var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedValue), classroom);
                     MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -51,15 +55,10 @@ namespace Shedule.ViewPages
                 }
                 else
                 {
-
-                var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text),Convert.ToInt32(building.SelectedValue), Convert.ToInt32(affiliationCB.SelectedIndex));
-                MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedValue), Convert.ToInt32(affiliationCB.SelectedIndex));
+                    MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
 
         private void number_PreviewTextInput(object sender, TextCompositionEventArgs e)

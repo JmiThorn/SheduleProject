@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,13 +36,19 @@ namespace Shedule.ViewPages
         }
         public async Task loadTeacher()
         {
-            var teacher = await LearningProcessesAPI.getAllTeachers();
-            teacherCB.ItemsSource = teacher;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var teacher = await LearningProcessesAPI.getAllTeachers();
+                teacherCB.ItemsSource = teacher;
+            });
         }
         public async Task loadSpecSubject()
         {
-            var subjects = await LearningProcessesAPI.getSpecialitySubjects(((Group)DataContext).SpecialityId);
-            name.ItemsSource = subjects;
+            AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                var subjects = await LearningProcessesAPI.getSpecialitySubjects(((Group)DataContext).SpecialityId);
+                name.ItemsSource = subjects;
+            });
         }
         private void back_Click(object sender, RoutedEventArgs e)
         {
@@ -49,7 +56,7 @@ namespace Shedule.ViewPages
         }
         private async void save_butt_Click(object sender, RoutedEventArgs e)
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createTeaching(
                     ((Teaching)teachigGrid.DataContext).GroupId,
@@ -58,11 +65,7 @@ namespace Shedule.ViewPages
                 );
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
     }
 }

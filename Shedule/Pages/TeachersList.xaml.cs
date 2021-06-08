@@ -1,5 +1,7 @@
 ﻿using LearningProcessesAPIClient.api;
+using LearningProcessesAPIClient.exceptions;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using Shedule.ViewPages;
 using System;
 using System.Collections.Generic;
@@ -29,19 +31,18 @@ namespace Shedule.Pages
         {
             InitializeComponent();
             sss();
+
         }
+
+        
+
         public async Task sss()
         {
-            try
-            {
-            var result = await LearningProcessesAPI.getAllTeachers();
+            AppUtils.ProcessClientLibraryRequest(async () => {
+                var result = await LearningProcessesAPI.getAllTeachers();
                 TeacherListView.ItemsSource = result;
                 totalCount.Content = TeacherListView.Items.Count;
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            });
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -85,19 +86,15 @@ namespace Shedule.Pages
         public async Task deleteTeacher(Teacher teacher)
         {
             //LearningProcessesAPI.updateTeacher();
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
-              List<Teacher> list = (List<Teacher>)TeacherListView.ItemsSource;
+                List<Teacher> list = (List<Teacher>)TeacherListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteTeacher(teacher.Id);
                 list.Remove(teacher);
                 //TeacherListView.Items.Remove(teacher);
                 TeacherListView.Items.Refresh();
                 totalCount.Content = TeacherListView.Items.Count;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
 
             //MessageBox.Show(result.Count + "");
         }

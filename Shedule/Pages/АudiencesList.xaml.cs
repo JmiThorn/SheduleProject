@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Shedule.Utils;
 using Shedule.ViewPages;
 using System;
 using System.Collections.Generic;
@@ -30,16 +31,12 @@ namespace Shedule.Pages
         }
         public async Task sss()
         {
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.getAllClassrooms();
-                ClassroomsListView.ItemsSource = result; 
+                ClassroomsListView.ItemsSource = result;
                 totalCount.Content = ClassroomsListView.Items.Count;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            });
         }
 
         private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
@@ -54,18 +51,14 @@ namespace Shedule.Pages
         public async Task deleteClassroom(Classroom classroom)
         {
             //LearningProcessesAPI.updateTeacher();
-            try
+            AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 List<Classroom> list = (List<Classroom>)ClassroomsListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteClassroom(classroom.Id);
                 list.Remove(classroom);
                 ClassroomsListView.Items.Refresh();
                 totalCount.Content = ClassroomsListView.Items.Count;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            });
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
