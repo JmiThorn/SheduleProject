@@ -118,6 +118,9 @@
     <Compile Include="AddPage\AddGroupTeachingView.xaml.cs">
       <DependentUpon>AddGroupTeachingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AlteredRowItemControl.xaml.cs">
+      <DependentUpon>AlteredRowItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MainScheduleItemControl.xaml.cs">
       <DependentUpon>MainScheduleItemControl.xaml</DependentUpon>
     </Compile>
@@ -195,6 +198,10 @@
     <Page Include="AddPage\AddGroupTeachingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\AlteredRowItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MainScheduleItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
