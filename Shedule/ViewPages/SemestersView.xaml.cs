@@ -202,7 +202,7 @@ namespace Shedule.ViewPages
                 UsedHours = 0,
                 Semester = (Semester)DataContext,
                 SemesterId = ((Semester)DataContext).Id,
-                SpecialitySubjectId = (int)specSub.SelectedValue,
+                SpecialitySubjectId = ((SpecialitySubject)specSub.SelectedItem).Id,
                 SpecialitySubject = (SpecialitySubject)specSub.SelectedItem
             };
             currentCurriculums.Add(curriculum);

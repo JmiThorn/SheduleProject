@@ -130,7 +130,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Margin="0,0,10,0" x:Name="OneStr" MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Surname}"/>
                                                 <TextBlock  Margin="0,0,10,0" MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Name}"/>
-                                                <TextBlock MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Patronimyc}"/>
+                                                <TextBlock MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Patronymic}"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>

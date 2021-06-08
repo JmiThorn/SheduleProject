@@ -102,7 +102,6 @@
                     />
                         <ComboBox 
                             x:Name="specSub"
-                            SelectedValue="{Binding SpecialitySubjectId}"
                             DisplayMemberPath="Subject.Name"
                             SelectedValuePath="Id" 
                             HorizontalAlignment="Left" 
