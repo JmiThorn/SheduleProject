@@ -1,4 +1,5 @@
-﻿using Shedule.Utils;
+﻿using Shedule.Controls;
+using Shedule.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace Shedule.Pages
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var rezult = await LearningProcessesAPIClient.api.LearningProcessesAPI.getAllGroups();
-                tet.ItemsSource = rezult;
+                //tet.ItemsSource = rezult;
             });
         }
 
@@ -49,9 +50,10 @@ namespace Shedule.Pages
             Person k = new Person();
             k.Name = 1;
             Frame.RowDefinitions.Add(new RowDefinition());
-            ComboBox combo = new ComboBox();
-            Frame.Children.Add(combo);
-            Grid.SetRow(combo, 2);
+            AlteredRowItemControl control = new AlteredRowItemControl();
+            Grid.SetRow(control, Frame.RowDefinitions.Count-2);
+            Grid.SetColumnSpan(control, 7);
+            Frame.Children.Add(control);
         }
     }
 }

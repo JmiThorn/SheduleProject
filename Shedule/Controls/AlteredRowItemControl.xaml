@@ -6,7 +6,25 @@
              xmlns:local="clr-namespace:Shedule.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid Background="Aqua" Height="45">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+
+        </Grid.RowDefinitions>
+        <ComboBox></ComboBox>
+        <Label Grid.Column="1" Content="dj" x:Name="lab1"/>
+        <Label Grid.Column="2" Content="ad" x:Name="lab2"/>
+        <Label Grid.Column="3" Content="hell" x:Name="lab3"/>
+        <Label Grid.Column="4" Content="hell" x:Name="lab4"/>
+        <Label Grid.Column="5" Content="hell" x:Name="lab6"/>
+        <Label Grid.Column="6" Content="hell" x:Name="lab7"/>
     </Grid>
 </UserControl>
