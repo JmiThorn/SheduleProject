@@ -510,7 +510,7 @@ namespace Shedule.ViewPages
                     m.ClassNumber == selectedTeachingInfo.ClassNumber
                     && m.DayOfWeekId == selectedTeachingInfo.DayOfWeekId
                     && m.IsRedWeek == red.IsChecked.Value
-                    && m.Teaching?.TeacherId == selectedTeachingInfo.TeacherId
+                    && m.ClassroomId == c.Id
                     && m.Semester?.StartDate >= info.SemesterStart
                     && m.Semester?.StartDate < info.SemesterEnd
                     && m.SemesterId != ((Semester)semesters.SelectedItem).Id
@@ -1008,30 +1008,33 @@ namespace Shedule.ViewPages
 
                             rebeindAndUpdateCellsContent();
 
-                            //сбрасываем значение для срабатывания события
-                            if (red.IsChecked.Value)
+                            Dispatcher.Invoke(async () =>
                             {
-                                red.IsChecked = false;
-                            }
-                            red.IsChecked = true;
+                                await reloadSubjectOverview();
 
-                            setControlsEnabled(true, InfluenceLevel.WEEK_COLOR_SELECTION);
+                                //сбрасываем значение для срабатывания события
+                                if (red.IsChecked.Value)
+                                {
+                                    red.IsChecked = false;
+                                }
+                                red.IsChecked = true;
+
+                                setControlsEnabled(true, InfluenceLevel.WEEK_COLOR_SELECTION);
+                            }, DispatcherPriority.Background);
+
+                            
                         }
                         else
                         {
-
                             setControlsEnabled(false, InfluenceLevel.WEEK_COLOR_SELECTION);
-                            //Очистка экрана
-                            rebeindAndUpdateCellsContent();
+
+                            Dispatcher.Invoke(async () =>
+                            {
+                                await reloadSubjectOverview();
+                                //Очистка экрана
+                                rebeindAndUpdateCellsContent();
+                            }, DispatcherPriority.Background);
                         }
-                        //TODO BUG Может быть причиной бага подгрузки часов
-                        Dispatcher.Invoke(async () =>
-                        {
-                            reloadSubjectOverview();
-                        }, DispatcherPriority.Background);
-
-
-                       
                     }
                 }
                 else

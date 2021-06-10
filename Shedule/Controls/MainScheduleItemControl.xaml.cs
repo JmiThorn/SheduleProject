@@ -26,7 +26,7 @@ namespace Shedule.Controls
             InitializeComponent();
         }
 
-        private void ComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ComboBox_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             (sender as ComboBox).SelectedIndex = -1;
         }
