@@ -22,6 +22,20 @@ namespace Shedule.Utils
         //Цвет первой недели В УЧЕБНОМ ГОДУ
         public static WeekColors FIRST_COLOR = WeekColors.RED;
 
+        //0 - первая неделя, 1 - вторая неделя и т.п.
+        public static int getCurrentWeekNumberFromStart(Semester semester)
+        {
+            return getWeekNumberFromStart(semester, DateTime.Now);
+        }
+
+        //0 - первая неделя, 1 - вторая неделя и т.п.
+        //TODO перерпроверить корректность
+        public static int getWeekNumberFromStart(Semester semester, DateTime comparedDate)
+        {
+            TimeSpan diff = comparedDate.Subtract(semester.StartDate);
+            return (int)Math.Floor((double)diff.Days / 7.0);
+        }
+
         public static int getRedWeeksCount(Semester semester)
         {
             WeekColors startColor = getWeekColor(semester.StartDate);
