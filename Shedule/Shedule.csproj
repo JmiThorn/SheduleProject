@@ -128,12 +128,13 @@
     <Compile Include="Models\CurriculumFillingInfoModel.cs" />
     <Compile Include="Models\MainScheduleLiveModel.cs" />
     <Compile Include="Models\Parsing\GroupModel.cs" />
-    <Compile Include="Models\Parsing\ParsingUtils.cs" />
+    <Compile Include="Utils\ParsingUtils.cs" />
     <Compile Include="Models\Parsing\SemesterModel.cs" />
     <Compile Include="Models\Parsing\SubjectModel.cs" />
     <Compile Include="Models\TeachingAvailabilityInfo.cs" />
     <Compile Include="Models\TeachingModel.cs" />
     <Compile Include="Utils\AppUtils.cs" />
+    <Compile Include="Utils\WeeksColoringUtils.cs" />
     <Compile Include="ViewPages\ClassroomsView.xaml.cs">
       <DependentUpon>ClassroomsView.xaml</DependentUpon>
     </Compile>

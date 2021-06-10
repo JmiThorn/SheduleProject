@@ -60,6 +60,8 @@
                 <ComboBox DisplayMemberPath="Number" x:Name="semesters" BorderThickness="2,2,2,2" IsEditable="False" BorderBrush="#E9E9E9" VerticalAlignment="Top" FontSize="24" Height="40" HorizontalAlignment="Left" Width="70" SelectionChanged="semesters_SelectionChanged"/>
                 <Label Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="Количество недель:" Width="200"/>
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="{Binding SelectedValue.WeeksCount, ElementName=semesters}" Width="40"/>
+                <Label Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="Начало:" Width="100"/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="{Binding SelectedValue.StartDate, ElementName=semesters}" Width="110"/>
             </StackPanel>
             <Border BorderBrush="#E9E9E9" BorderThickness="0,0,0,2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"/>
             <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="20" FontWeight="Bold" Content="Понедельник"/>
@@ -216,12 +218,16 @@
                     <DataTemplate>
                         <StackPanel>
                             <Label Content="{Binding SpecialitySubject.Subject.Name}" VerticalContentAlignment="Center"  FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0" FontFamily="Global User Interface"/>
-                            <StackPanel Orientation="Horizontal">
+                            <!--<StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding AllocatedHours}" FontWeight="DemiBold" x:Name="current" Padding="3" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
                                 <TextBlock Text="/" Margin="5,0" FontFamily="Global User Inerface" VerticalAlignment="Center" FontSize="30"/>
                                 <TextBlock Text="{Binding PlannedHours}" FontWeight="DemiBold" x:Name="total" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
-                            </StackPanel>
-                            <ProgressBar Width="230" MinWidth="50" Minimum="0" Maximum="{Binding PlannedHours}" Value="{Binding AllocatedHours}" Height="5" HorizontalAlignment="Left"/>
+                            </StackPanel>-->
+                            <TextBlock Text="{Binding PlannedHours, StringFormat='Запланировано часов: {0}'}" FontWeight="DemiBold" x:Name="planned" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
+                            <TextBlock Text="{Binding AllocatedHours, StringFormat='Использовано часов: {0}'}" FontWeight="DemiBold" x:Name="allocated" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
+                            <TextBlock Text="{Binding AbsoluteNotAllocatedHours, StringFormat='Не использовано часов: {0}'}" FontWeight="DemiBold" x:Name="notAllocated" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
+                            <TextBlock Text="{Binding LastDayFactFormatted, StringFormat='Дата последней пары: {0}'}" FontWeight="DemiBold" x:Name="lastDay" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
+                            <!--<ProgressBar Width="230" MinWidth="50" Minimum="0" Maximum="{Binding PlannedHours}" Value="{Binding AllocatedHours}" Height="5" HorizontalAlignment="Left"/>-->
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

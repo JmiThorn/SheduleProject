@@ -1,7 +1,7 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model.parsing;
 using OfficeOpenXml;
-using Shedule.Utils;
+using Shedule.Models.Parsing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Shedule.Models.Parsing
+namespace Shedule.Utils
 {
     public class ParsingUtils
     {

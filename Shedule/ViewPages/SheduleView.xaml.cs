@@ -15,6 +15,11 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Xml;
+using System;
+using LearningProcessesAPIClient.exceptions;
+using System.Globalization;
+using Shedule.Controls;
+using Shedule.Utils;
 
 namespace Shedule.ViewPages
 {
@@ -672,8 +677,8 @@ namespace Shedule.ViewPages
                 return;
             int semesterId = ((Semester)semesters.SelectedItem)?.Id ?? -1;
             bool isBlueWeek = !red.IsChecked.Value;
-            int redWeeks = (int)Math.Ceiling((double)((Semester)semesters.SelectedItem).WeeksCount / 2);
-            int blueWeeks = (((Semester)semesters.SelectedItem).WeeksCount) - redWeeks;
+            int redWeeks = WeeksColoringUtils.getRedWeeksCount((Semester)semesters.SelectedItem);
+            int blueWeeks = WeeksColoringUtils.getBlueWeeksCount((Semester)semesters.SelectedItem);
             //Выбираем данные из того-же семестра, но для другой недели
             //Для этой недели будем перебирать комбобоксы
             var mainSchedules = allMainSchedules.Where(m =>
@@ -682,41 +687,70 @@ namespace Shedule.ViewPages
             ).ToList();
             //Очищаем
 
-            specialityHoursItemsSource.Values.ToList().ForEach(m => m.AllocatedHours = 0);
-            int countedM = 0;
-            int countedT = 0;
-            //Начинаем заполнять с mainSchedules
-            mainSchedules.ForEach(m =>
-            {
-                if (m.TeachingId == null)
-                    return;
-                int ssId = m.Teaching.SpecialitySubjectId;
-                if (!specialityHoursItemsSource.Keys.Contains(ssId))
-                    return;
-                //По идее, здесь должны быть все предметы (если только в бд нет несоответвтвий куррикулумов и присутсвующих MainSchedule)
-                specialityHoursItemsSource[ssId].AllocatedHours += 2 * (isBlueWeek ? blueWeeks : redWeeks);
-                countedM++;
-            });
+            bool takeFromGrid = (WeeksColoringUtils.getWeekColor(((Semester)semesters.SelectedItem).StartDate) == WeeksColoringUtils.WeekColors.RED) == red.IsChecked.Value;
 
-            //Перебираем интерфейс
-            foreach (var e in Frame.Children)
+            specialityHoursItemsSource.Values.ToList().ForEach(m => m.AllocatedHours = 0);
+
+            for (int week = 0; week < ((Semester)semesters.SelectedItem).WeeksCount; week++)
             {
-                if (!(e is MainScheduleItemControl))
-                    continue;
-                int x = getDayOfWeekFromGridColumn(Grid.GetColumn((UIElement)e));
-                int y = getClassNumberFromGridRow(Grid.GetRow((UIElement)e));
-                if (x >= 0 && x < DAYS && y >= 0 && y < 6)
+                for(int day = 0; day < DAYS; day++)
                 {
-                    if (((ComboBox)((MainScheduleItemControl)e).StackPanel.Children[0]).SelectedIndex > -1)
+                    DateTime date = ((Semester)semesters.SelectedItem).StartDate.AddDays((7 * week) + day);
+                    //Скипаем практики в подсчете часов
+                    if (currentCurriculums.Count(c => c.PracticeSchedule != null && c.PracticeSchedule.StartDate <= date && c.PracticeSchedule.EndDate >= date) > 0)
+                        continue;
+                    if (takeFromGrid)
                     {
-                        int ssId = ((TeachingAvailabilityInfo)((ComboBox)((MainScheduleItemControl)e).StackPanel.Children[0]).SelectedItem).Teaching.SpecialitySubjectId;
-                        if (!specialityHoursItemsSource.Keys.Contains(ssId))
-                            continue;
-                        specialityHoursItemsSource[ssId].AllocatedHours += 2 * (red.IsChecked.Value ? redWeeks : blueWeeks);
-                        countedT++;
+                        //Перебираем интерфейс
+                        foreach (var e in Frame.Children)
+                        {
+                            if (!(e is MainScheduleItemControl))
+                                continue;
+                            int x = getDayOfWeekFromGridColumn(Grid.GetColumn((UIElement)e));
+                            int y = getClassNumberFromGridRow(Grid.GetRow((UIElement)e));
+                            if (x == day && y >= 0 && y < 6)
+                            {
+                                if (((ComboBox)((MainScheduleItemControl)e).StackPanel.Children[0]).SelectedIndex > -1)
+                                {
+                                    int ssId = ((TeachingAvailabilityInfo)((ComboBox)((MainScheduleItemControl)e).StackPanel.Children[0]).SelectedItem).Teaching.SpecialitySubjectId;
+                                    if (!specialityHoursItemsSource.Keys.Contains(ssId))
+                                        continue;
+                                    specialityHoursItemsSource[ssId].AllocatedHours += 2;
+                                    //Конец для четного и нечетного общего числа часов
+                                    if(specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == -1 || specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == 0)
+                                    {
+                                        specialityHoursItemsSource[ssId].LastDayFact = date;
+                                    }
+                                }
+                            }
+                        }
                     }
+                    else
+                    {
+                        //Начинаем заполнять с mainSchedules
+                        mainSchedules.ForEach(m =>
+                        {
+                            if (m.TeachingId == null)
+                                return;
+                            if(m.DayOfWeekId == day)
+                            {
+                                int ssId = m.Teaching.SpecialitySubjectId;
+                                if (!specialityHoursItemsSource.Keys.Contains(ssId))
+                                    return;
+                                //По идее, здесь должны быть все предметы (если только в бд нет несоответвтвий куррикулумов и присутсвующих MainSchedule)
+                                specialityHoursItemsSource[ssId].AllocatedHours += 2;
+                                //Конец для четного и нечетного общего числа часов
+                                if (specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == -1 || specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == 0)
+                                {
+                                    specialityHoursItemsSource[ssId].LastDayFact = date;
+                                }
+                            }
+                        });
+                    }   
                 }
+                takeFromGrid = !takeFromGrid;
             }
+
             //Заменяем старое на новое
             sujectsOverview.ItemsSource = specialityHoursItemsSource.Values.ToList();
         }
@@ -851,7 +885,16 @@ namespace Shedule.ViewPages
             }
             //TODO подтянуть модель
             hoursInfo[dayOfWeek].Content = hours;
-
+            if (hours > (groupsList.SelectedItem as Group).Speciality.MaxDailyHours) {
+                hoursInfo[dayOfWeek].Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                hoursInfo[dayOfWeek].ToolTip = "Вы привысили максимально возможно количество часов в день для данной группы";
+            }
+            else
+            {
+                current.Background = Brushes.White;
+                current.ToolTip = null;
+            }
+            
             int sum = 0;
             foreach (KeyValuePair<int, Label> keyValue in hoursInfo)
             {
@@ -981,6 +1024,7 @@ namespace Shedule.ViewPages
                             //Очистка экрана
                             rebeindAndUpdateCellsContent();
                         }
+                        //TODO BUG Может быть причиной бага подгрузки часов
                         Dispatcher.Invoke(async () =>
                         {
                             reloadSubjectOverview();

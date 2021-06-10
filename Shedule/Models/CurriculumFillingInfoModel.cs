@@ -12,8 +12,9 @@ namespace Shedule.Models
     public class CurriculumFillingInfoModel : Curriculum
     {
         private int allocatedHours = 0;
+        private DateTime ?lastDay = null;
 
-        public new int AllocatedHours
+        public int AllocatedHours
         {
             get
             {
@@ -23,8 +24,38 @@ namespace Shedule.Models
             {
                 allocatedHours = value;
                 OnPropertyChanged("AllocatedHours");
+                OnPropertyChanged("NotAllocatedHours");
             }
         }
+
+        public int AbsoluteNotAllocatedHours //TODO сделать относительную версию с UsedHours?
+        {
+            get
+            {
+                return PlannedHours - AllocatedHours;
+            }
+        }
+
+        public DateTime ?LastDayFact {
+            get {
+                return lastDay;
+            }
+            set
+            {
+                lastDay = value;
+                OnPropertyChanged("LastDay");
+                OnPropertyChanged("LastDayFormatted");
+            }
+        }
+
+        public string LastDayFactFormatted
+        {
+            get
+            {
+                return LastDayFact?.ToShortDateString() ?? "Не определено";
+            }
+        }
+
 
         public void setCurriculum(Curriculum curriculum)
         {
@@ -37,6 +68,9 @@ namespace Shedule.Models
             Semester = curriculum.Semester;
             SpecialitySubject = curriculum.SpecialitySubject;
             PracticeSchedule = curriculum.PracticeSchedule;
+
+            AllocatedHours = 0;
+            LastDayFact = null;
 
             OnPropertyChanged("Id");               
             OnPropertyChanged("SpecialitySubjectId");
