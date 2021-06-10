@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Shedule"
         mc:Ignorable="d"
-        Title="Главная" MinHeight="600" MinWidth="1600" Height="900" Width="1600"
+        Title="Главная" MinHeight="950" MinWidth="1600"
         Icon="Image\logo.ico"
         WindowState="Maximized"
         >

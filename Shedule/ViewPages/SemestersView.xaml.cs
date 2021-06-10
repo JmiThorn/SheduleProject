@@ -51,9 +51,10 @@ namespace Shedule.ViewPages
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 number.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                startdate.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                startdate.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
                 weekscount.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 Semester semester = (Semester)DataContext;
+                semester.StartDate = (DateTime)startdate.SelectedDate;
                 var result = await LearningProcessesAPI.updateSemester(semester.Id, semester);
                 if (result != null)
                 {

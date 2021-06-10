@@ -12,38 +12,12 @@
         <local:BuildingConverter x:Key="BuildingConverter"/>
     </UserControl.Resources>
     <StackPanel x:Name="StackPanel" x:FieldModifier="public">
-        <ComboBox SelectedValue ="{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "18" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id" MouseDoubleClick="ComboBox_MouseDoubleClick">
+        <ComboBox SelectedValue ="{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "16" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id" MouseDoubleClick="ComboBox_MouseDoubleClick">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel>
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding  StringFormat="{}{0} {1} {2}. {3}." TargetNullValue="Нет пары">
-                                        <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
-                                        <Binding Path="Teaching.Teacher.Surname"/>
-                                        <Binding Path="Teaching.Teacher.Name" Converter="{StaticResource FirstLetterFromStrConverter}"/>
-                                        <Binding Path="Teaching.Teacher.Patronymic" Converter="{StaticResource FirstLetterFromStrConverter}"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                            <ItemsControl BorderBrush="white" ItemsSource = "{Binding MainSchedulesInTheSameTime}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation = "Horizontal">
-                                            <TextBlock>
-                                            <Run Text="{Binding Teaching.SpecialitySubject.Subject.Name, StringFormat='{}{0} - '}"/>
-                                            <Run Text="{Binding Teaching.Teacher.Surname}"/>
-                                            <Run Text="{Binding Teaching.Teacher.Name, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
-                                            <Run Text="{Binding Teaching.Teacher.Patronymic, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
-                                            </TextBlock>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl >
-                        </StackPanel>
-                        <StackPanel>
-                            <Image Margin="10,0,0,0" Width="20" Height="20">
+                            <Image Margin="0,2,4,0" Width="15" Height="15">
                                 <Image.Style>
                                     <Style TargetType="{x:Type Image}">
                                         <Setter Property="Source" Value="/Image\bad.png"/>
@@ -56,6 +30,34 @@
                                 </Image.Style>
                             </Image>
                         </StackPanel>
+                        <StackPanel>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding  StringFormat="{}{0} {1} {2}. {3}." TargetNullValue="Нет пары">
+                                        <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
+                                        <Binding Path="Teaching.Teacher.Surname"/>
+                                        <Binding Path="Teaching.Teacher.Name" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                                        <Binding Path="Teaching.Teacher.Patronymic" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                                        <!--<Binding Path="Teaching.Group.Codename"/>-->
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <ItemsControl BorderBrush="white" ItemsSource = "{Binding MainSchedulesInTheSameTime}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation = "Horizontal">
+                                            <TextBlock>
+                                            <Run Text="{Binding Teaching.SpecialitySubject.Subject.Name, StringFormat='{}{0} - '}"/>
+                                            <Run Text="{Binding Teaching.Teacher.Surname}"/>
+                                            <Run Text="{Binding Teaching.Teacher.Name, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
+                                            <Run Text="{Binding Teaching.Teacher.Patronymic, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
+                                            <Run Text="{Binding Teaching.Group.Codename}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl >
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
@@ -65,10 +67,11 @@
             Padding="0" 
             SelectedValuePath = "Classroom.Id" 
             IsEditable="False" 
-            MinWidth = "60" 
+            MinWidth = "135" 
+            MaxWidth = "135" 
             FontSize = "18" 
             Height = "20" 
-            Margin = "0" 
+            Margin = "10,1,10,0" 
             FontFamily = "Global User Interface" 
             HorizontalContentAlignment = "Center" 
             VerticalContentAlignment = "Center" 
@@ -76,7 +79,27 @@
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Width="20">
+                            <Image Margin="2,2,4,0" Width="15" Height="15">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Source" Value="/Image\bad.png"/>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
+                                            <Setter Property="Source" Value="/Image\good.png"/>
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RecommendationLevel}" Value="1">
+                                            <Setter Property="Source" Value="{x:Null}"/>
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        </StackPanel>
+                        <StackPanel Width="100" Orientation="Vertical">
                             <TextBlock>
                                 <TextBlock.Text>
                                     <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="X">
@@ -88,7 +111,7 @@
                             <ItemsControl BorderBrush="white" ItemsSource = "{Binding MainSchedulesInTheSameClassroom}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation = "Horizontal">
+                                        <!--<StackPanel Orientation = "Horizontal">-->
                                             <TextBlock>
                                                 <TextBlock.Text>
                                                     <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="Не выбрано">
@@ -97,26 +120,11 @@
                                                     </MultiBinding>
                                                 </TextBlock.Text>
                                             </TextBlock>
-                                        </StackPanel>
+                                        <!--</StackPanel>-->
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl >
                         </StackPanel>
-                        <Image Margin="10,0,0,0" Width="20" Height="20">
-                            <Image.Style>
-                                <Style TargetType="{x:Type Image}">
-                                    <Setter Property="Source" Value="/Image\bad.png"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
-                                            <Setter Property="Source" Value="/Image\good.png"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding RecommendationLevel}" Value="1">
-                                            <Setter Property="Source" Value="{x:Null}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>

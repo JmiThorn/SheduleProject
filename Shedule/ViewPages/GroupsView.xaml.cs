@@ -189,7 +189,6 @@ namespace Shedule.ViewPages
                 if (openFileDialog.ShowDialog() == true)
                 {
                     ParsingUtils.ParseFile(openFileDialog.FileName, ((DataContext as Group).Id));
-
                 }
             }
             catch (Exception ex)

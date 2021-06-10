@@ -48,7 +48,7 @@
                                 <GridViewColumn  Width="250" Header="Дата начала">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding StartDate, StringFormat=\{0:d\}}"/>
+                                            <TextBlock  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding StartDate, StringFormat='{}{0:dd.MM.yyyy}'}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

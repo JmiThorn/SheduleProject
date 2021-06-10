@@ -35,7 +35,7 @@ namespace Shedule.ViewPages
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
-                var result = await LearningProcessesAPI.createSemester(Convert.ToInt32(weekscount.Text), Convert.ToDateTime(startdate.Text), Convert.ToInt32(number.Text), Convert.ToInt32(((Group)DataContext).Id));
+                var result = await LearningProcessesAPI.createSemester(Convert.ToInt32(weekscount.Text), (DateTime)startdate.SelectedDate, Convert.ToInt32(number.Text), Convert.ToInt32(((Group)DataContext).Id));
                 MessageBox.Show("Семестр успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }

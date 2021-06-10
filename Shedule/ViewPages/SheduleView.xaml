@@ -201,8 +201,9 @@
             </Grid.RowDefinitions>
             <Label Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Row="0" FontSize="20" FontWeight="Bold">Учебный план</Label>
             <Border BorderBrush="#E9E9E9" BorderThickness="0,0,0,2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"/>
-            <ListView IsEnabled="True" x:Name="sujectsOverview" Grid.Row="1">
-                <!--<ListView.ItemContainerStyle>
+            <ScrollViewer  Grid.Row="1" HorizontalScrollBarVisibility="Auto">
+                <ItemsControl IsEnabled="True" x:Name="sujectsOverview">
+                    <!--<ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" >
                         <Setter Property="Focusable" Value="false"/>
                         <Style.Triggers>
@@ -214,24 +215,25 @@
                     </Style>
 
                 </ListView.ItemContainerStyle>-->
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <Label Content="{Binding SpecialitySubject.Subject.Name}" VerticalContentAlignment="Center"  FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0" FontFamily="Global User Interface"/>
-                            <!--<StackPanel Orientation="Horizontal">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Label FontWeight="DemiBold" Background="Olive" Content="{Binding SpecialitySubject.Subject.Name}" VerticalContentAlignment="Center"  FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0" FontFamily="Global User Interface"/>
+                                <!--<StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding AllocatedHours}" FontWeight="DemiBold" x:Name="current" Padding="3" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
                                 <TextBlock Text="/" Margin="5,0" FontFamily="Global User Inerface" VerticalAlignment="Center" FontSize="30"/>
                                 <TextBlock Text="{Binding PlannedHours}" FontWeight="DemiBold" x:Name="total" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
                             </StackPanel>-->
-                            <TextBlock Text="{Binding PlannedHours, StringFormat='Запланировано часов: {0}'}" FontWeight="DemiBold" x:Name="planned" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
-                            <TextBlock Text="{Binding AllocatedHours, StringFormat='Использовано часов: {0}'}" FontWeight="DemiBold" x:Name="allocated" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
-                            <TextBlock Text="{Binding AbsoluteNotAllocatedHours, StringFormat='Не использовано часов: {0}'}" FontWeight="DemiBold" x:Name="notAllocated" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
-                            <TextBlock Text="{Binding LastDayFactFormatted, StringFormat='Дата последней пары: {0}'}" FontWeight="DemiBold" x:Name="lastDay" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
-                            <!--<ProgressBar Width="230" MinWidth="50" Minimum="0" Maximum="{Binding PlannedHours}" Value="{Binding AllocatedHours}" Height="5" HorizontalAlignment="Left"/>-->
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                <TextBlock Text="{Binding PlannedHours, StringFormat='Запланировано часов: {0}'}" FontWeight="DemiBold" x:Name="planned" VerticalAlignment="Center" FontSize="15" FontFamily="Global User Interface"/>
+                                <TextBlock Text="{Binding AllocatedHours, StringFormat='Использовано часов: {0}'}" FontWeight="DemiBold" x:Name="allocated" VerticalAlignment="Center" FontSize="15" FontFamily="Global User Interface"/>
+                                <TextBlock Text="{Binding AbsoluteNotAllocatedHours, StringFormat='Не использовано часов: {0}'}" FontWeight="DemiBold" x:Name="notAllocated" VerticalAlignment="Center" FontSize="15" FontFamily="Global User Interface"/>
+                                <TextBlock Text="{Binding LastDayFactFormatted, StringFormat='Дата последней пары: {0}'}" FontWeight="DemiBold" x:Name="lastDay" VerticalAlignment="Center" FontSize="15" FontFamily="Global User Interface"/>
+                                <!--<ProgressBar Width="230" MinWidth="50" Minimum="0" Maximum="{Binding PlannedHours}" Value="{Binding AllocatedHours}" Height="5" HorizontalAlignment="Left"/>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <Label VerticalContentAlignment="Center"  FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0" FontFamily="Global User Interface">Часов в неделю:</Label>
                 <TextBlock FontWeight="DemiBold" x:Name="current" Padding="3" VerticalAlignment="Center" FontSize="20" FontFamily="Global User Interface"/>
@@ -242,5 +244,9 @@
         </Grid>
         <Label HorizontalContentAlignment="Center" Content="Расписание" HorizontalAlignment="Center" Margin="10,52" VerticalAlignment="Center" Width="1480" FontSize="64" FontWeight="Bold" Height="96" Grid.ColumnSpan="2"/>
         <Button Click="Shed_save_Click" x:Name="Shed_save" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Width="130" Height="50" Grid.Column="1"/>
+        <StackPanel Orientation="Horizontal">
+        <Image/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,0,0,10" Grid.Row="1" TextWrapping="Wrap" Text="Удаление пары ПКМ по названию пары" VerticalAlignment="Bottom" Height="21" Width="223"/>
+        </StackPanel>
     </Grid>
 </Page>
