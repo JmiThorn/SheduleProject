@@ -24,7 +24,7 @@
             <ColumnDefinition Width="109*"></ColumnDefinition>
             <ColumnDefinition Width="387*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="Chang_but" Click="Chang_but_Click" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="55">Изменения</Button>
+        <Button x:Name="Chang_but" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="55">Изменения</Button> <!--<Button x:Name="Chang_but" Click="Chang_but_Click" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="55">Изменения</Button>-->
         <Button x:Name="Shed_but" Click="Button_Click" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="55">Расписание</Button>
         <TextBlock Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center" Height="56" Margin="0,2,0,12">Учебная часть</TextBlock>
         <ScrollViewer Grid.Column="0" Grid.Row="4" VerticalScrollBarVisibility="Hidden" Margin="0,0,0,10">
@@ -41,9 +41,9 @@
                 <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
                     <TextBlock MouseLeftButtonDown="groups_butt_MouseLeftButtonDown" x:Name='groups_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Группы</TextBlock>
                 </Border>
-                <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
+                <!--<Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
                     <TextBlock MouseLeftButtonDown="plan_butt_MouseLeftButtonDown" x:Name='plan_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Учебный план</TextBlock>
-                </Border>
+                </Border>-->
                 <Border BorderBrush="#D8D8D8" Opacity="0.8" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="35" Width="280" Margin="10,0,0,0">
                     <TextBlock MouseLeftButtonDown="disciplines_butt_MouseLeftButtonDown" x:Name='disciplines_butt' Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="26" TextAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0">Дисциплины</TextBlock>
                 </Border>
