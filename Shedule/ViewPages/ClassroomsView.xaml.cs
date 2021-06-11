@@ -57,6 +57,7 @@ namespace Shedule.ViewPages
                 number.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 affiliationCB.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
                 Classroom classroom = (Classroom)DataContext;
+                classroom.Building = building.SelectedIndex + 1;
                 var result = await LearningProcessesAPI.updateClassroom(classroom.Id, classroom);
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
@@ -74,6 +75,11 @@ namespace Shedule.ViewPages
         private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void affiliationCB_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            affiliationCB.SelectedIndex = -1;
         }
     }
 }

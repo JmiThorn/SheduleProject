@@ -45,17 +45,17 @@ namespace Shedule.ViewPages
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
-                Teacher classroom;
-                classroom = null;
+                Teacher teacher;
+                teacher = null;
                 if ((affiliationCB.SelectedIndex) == -1)
                 {
-                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedValue), classroom);
+                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedIndex)+1, teacher);
                     MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateParent?.Invoke();
                 }
                 else
                 {
-                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedValue), Convert.ToInt32(affiliationCB.SelectedIndex));
+                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedIndex)+1, Convert.ToInt32(affiliationCB.SelectedValue));
                     MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             });
@@ -72,6 +72,11 @@ namespace Shedule.ViewPages
         private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void building_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            affiliationCB.SelectedIndex = -1;
         }
     }
 }

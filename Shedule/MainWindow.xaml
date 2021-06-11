@@ -9,6 +9,7 @@
         Icon="Image\logo.ico"
         WindowState="Maximized"
         >
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="200"></RowDefinition>
@@ -17,7 +18,6 @@
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="55"></RowDefinition>
-
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="300" Width="300"></ColumnDefinition>

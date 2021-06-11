@@ -56,6 +56,7 @@ namespace Shedule.ViewPages
             {
                 var semesters = await LearningProcessesAPI.getSemesters(group.Id);
                 SemesterListView.ItemsSource = semesters;
+                SemesterListView.Items.Refresh();
             });
         }
         public async Task loadSpecSub(Group group)
@@ -180,7 +181,7 @@ namespace Shedule.ViewPages
             MainWindow.Instance.MainFrame.Navigate(new AddGroupTeachingView((Group)DataContext, loadTeachings));
         }
 
-        private void import_Click(object sender, RoutedEventArgs e)
+        private async void import_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -188,7 +189,8 @@ namespace Shedule.ViewPages
                 openFileDialog.Filter = "Excel files(*.xlsx)|*.xlsx";
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    ParsingUtils.ParseFile(openFileDialog.FileName, ((DataContext as Group).Id));
+                    await ParsingUtils.ParseFile(openFileDialog.FileName, ((DataContext as Group).Id));
+                    loadSemesters((Group)DataContext);
                 }
             }
             catch (Exception ex)

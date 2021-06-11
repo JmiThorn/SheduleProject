@@ -4,6 +4,19 @@
              xmlns:local="clr-namespace:Shedule"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate x:Key="save">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Height="23" Source="/Image\Save.png"/>
+                <Label Padding="0" VerticalContentAlignment="Center">Сохранить</Label>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate  x:Key="back">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image Height="15" Source="/Image\left.png" Margin="0,0,5,0"/>
+                <Label Padding="0" VerticalContentAlignment="Center" HorizontalAlignment="Left">Назад</Label>
+            </StackPanel>
+        </DataTemplate>
+        
+        
     </Application.Resources>
 </Application>

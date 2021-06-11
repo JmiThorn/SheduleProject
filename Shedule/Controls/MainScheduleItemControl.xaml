@@ -20,10 +20,10 @@
                             <Image Margin="0,2,4,0" Width="15" Height="15">
                                 <Image.Style>
                                     <Style TargetType="{x:Type Image}">
-                                        <Setter Property="Source" Value="/Image\bad.png"/>
+                                        <Setter Property="Source" Value="/Image\No.png"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
-                                                <Setter Property="Source" Value="/Image\good.png"/>
+                                                <Setter Property="Source" Value="/Image\Yes.png"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -46,8 +46,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation = "Horizontal">
-                                            <TextBlock>
-                                            <Run Text="{Binding Teaching.SpecialitySubject.Subject.Name, StringFormat='{}{0} - '}"/>
+                                            <TextBlock FontSize="14" Margin="10,0,0,0">
+                                            <Run Text="{Binding Teaching.SpecialitySubject.Subject.Name, StringFormat='{} - {0}  — '}"/>
                                             <Run Text="{Binding Teaching.Teacher.Surname}"/>
                                             <Run Text="{Binding Teaching.Teacher.Name, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
                                             <Run Text="{Binding Teaching.Teacher.Patronymic, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
@@ -69,7 +69,7 @@
             IsEditable="False" 
             MinWidth = "135" 
             MaxWidth = "135" 
-            FontSize = "18" 
+            FontSize = "16" 
             Height = "20" 
             Margin = "10,1,10,0" 
             FontFamily = "Global User Interface" 
@@ -83,11 +83,11 @@
                             <Image Margin="2,2,4,0" Width="15" Height="15">
                             <Image.Style>
                                 <Style TargetType="{x:Type Image}">
-                                    <Setter Property="Source" Value="/Image\bad.png"/>
+                                    <Setter Property="Source" Value="/Image\No.png"/>
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
-                                            <Setter Property="Source" Value="/Image\good.png"/>
+                                            <Setter Property="Source" Value="/Image\Yes.png"/>
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding RecommendationLevel}" Value="1">
@@ -99,7 +99,7 @@
                             </Image.Style>
                         </Image>
                         </StackPanel>
-                        <StackPanel Width="100" Orientation="Vertical">
+                        <StackPanel MinWidth="100" MaxWidth="300" Orientation="Vertical">
                             <TextBlock>
                                 <TextBlock.Text>
                                     <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="X">
@@ -112,9 +112,10 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <!--<StackPanel Orientation = "Horizontal">-->
-                                            <TextBlock>
+                                            <TextBlock Margin="10,0,0,0">
                                                 <TextBlock.Text>
-                                                    <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="Не выбрано">
+                                                    
+                                                    <MultiBinding  StringFormat="{} - {0} {1}" TargetNullValue="Не выбрано">
                                                         <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
                                                         <Binding Path="Teaching.Group.Codename"/>
                                                     </MultiBinding>

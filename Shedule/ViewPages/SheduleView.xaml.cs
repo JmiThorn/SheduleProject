@@ -20,6 +20,7 @@ using LearningProcessesAPIClient.exceptions;
 using System.Globalization;
 using Shedule.Controls;
 using Shedule.Utils;
+using System.Windows.Media.Animation;
 
 namespace Shedule.ViewPages
 {
@@ -426,9 +427,6 @@ namespace Shedule.ViewPages
                 currentCurriculums = new List<Curriculum>();
                 currentTeachings = new List<Teaching>();
             }
-
-            //Заполняем списки
-            bindTeachingLists();
         }
 
         //Вызывать при каждой смене недели/семестра/(группы)
@@ -751,7 +749,24 @@ namespace Shedule.ViewPages
                 takeFromGrid = !takeFromGrid;
             }
 
-            //Заменяем старое на новое
+            //clock.Height = 40;
+            //DoubleAnimation buttonAnimation = new DoubleAnimation();
+            //buttonAnimation.From = clock.Height;
+            //buttonAnimation.To = 30;
+            //buttonAnimation.Duration = TimeSpan.FromSeconds(1);
+            //buttonAnimation.RepeatBehavior = new RepeatBehavior(5);
+            ////buttonAnimation.To = 30;
+            //clock.BeginAnimation(Image.HeightProperty, buttonAnimation);
+            //buttonAnimation.AutoReverse = true;
+            ////            buttonAnimation.
+
+            //DoubleAnimation buttonAnimation1 = new DoubleAnimation();
+            //buttonAnimation1.From = clock.ActualHeight;
+            //buttonAnimation1.To = 30;
+            //buttonAnimation1.Duration = TimeSpan.FromSeconds(1);
+            ////            buttonAnimation1.RepeatBehavior = new RepeatBehavior(1);
+            //clock.BeginAnimation(Image.HeightProperty, buttonAnimation1);
+            ////Заменяем старое на новое
             sujectsOverview.ItemsSource = specialityHoursItemsSource.Values.ToList();
         }
         #endregion
@@ -1117,7 +1132,10 @@ namespace Shedule.ViewPages
                 classroomsCB.SelectedIndex = 0;
                 classroomsCB.SelectedIndex = -1;
                 classroomsCB.IsDropDownOpen = true;
+
+               
             }
+
         }
 
         private void ClassroomgSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1165,6 +1183,10 @@ namespace Shedule.ViewPages
         }
         #endregion
 
+        private void romb_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+           
+        }
     }
 
 

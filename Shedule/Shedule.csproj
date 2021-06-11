@@ -63,6 +63,7 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -362,9 +363,18 @@
     <Resource Include="Image\logo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Image\left.png" />
+    <Resource Include="Image\Yes.png" />
     <Resource Include="Image\good.png" />
     <Resource Include="Image\search.png" />
     <Resource Include="Image\bad.png" />
+    <Resource Include="Image\Question.png" />
+    <Resource Include="Image\No.png" />
+    <Resource Include="Image\List.png" />
+    <Resource Include="Image\Save.png" />
+    <Resource Include="Image\Clock.png" />
+    <Resource Include="Image\romb.png" />
+    <Resource Include="Image\rombik.png" />
     <Content Include="Image\search.svg" />
   </ItemGroup>
   <ItemGroup>
