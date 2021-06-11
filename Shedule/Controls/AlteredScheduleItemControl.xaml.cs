@@ -16,13 +16,18 @@ using System.Windows.Shapes;
 namespace Shedule.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для AlteredRowItemControl.xaml
+    /// Логика взаимодействия для AlteredScheduleItemControl.xaml
     /// </summary>
-    public partial class AlteredRowItemControl : UserControl
+    public partial class AlteredScheduleItemControl : UserControl
     {
-        public AlteredRowItemControl()
+        public AlteredScheduleItemControl()
         {
             InitializeComponent();
+        }
+
+        private void ComboBox_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            (sender as ComboBox).SelectedIndex = -1;
         }
     }
 }

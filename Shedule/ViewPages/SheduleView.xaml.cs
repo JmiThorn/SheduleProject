@@ -426,9 +426,6 @@ namespace Shedule.ViewPages
                 currentCurriculums = new List<Curriculum>();
                 currentTeachings = new List<Teaching>();
             }
-
-            //Заполняем списки
-            bindTeachingLists();
         }
 
         //Вызывать при каждой смене недели/семестра/(группы)

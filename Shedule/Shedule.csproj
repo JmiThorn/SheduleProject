@@ -118,12 +118,17 @@
     <Compile Include="AddPage\AddGroupTeachingView.xaml.cs">
       <DependentUpon>AddGroupTeachingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AlteredRowItemControl.xaml.cs">
-      <DependentUpon>AlteredRowItemControl.xaml</DependentUpon>
+    <Compile Include="Controls\AlteredGroupScheduleRowControl.xaml.cs">
+      <DependentUpon>AlteredGroupScheduleRowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AlteredScheduleItemControl.xaml.cs">
+      <DependentUpon>AlteredScheduleItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\MainScheduleItemControl.xaml.cs">
       <DependentUpon>MainScheduleItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlteredSchedules\AlteredScheduleLiveModel.cs" />
+    <Compile Include="Models\AlteredSchedules\AlteredScheduleRow.cs" />
     <Compile Include="Models\ClassroomAvailabilityInfo.cs" />
     <Compile Include="Models\CurriculumFillingInfoModel.cs" />
     <Compile Include="Models\MainScheduleLiveModel.cs" />
@@ -201,7 +206,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\AlteredRowItemControl.xaml">
+    <Page Include="Controls\AlteredGroupScheduleRowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AlteredScheduleItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
