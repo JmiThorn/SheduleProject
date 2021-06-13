@@ -86,6 +86,8 @@ namespace Shedule.Pages
         private void search_box_TextChanged(object sender, TextChangedEventArgs e)
         {
                 DisciplinesListView.Items.Filter = x => ((Subject)x).Name.ToString().IndexOf(search_box.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+            DisciplinesListView.Items.Refresh();
+            totalCount.Content = DisciplinesListView.Items.Count;
         }
     }
 }

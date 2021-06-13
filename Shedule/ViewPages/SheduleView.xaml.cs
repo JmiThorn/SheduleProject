@@ -1187,6 +1187,12 @@ namespace Shedule.ViewPages
         {
            
         }
+
+        private async void Export_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime semesterStart = ((Semester)semesters.SelectedItem).StartDate;
+            await Utils.SheduleExport.Export(allMainSchedules, semesterStart);
+        }
     }
 
 

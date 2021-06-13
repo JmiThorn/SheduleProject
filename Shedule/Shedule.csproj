@@ -135,6 +135,7 @@
     <Compile Include="Models\TeachingAvailabilityInfo.cs" />
     <Compile Include="Models\TeachingModel.cs" />
     <Compile Include="Utils\AppUtils.cs" />
+    <Compile Include="Utils\SheduleExport.cs" />
     <Compile Include="Utils\WeeksColoringUtils.cs" />
     <Compile Include="ViewPages\ClassroomsView.xaml.cs">
       <DependentUpon>ClassroomsView.xaml</DependentUpon>
