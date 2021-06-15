@@ -379,6 +379,7 @@
     <Resource Include="Image\logo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Image\Timer.png" />
     <Resource Include="Image\left.png" />
     <Resource Include="Image\Yes.png" />
     <Resource Include="Image\good.png" />
@@ -391,6 +392,8 @@
     <Resource Include="Image\Clock.png" />
     <Resource Include="Image\romb.png" />
     <Resource Include="Image\rombik.png" />
+    <Resource Include="Image\247.png" />
+    <Resource Include="Image\Group.png" />
     <Content Include="Image\search.svg" />
   </ItemGroup>
   <ItemGroup>

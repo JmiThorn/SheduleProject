@@ -176,9 +176,9 @@ namespace Shedule.Pages
            List<AlteredSchedule> alterToDay = new List<AlteredSchedule>();
             try
             {
-            alterToDay = await LearningProcessesAPI.getAlteredSchedules(date.SelectedDate.Value);
+            alterToDay = await LearningProcessesAPI.getAlteredSchedules(DatePicker.SelectedDate.Value);
 
-            AlterExport.ExportAlterShedule(alterToDay, date.SelectedDate.Value);
+            AlterExport.ExportAlterShedule(alterToDay, DatePicker.SelectedDate.Value);
             }
             catch
             {
