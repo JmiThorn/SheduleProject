@@ -262,7 +262,6 @@ namespace Shedule.Utils
             saveFileDialog.FileName = "Изменения на " + date.ToShortDateString();
             if (saveFileDialog.ShowDialog() == true)
             {
-
                 var ExportPath = saveFileDialog.FileName;
                 document.SaveAs2(ExportPath);
                 document.Close();
