@@ -24,7 +24,7 @@ namespace Shedule.Models
             {
                 allocatedHours = value;
                 OnPropertyChanged("AllocatedHours");
-                OnPropertyChanged("NotAllocatedHours");
+                OnPropertyChanged("AbsoluteNotAllocatedHours");
             }
         }
 

@@ -19,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <ComboBox x:Name="groups" ItemsSource="{Binding AvailableGroupsList}" SelectedValue="Id" DisplayMemberPath="Codename" SelectionChanged="groups_SelectionChanged" PreviewMouseRightButtonDown="groups_PreviewMouseRightButtonDown"/>
+        <TextBlock Visibility="Collapsed" x:Name="groupTitle" FontSize="30" Text="{Binding SelectedGroup.Codename}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" PreviewMouseRightButtonDown="groups_PreviewMouseRightButtonDown"/>
+        <ComboBox x:Name="groups" ItemsSource="{Binding AvailableGroupsList}" SelectedValue="Id" DisplayMemberPath="Codename" SelectionChanged="groups_SelectionChanged"/>
     </Grid>
 </UserControl>

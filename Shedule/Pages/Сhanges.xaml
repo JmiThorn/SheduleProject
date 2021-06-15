@@ -17,7 +17,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Изменения на" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontSize="66" FontWeight="Bold"/>
+        <Label HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontSize="66" FontWeight="Bold">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Изменения на"/>
+                <DatePicker IsTodayHighlighted="True" x:Name="DatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+            </StackPanel>
+        </Label>
         <Grid x:Name="Frame" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>

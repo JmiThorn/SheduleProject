@@ -5,128 +5,176 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Shedule.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Grid.Row="2" Grid.Column="1">
+             d:DesignHeight="450" d:DesignWidth="800" Grid.Row="2" Grid.Column="1" DataContextChanged="UserControl_DataContextChanged">
     <UserControl.Resources>
         <local:FirstLetterFromStrConverter x:Key="FirstLetterFromStrConverter"/>
         <local:BuildingConverter x:Key="BuildingConverter"/>
     </UserControl.Resources>
-    <StackPanel x:Name="StackPanel" x:FieldModifier="public">
-        <ComboBox SelectedValue ="{Binding NewTeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "16" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id" PreviewMouseRightButtonDown="ComboBox_MouseRightButtonDown">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel>
-                            <Image Margin="0,2,4,0" Width="15" Height="15">
-                                <Image.Style>
-                                    <Style TargetType="{x:Type Image}">
-                                        <Setter Property="Source" Value="/Image\bad.png"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
-                                                <Setter Property="Source" Value="/Image\good.png"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
+    <StackPanel>
+        <Image x:Name="ClassRecommendationImage" Width="10" Height="10">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Source" Value="{x:Null}"/>
+                    <Setter Property="ToolTip" Value="{x:Null}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSubjectOver}" Value="True">
+                            <Setter Property="Source" Value="/Image\good.png"/>
+                            <Setter Property="ToolTip" Value="Основной предмет окончен\nРекомендуется установить замену"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsPracticeAtTheSameTime}" Value="True">
+                            <Setter Property="Source" Value="/Image\search.png"/>
+                            <Setter Property="ToolTip" Value="В данный момент группа проходит практику. Рекомендуется установить отмену"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding DailyHoursAreOk}" Value="False">
+                            <Setter Property="Source" Value="/Image\bad.png"/>
+                            <Setter Property="ToolTip" Value="Превышен дневной лимит часов"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <StackPanel x:Name="NoChangeContent" Visibility="Visible">
+            <Button Content="Добавить замену" Click="AddChangeButtonClick"/>
+            <TextBlock>
+                <Run Text="{Binding MainSchedule.Teaching.SpecialitySubject.Subject.Name}"/>
+                <Run>
+                    <Run.Text>
+                        <MultiBinding StringFormat="{}{0} {1}. {2}." >
+                            <Binding Path="MainSchedule.Teaching.Teacher.Surname" TargetNullValue="НЕТ ПАРЫ"/>
+                            <Binding Path="MainSchedule.Teaching.Teacher.Name" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                            <Binding Path="MainSchedule.Teaching.Teacher.Patronymic" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                        </MultiBinding>
+                    </Run.Text>    
+                </Run>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel x:Name="ChangeContent" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Удалить замену" Click="DeleteChangeButtonClick"/>
+                <TextBlock Text="Замена"/>
+            </StackPanel>
+            <ComboBox x:Name="Teachings" x:FieldModifier="public" SelectedValue ="{Binding AlteredSchedule.NewTeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "16" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "ExtendedTeaching.Id" PreviewMouseRightButtonDown="ComboBox_MouseRightButtonDown" SelectionChanged="Teachings_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <Image Margin="0,2,4,0" Width="15" Height="15">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="/Image\bad.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
+                                                    <Setter Property="Source" Value="/Image\good.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding  StringFormat="{}{0} {1} {2}. {3}. ({4})" TargetNullValue="ОТМЕНА">
+                                            <Binding Path="ExtendedTeaching.SpecialitySubject.Subject.Name"/>
+                                            <Binding Path="ExtendedTeaching.Teacher.Surname"/>
+                                            <Binding Path="ExtendedTeaching.Teacher.Name" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                                            <Binding Path="ExtendedTeaching.Teacher.Patronymic" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                                            <Binding Path="RelativeNotAllocatedHoursFact" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                                            <!--<Binding Path="Teaching.Group.Codename"/>-->
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <ItemsControl BorderBrush="white" ItemsSource = "{Binding TeacherParallels}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation = "Horizontal">
+                                                <TextBlock>
+                                                <Run Text="{Binding Item2.SpecialitySubject.Subject.Name, StringFormat='{}{0} - '}"/>
+                                                <!--<Run Text="{Binding Teaching.SpecialitySubject.Subject.Name, StringFormat='{}{0} - '}"/>-->
+                                                <Run Text="{Binding Item2.Teacher.Surname}"/>
+                                                <Run Text="{Binding Item2.Teacher.Name, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
+                                                <Run Text="{Binding Item2.Teacher.Patronymic, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
+                                                <Run Text="{Binding Item2.Group.Codename}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl >
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel>
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding  StringFormat="{}{0} {1} {2}. {3}." TargetNullValue="Нет пары">
-                                        <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
-                                        <Binding Path="Teaching.Teacher.Surname"/>
-                                        <Binding Path="Teaching.Teacher.Name" Converter="{StaticResource FirstLetterFromStrConverter}"/>
-                                        <Binding Path="Teaching.Teacher.Patronymic" Converter="{StaticResource FirstLetterFromStrConverter}"/>
-                                        <!--<Binding Path="Teaching.Group.Codename"/>-->
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                            <ItemsControl BorderBrush="white" ItemsSource = "{Binding MainSchedulesInTheSameTime}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation = "Horizontal">
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox 
+                x:Name="Classrooms"
+                x:FieldModifier="public"
+                SelectedValue ="{Binding AlteredSchedule.NewClassroomId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                Padding="0" 
+                SelectedValuePath = "Classroom.Id" 
+                IsEditable="False" 
+                MinWidth = "135" 
+                MaxWidth = "135" 
+                FontSize = "18" 
+                Height = "20" 
+                Margin = "10,1,10,0" 
+                FontFamily = "Global User Interface" 
+                HorizontalContentAlignment = "Center" 
+                VerticalContentAlignment = "Center" 
+                HorizontalAlignment = "Center"
+                SelectionChanged="Classrooms_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Width="20">
+                                <Image Margin="2,2,4,0" Width="15" Height="15">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="/Image\bad.png"/>
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
+                                                    <Setter Property="Source" Value="/Image\good.png"/>
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding RecommendationLevel}" Value="1">
+                                                    <Setter Property="Source" Value="{x:Null}"/>
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </StackPanel>
+                            <StackPanel Width="100" Orientation="Vertical">
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="X">
+                                            <Binding Path="Classroom.Number"/>
+                                            <Binding Path="Classroom.Building" Converter="{StaticResource BuildingConverter}"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <ItemsControl BorderBrush="white" ItemsSource = "{Binding TeachingsAtTheSameTime}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <!--<StackPanel Orientation = "Horizontal">-->
                                             <TextBlock>
-                                            <Run Text="{Binding Teaching.SpecialitySubject.Subject.Name, StringFormat='{}{0} - '}"/>
-                                            <Run Text="{Binding Teaching.Teacher.Surname}"/>
-                                            <Run Text="{Binding Teaching.Teacher.Name, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
-                                            <Run Text="{Binding Teaching.Teacher.Patronymic, Converter={StaticResource FirstLetterFromStrConverter}, StringFormat='{}{0}. '}"/>
-                                            <Run Text="{Binding Teaching.Group.Codename}"/>
+                                                <TextBlock.Text>
+                                                    <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="Не выбрано">
+                                                        <Binding Path="SpecialitySubject.Subject.Name"/>
+                                                        <Binding Path="Group.Codename"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
                                             </TextBlock>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl >
+                                            <!--</StackPanel>-->
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl >
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ComboBox 
-            SelectedValue ="{Binding NewClassroomId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-            Padding="0" 
-            SelectedValuePath = "Classroom.Id" 
-            IsEditable="False" 
-            MinWidth = "135" 
-            MaxWidth = "135" 
-            FontSize = "18" 
-            Height = "20" 
-            Margin = "10,1,10,0" 
-            FontFamily = "Global User Interface" 
-            HorizontalContentAlignment = "Center" 
-            VerticalContentAlignment = "Center" 
-            HorizontalAlignment = "Center">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Width="20">
-                            <Image Margin="2,2,4,0" Width="15" Height="15">
-                                <Image.Style>
-                                    <Style TargetType="{x:Type Image}">
-                                        <Setter Property="Source" Value="/Image\bad.png"/>
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
-                                                <Setter Property="Source" Value="/Image\good.png"/>
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding RecommendationLevel}" Value="1">
-                                                <Setter Property="Source" Value="{x:Null}"/>
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-                        </StackPanel>
-                        <StackPanel Width="100" Orientation="Vertical">
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="X">
-                                        <Binding Path="Classroom.Number"/>
-                                        <Binding Path="Classroom.Building" Converter="{StaticResource BuildingConverter}"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                            <ItemsControl BorderBrush="white" ItemsSource = "{Binding MainSchedulesInTheSameClassroom}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <!--<StackPanel Orientation = "Horizontal">-->
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="Не выбрано">
-                                                    <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
-                                                    <Binding Path="Teaching.Group.Codename"/>
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                        <!--</StackPanel>-->
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl >
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
     </StackPanel>
 </UserControl>

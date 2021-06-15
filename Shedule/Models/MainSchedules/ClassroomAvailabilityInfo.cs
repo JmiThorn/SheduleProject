@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LearningProcessesAPIClient.model;
 
-namespace Shedule.Models
+namespace Shedule.Models.MainSchedules
 {
     public class ClassroomAvailabilityInfo
     {

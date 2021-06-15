@@ -149,13 +149,13 @@ namespace Shedule.Utils
         }
 
         //Вернет от 1 до 7 в соответствии с днями недели
-        private static int convertDayOfWeekToInt(DayOfWeek dayOfWeek)
+        public static int convertDayOfWeekToInt(DayOfWeek dayOfWeek)
         {
             if (dayOfWeek == DayOfWeek.Sunday)
                 return 7;
             else
             {
-                return (int)dayOfWeek;
+                return (int)dayOfWeek - 1;
             }
         }
 

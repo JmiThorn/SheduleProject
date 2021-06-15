@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shedule.Models
+namespace Shedule.Models.MainSchedules
 {
     public class MainScheduleLiveModel : MainSchedule, INotifyPropertyChanged
     {
