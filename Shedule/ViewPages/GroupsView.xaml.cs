@@ -84,7 +84,7 @@ namespace Shedule.ViewPages
                 e.Handled = true;
             }
         }
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
@@ -98,6 +98,10 @@ namespace Shedule.ViewPages
                 codename.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             });
+        }
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
         }
 
 

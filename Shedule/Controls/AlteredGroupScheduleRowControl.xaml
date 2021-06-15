@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition  Width="120"></ColumnDefinition>
+            <ColumnDefinition  Width="*"></ColumnDefinition>
             <ColumnDefinition  Width="*"></ColumnDefinition>
             <ColumnDefinition  Width="*"></ColumnDefinition>
             <ColumnDefinition  Width="*"></ColumnDefinition>
@@ -19,7 +19,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <TextBlock Visibility="Collapsed" x:Name="groupTitle" FontSize="30" Text="{Binding SelectedGroup.Codename}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" PreviewMouseRightButtonDown="groups_PreviewMouseRightButtonDown"/>
-        <ComboBox x:Name="groups" ItemsSource="{Binding AvailableGroupsList}" SelectedValue="Id" DisplayMemberPath="Codename" SelectionChanged="groups_SelectionChanged"/>
+        <Border BorderThickness="1" BorderBrush="#cfcfcf">
+        <TextBlock  FontWeight="Bold" Visibility="Collapsed" x:Name="groupTitle" FontSize="30" Text="{Binding SelectedGroup.Codename}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" PreviewMouseRightButtonDown="groups_PreviewMouseRightButtonDown"/>
+            
+        </Border>
+        <ComboBox FontWeight="Bold" FontSize="36"  x:Name="groups" ItemsSource="{Binding AvailableGroupsList}" SelectedValue="Id" DisplayMemberPath="Codename" SelectionChanged="groups_SelectionChanged"/>
     </Grid>
 </UserControl>

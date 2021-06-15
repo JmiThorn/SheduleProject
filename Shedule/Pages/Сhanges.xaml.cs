@@ -37,7 +37,8 @@ namespace Shedule.Pages
         public Сhanges()
         {
             InitializeComponent();
-            DatePicker.SelectedDate = DateTime.Parse("13.01.2020");
+           
+            DatePicker.SelectedDate = DateTime.Today;
         }
 
         async Task loadSchedules()
@@ -153,6 +154,15 @@ namespace Shedule.Pages
                     return;
                 }
             }
+            var color = WeeksColoringUtils.getWeekColor(DatePicker.SelectedDate.Value);
+            if (color == WeeksColoringUtils.WeekColors.BLUE)
+            {
+                week.Fill = Brushes.Blue;
+            }
+            else
+            {
+                week.Fill = Brushes.Red;
+            }
             Dispatcher.Invoke(async () =>
             {
                 await loadGroups();
@@ -174,6 +184,11 @@ namespace Shedule.Pages
             {
                 MessageBox.Show("Gecnj");
             }
+
+        }
+
+        private void Ellipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
 
         }
     }

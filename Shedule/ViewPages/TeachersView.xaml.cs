@@ -47,8 +47,7 @@ namespace Shedule.ViewPages
                 departmentsCB.ItemsSource = departments;
             });
         }
-
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
@@ -61,6 +60,10 @@ namespace Shedule.ViewPages
                 var result = await LearningProcessesAPI.updateTeacher(teacher.Id, teacher);
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             });
+        }
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
         }
 
         private void back_Click(object sender, RoutedEventArgs e)

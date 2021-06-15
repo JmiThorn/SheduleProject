@@ -36,8 +36,7 @@ namespace Shedule.ViewPages
                 departmentCB.ItemsSource = department;
             });
         }
-
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () => {
                 if (Convert.ToInt32(week.Text) > 168 || Convert.ToInt32(day.Text) > 24)
@@ -59,6 +58,10 @@ namespace Shedule.ViewPages
                     UpdateParent?.Invoke();
                 }
             });
+        }
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
         }
 
         private void edit_butt_Click(object sender, RoutedEventArgs e)

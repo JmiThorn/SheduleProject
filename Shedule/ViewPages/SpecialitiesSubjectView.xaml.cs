@@ -41,8 +41,7 @@ namespace Shedule.ViewPages
         {
             NavigationService.GoBack();
         }
-
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
@@ -54,6 +53,10 @@ namespace Shedule.ViewPages
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
             });
+        }
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
         }
     }
 }

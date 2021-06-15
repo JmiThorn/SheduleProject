@@ -10,6 +10,7 @@
         <local:FirstLetterFromStrConverter x:Key="FirstLetterFromStrConverter"/>
         <local:BuildingConverter x:Key="BuildingConverter"/>
     </UserControl.Resources>
+    <Border BorderThickness="1" BorderBrush="#cfcfcf">
     <StackPanel>
         <Image x:Name="ClassRecommendationImage" Width="10" Height="10">
             <Image.Style>
@@ -79,7 +80,7 @@
                                             <Binding Path="ExtendedTeaching.Teacher.Surname"/>
                                             <Binding Path="ExtendedTeaching.Teacher.Name" Converter="{StaticResource FirstLetterFromStrConverter}"/>
                                             <Binding Path="ExtendedTeaching.Teacher.Patronymic" Converter="{StaticResource FirstLetterFromStrConverter}"/>
-                                            <Binding Path="RelativeNotAllocatedHoursFact" Converter="{StaticResource FirstLetterFromStrConverter}"/>
+                                            <Binding Path="RelativeNotAllocatedHoursFact"/>
                                             <!--<Binding Path="Teaching.Group.Codename"/>-->
                                         </MultiBinding>
                                     </TextBlock.Text>
@@ -177,4 +178,5 @@
             </ComboBox>
         </StackPanel>
     </StackPanel>
+    </Border>
 </UserControl>

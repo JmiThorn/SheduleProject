@@ -52,8 +52,7 @@ namespace Shedule.ViewPages
             number.IsEnabled = true;
             affiliationCB.IsEnabled = true;
         }
-
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
@@ -66,6 +65,10 @@ namespace Shedule.ViewPages
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
             });
+        }
+        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
         }
 
         private void number_PreviewTextInput(object sender, TextCompositionEventArgs e)

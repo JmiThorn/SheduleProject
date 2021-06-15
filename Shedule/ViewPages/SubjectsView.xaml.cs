@@ -33,8 +33,7 @@ namespace Shedule.ViewPages
         {
             name.IsEnabled = true;
         }
-
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
@@ -43,6 +42,10 @@ namespace Shedule.ViewPages
                 var result = await LearningProcessesAPI.updateSubject(subject.Id, subject);
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             });
+        }
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
         }
 
         private void back_Click(object sender, RoutedEventArgs e)

@@ -45,8 +45,7 @@ namespace Shedule.ViewPages
         {
            
         }
-
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
@@ -76,6 +75,10 @@ namespace Shedule.ViewPages
                     MessageBox.Show("Семестр не найден!", "Ошбика обновления данных", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             });
+        }
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
         }
         private void DigitCheck_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
