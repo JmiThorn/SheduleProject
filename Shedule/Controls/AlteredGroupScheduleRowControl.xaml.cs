@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -24,9 +25,42 @@ namespace Shedule.Controls
     /// </summary>
     public partial class AlteredGroupScheduleRowControl : UserControl
     {
+        private List<int> highlightQueue = new List<int>();
+        private bool hasCells = false;
+
         public AlteredGroupScheduleRowControl()
         {
             InitializeComponent();
+        }
+
+        public void  addCellForHighlight(int column)
+        {
+            highlightQueue.Add(column);
+            if (hasCells)
+            {
+                highlightQueue.ForEach(h => highlightCell(h));
+                highlightQueue.Clear();
+            }
+        }
+
+        private void highlightCell(int column)
+        {
+            foreach (var cell in Grid.Children)
+            {
+                if (!(cell is AlteredScheduleItemControl))
+                    continue;
+                if (Grid.GetColumn((UIElement)cell) == column)
+                {
+                    ColorAnimation animation = new ColorAnimation();
+                    animation.To = Colors.Red;
+                    animation.Duration = new Duration(TimeSpan.FromSeconds(1));
+                    animation.AutoReverse = true;
+                    Storyboard.SetTargetProperty(animation, new PropertyPath("(Background).(SolidColorBrush.Color)", null));
+                    Storyboard storyboard = new Storyboard();
+                    storyboard.Children.Add(animation);
+                    storyboard.Begin((cell as AlteredScheduleItemControl));
+                }
+            }
         }
 
         private void fillCells()
@@ -37,6 +71,9 @@ namespace Shedule.Controls
                 Grid.SetColumn(combos, i + 1);
                 Grid.Children.Add(combos);
             }
+            hasCells = true;
+            highlightQueue.ForEach(h => highlightCell(h));
+            highlightQueue.Clear();
         }
 
         private async void groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -100,7 +137,7 @@ namespace Shedule.Controls
                             continue;
                         int classNumber = Grid.GetColumn(item as UIElement) - 1;
                         (item as AlteredScheduleItemControl).DataContext = (DataContext as AlteredScheduleRow).getClassModel(classNumber);
-                        //(item as AlteredScheduleItemControl).Teachings.ItemsSource = ((item as AlteredScheduleItemControl).DataContext as ClassAvailabilityInfoModel).getFeaturedTeachingModelsList();
+                        (item as AlteredScheduleItemControl).Teachings.ItemsSource = ((item as AlteredScheduleItemControl).DataContext as ClassAvailabilityInfoModel).getTeachingModels();
                     }
                 });
             }
