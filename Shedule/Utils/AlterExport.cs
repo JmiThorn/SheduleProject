@@ -1,5 +1,6 @@
 ﻿using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -244,17 +245,29 @@ namespace Shedule.Utils
                 }
             }
             ////////////////////////////////////////////// - Сохранение файла
-            var ExportPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            var path = new FileInfo(ExportPath + $"\\Изменения расписания на {date.ToShortDateString()}.docx");
-            int n = 1;
-            while (path.Exists)
+            //var ExportPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = new FileInfo(ExportPath + $"\\Изменения расписания на {date.ToShortDateString()}.docx");
+            //int n = 1;
+            //while (path.Exists)
+            //{
+            //    path = new FileInfo(ExportPath + "\\Изменения расписания на " + date.ToShortDateString() + "(" + n++.ToString() + ")" + ".docx");
+            //}
+          //  string path2 = path.ToString();
+            //document.SaveAs2(path2);
+            //document.Close();
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Document Word files(*.docx)|*.docx";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveFileDialog.FileName = "Изменения на " + date.ToShortDateString();
+            if (saveFileDialog.ShowDialog() == true)
             {
-                path = new FileInfo(ExportPath + "\\Изменения расписания на " + date.ToShortDateString() + "(" + n++.ToString() + ")" + ".docx");
+
+                var ExportPath = saveFileDialog.FileName;
+                document.SaveAs2(ExportPath);
+                document.Close();
             }
-            string path2 = path.ToString();
-            document.SaveAs2(path2);
-            document.Close();
-        }
+            }
 
 
     }
