@@ -22,7 +22,7 @@
                 <TextBlock Text="Изменения на" FontSize="64" FontFamily="Global User Interface" Height="80"/>
                 <DatePicker Background="Transparent" BorderBrush="Transparent" IsTodayHighlighted="True" x:Name="DatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged" FontSize="64" FontFamily="Global User Interface" Width="398" Height="80"/>
 
-                <Ellipse Name="week" Fill="Red" Width="30" Height="30" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown"/>
+                <Ellipse Name="week" Fill="Red" Width="30" Height="30"/>
             </StackPanel>
         </Label>
         <Grid x:Name="Frame" Grid.Row="1">
@@ -54,7 +54,7 @@
             <ItemsControl Name="alteredRows"/>
         </ScrollViewer>
         <Button Content="Экспорт" BorderThickness="2" BorderBrush="#e9e9e9" Background="Transparent" HorizontalAlignment="Right" Margin="0,0,150,10" VerticalAlignment="Bottom" Width="130" Height="40" Click="Button_Click_1" Grid.Row="2"/>
-        <Button Content="Button"  BorderThickness="2" BorderBrush="#e9e9e9" Background="Transparent" ContentTemplate="{StaticResource ResourceKey=save}" Grid.Row="2" VerticalAlignment="Bottom" Width="130" Height="40" Margin="0,0,10,10" HorizontalAlignment="Right"/>
+        <Button x:Name="saveButton" Content="Button"  BorderThickness="2" BorderBrush="#e9e9e9" Background="Transparent" ContentTemplate="{StaticResource ResourceKey=save}" Grid.Row="2" VerticalAlignment="Bottom" Width="130" Height="40" Margin="0,0,10,10" HorizontalAlignment="Right" Click="saveButton_Click"/>
         <!--<Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="60">В разработке</Label>-->
     </Grid>
 </Page>

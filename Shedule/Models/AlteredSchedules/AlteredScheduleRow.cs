@@ -206,14 +206,15 @@ namespace Shedule.Models.AlteredSchedules
         #endregion
 
         #region Обновление Замен
-        public static void createAlteredSchedule(ClassAvailabilityInfoModel model)
+        public static bool createAlteredSchedule(ClassAvailabilityInfoModel model)
         {
             if(model.MainSchedule == null) {
                 MessageBox.Show("Отсутствует основное расписание для выбранной пары!", "Ошибка наполнения", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                return false;
             }
             AlteredSchedule alteredSchedule = new AlteredSchedule()
             {
+                Id = -1,
                 Date = model.Date,
                 MainScheduleId = model.MainSchedule.Id,
                 MainSchedule = model.MainSchedule
@@ -222,6 +223,7 @@ namespace Shedule.Models.AlteredSchedules
             model.AlteredSchedule = alteredSchedule;
             //Обновляем все заинетерснованные компоненты
             OnAlteredSchedulesUpdated?.Invoke();
+            return true;
         }
 
         public static void updateAlteredSchedule()
