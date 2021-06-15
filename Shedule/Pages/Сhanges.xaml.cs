@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LearningProcessesAPIClient.api;
+using LearningProcessesAPIClient.model;
 
 namespace Shedule.Pages
 {
@@ -54,6 +56,16 @@ namespace Shedule.Pages
             Grid.SetRow(control, Frame.RowDefinitions.Count-2);
             Grid.SetColumnSpan(control, 7);
             Frame.Children.Add(control);
+        }
+
+              
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+           List<AlteredSchedule> alterToDay = new List<AlteredSchedule>();
+            alterToDay = await LearningProcessesAPI.getAlteredSchedules(date.SelectedDate.Value);
+
+
+            AlterExport.ExportAlterShedule(alterToDay, date.SelectedDate.Value);
         }
     }
 }

@@ -66,25 +66,5 @@ namespace Shedule.Pages
                 MessageBox.Show("Не корректный логин или пароль, проверьте правильность и повторите попытку");
             }
         }
-
-        //private void import_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        OpenFileDialog openFileDialog = new OpenFileDialog();
-        //        openFileDialog.Filter = "Excel files(*.xlsx;*.xls)|*.xlsx;*.xls";
-        //        if (openFileDialog.ShowDialog() == true)
-        //        {
-        //            filename.Content = (openFileDialog.FileName);
-        //       //     ParsingUtils.ParseFile(openFileDialog.FileName);
-
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-           
-        //}
     }
 }

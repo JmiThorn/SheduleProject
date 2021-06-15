@@ -50,7 +50,6 @@ namespace Shedule
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Frame1.Visibility = Visibility.Visible;
             MainFrame.Navigate(new SheduleView());
         }
 

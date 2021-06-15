@@ -45,6 +45,8 @@
             <!--<ComboBox x:Name="tet" SelectedValue="{Binding Id}" DisplayMemberPath="Codename" SelectedValuePath="Id" Grid.Row="2" Margin="10,10,10,11" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>-->
 
         </Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="104,82,0,0" VerticalAlignment="Top" Width="156" Height="67" Click="Button_Click_1"/>
+        <DatePicker Name="date" HorizontalAlignment="Left" Margin="160,154,0,0" VerticalAlignment="Top" Width="276"/>
         <!--<Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="60">В разработке</Label>-->
     </Grid>
 </Page>

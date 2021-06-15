@@ -31,6 +31,10 @@ namespace Shedule.ViewPages
             DataContext = classroom;
             loadTeachers();
             UpdateParent += updater;
+            if (classroom.Building == 1)
+                building.SelectedIndex = 0;
+            if (classroom.Building == 2)
+                building.SelectedIndex = 1;
         }
 
         public async Task loadTeachers()

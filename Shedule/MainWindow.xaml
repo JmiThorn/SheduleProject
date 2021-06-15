@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Главная" MinHeight="950" MinWidth="1650"
         Icon="Image\logo.ico"
-        WindowState="Maximized"
+        WindowState="Maximized" Width="1515" Height="944"
         >
 
     <Grid>
@@ -24,7 +24,8 @@
             <ColumnDefinition Width="109*"></ColumnDefinition>
             <ColumnDefinition Width="387*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="Chang_but" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="55">Изменения</Button> <!--<Button x:Name="Chang_but" Click="Chang_but_Click" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="55">Изменения</Button>-->
+        <!--<Button x:Name="Chang_but" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="55">Изменения</Button>--> 
+        <Button x:Name="Chang_but" Click="Chang_but_Click" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="55">Изменения</Button>
         <Button x:Name="Shed_but" Click="Button_Click" Background="White" Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="55">Расписание</Button>
         <TextBlock Foreground="#2d2d2d" Opacity="0.7" FontWeight="normal" FontSize="34" Grid.Column="0" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center" Height="56" Margin="0,2,0,12">Учебная часть</TextBlock>
         <ScrollViewer Grid.Column="0" Grid.Row="4" VerticalScrollBarVisibility="Hidden" Margin="0,0,0,10">
@@ -58,7 +59,7 @@
         <Image Grid.Row="0" Grid.Column="0" Source="image 2.png" Margin="85,35"/>
 
         <Border BorderBrush="#2D2D2D" Opacity="0.7" BorderThickness="4,0,0,0" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="2">
-            <Frame Background="#F6F6FC" x:Name="MainFrame" Grid.Row="0" Grid.Column="1" NavigationUIVisibility="Hidden" Content="" Grid.RowSpan="17"/>
+            <Frame Background="#F6F6FC" x:Name="MainFrame" Grid.Row="0" Grid.Column="1" NavigationUIVisibility="Hidden" Content="" Grid.RowSpan="17" Margin="6,0,-6,0"/>
         </Border>
     </Grid>
 </Window>

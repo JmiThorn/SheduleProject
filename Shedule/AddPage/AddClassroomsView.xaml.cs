@@ -41,7 +41,7 @@ namespace Shedule.ViewPages
             });
         }
 
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
@@ -49,16 +49,21 @@ namespace Shedule.ViewPages
                 teacher = null;
                 if ((affiliationCB.SelectedIndex) == -1)
                 {
-                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedIndex)+1, teacher);
+                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedIndex) + 1, teacher);
                     MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateParent?.Invoke();
                 }
                 else
                 {
-                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedIndex)+1, Convert.ToInt32(affiliationCB.SelectedValue));
+                    var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedIndex) + 1, Convert.ToInt32(affiliationCB.SelectedValue));
                     MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             });
+        }
+
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
         }
 
         private void number_PreviewTextInput(object sender, TextCompositionEventArgs e)
