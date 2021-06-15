@@ -15,6 +15,7 @@ namespace Shedule.Models.AlteredSchedules
         private AlteredSchedule alteredSchedule = null;
         private readonly Curriculum practiceCurriculum;
         private readonly List<ExtendedTeaching> extendedTeachings;
+        private bool cacheIsSubjectOver = false;
 
         private Group Group { get; set; }
         public DateTime Date { get; private set; }
@@ -38,36 +39,7 @@ namespace Shedule.Models.AlteredSchedules
 
         //Может быть для одной и той же пары в один день разным, т.е. может быть две пары, и последней будет первая пара, а вторая уже должна заменяться
         public bool IsSubjectOver { 
-            get
-            {
-                if (MainSchedule == null || MainCurriculum == null)
-                    return false;
-                var prevMains = AlteredScheduleRow.AllMainSchedules.Where(m =>
-                    m.SemesterId == MainSchedule.SemesterId
-                    && m.DayOfWeekId == MainSchedule.DayOfWeekId
-                    && m.IsRedWeek == MainSchedule.IsRedWeek
-                    && m.ClassNumber < MainSchedule.ClassNumber
-                    && m.TeachingId != null
-                    && m.TeachingId == MainSchedule.TeachingId);
-                var prevAlters = AlteredScheduleRow.AllAlteredSchedules.Where(a => 
-                    a.Date == Date
-                    && a.MainSchedule.ClassNumber < MainSchedule.ClassNumber
-                    && a.MainSchedule.SemesterId == MainSchedule.SemesterId);
-                int todayPrevHours = 0;
-                prevAlters.ToList().ForEach(a =>
-                {
-                    if (a.NewTeachingId != null
-                    && a.NewTeachingId == MainSchedule.TeachingId
-                    && a.MainSchedule.TeachingId != MainSchedule.TeachingId)
-                        todayPrevHours++;
-                    if (a.NewTeachingId == null
-                    && a.MainSchedule.TeachingId == MainSchedule.TeachingId)
-                        todayPrevHours--;
-                });
-                todayPrevHours += prevMains.Count();
-                todayPrevHours *= 2;
-                return MainCurriculum.UsedHours + todayPrevHours >= MainCurriculum.PlannedHours;
-            }
+            get => cacheIsSubjectOver;
         }
 
         //Рекомендуем не перегружать учеников
@@ -79,8 +51,9 @@ namespace Shedule.Models.AlteredSchedules
                 var relatedMainSchedules = AlteredScheduleRow.AllMainSchedules.Where(m =>
                     m.SemesterId == MainSchedule.SemesterId
                     && m.DayOfWeekId == MainSchedule.DayOfWeekId
-                    && m.IsRedWeek == MainSchedule.IsRedWeek);
-                var alteredSchedules = AlteredScheduleRow.AllAlteredSchedules.Where(a => a.Date == Date && a.MainSchedule.SemesterId == MainSchedule.SemesterId);
+                    && m.IsRedWeek == MainSchedule.IsRedWeek
+                    && AlteredScheduleRow.AllAlteredSchedules.Count(a => a.MainScheduleId == m.Id && a.NewTeachingId == null) == 0);
+                var alteredSchedules = AlteredScheduleRow.AllAlteredSchedules.Where(a => a.Date == Date && a.MainSchedule.SemesterId == MainSchedule.SemesterId && a.NewTeachingId != null);
                 int alteredHours = alteredSchedules.Count(a => a.NewTeachingId != null && a.MainSchedule.TeachingId == null) * 2;
                 int mainHours = relatedMainSchedules.Count(r => r.TeachingId != null) * 2;
 
@@ -99,35 +72,45 @@ namespace Shedule.Models.AlteredSchedules
             MainCurriculum = mainCurriculum;
             this.practiceCurriculum = practiceCurriculum;
             this.extendedTeachings = extendedTeachings;
+            onAlteredSchedulesUpdated();
         }
 
-        public List<TeachingAvailabilityInfo> getFeaturedTeachingModelsList()
+        private void updateCache()
         {
-            if (!DailyHoursAreOk)
+            if (MainSchedule == null || MainCurriculum == null)
             {
-                return null;//Рекомендация отмены
+                cacheIsSubjectOver =  false;
+                return;
             }
-            if (IsPracticeAtTheSameTime)
+
+            var prevMains = AlteredScheduleRow.AllMainSchedules.Where(m =>
+                m.SemesterId == MainSchedule.SemesterId
+                && m.DayOfWeekId == MainSchedule.DayOfWeekId
+                && m.IsRedWeek == MainSchedule.IsRedWeek
+                && m.ClassNumber < MainSchedule.ClassNumber
+                && m.TeachingId != null
+                && m.TeachingId == MainSchedule.TeachingId);
+            var prevAlters = AlteredScheduleRow.AllAlteredSchedules.Where(a =>
+                a.Date == Date
+                && a.MainSchedule.ClassNumber < MainSchedule.ClassNumber
+                && a.MainSchedule.SemesterId == MainSchedule.SemesterId);
+            int todayPrevHours = 0;
+            prevAlters.ToList().ForEach(a =>
             {
-                int practiceSubjId = practiceCurriculum.SpecialitySubjectId;
-                var teaching = extendedTeachings.FirstOrDefault(t => t.SpecialitySubjectId == practiceSubjId);
-                if (teaching == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return new List<TeachingAvailabilityInfo>()
-                            {
-                                new TeachingAvailabilityInfo(teaching,Date,MainSchedule.ClassNumber,MainSchedule.DayOfWeekId,MainSchedule.IsRedWeek)
-                            };
-                }
-            }
-            //IsSubjectOver рекомендует тоже самое по факту
-            return getTeachingModels();
+                if (a.NewTeachingId != null
+                && a.NewTeachingId == MainSchedule.TeachingId
+                && a.MainSchedule.TeachingId != MainSchedule.TeachingId)
+                    todayPrevHours++;
+                if (a.NewTeachingId == null
+                && a.MainSchedule.TeachingId == MainSchedule.TeachingId)
+                    todayPrevHours--;
+            });
+            todayPrevHours += prevMains.Count();
+            todayPrevHours *= 2;
+            cacheIsSubjectOver =  MainCurriculum.UsedHours + todayPrevHours >= MainCurriculum.PlannedHours;
         }
 
-        private List<TeachingAvailabilityInfo> getTeachingModels()
+        public List<TeachingAvailabilityInfo> getTeachingModels()
         {
             var list = new List<TeachingAvailabilityInfo>();
             if (MainSchedule != null)
@@ -143,6 +126,7 @@ namespace Shedule.Models.AlteredSchedules
 
         public override void onAlteredSchedulesUpdated()
         {
+            updateCache();  
             OnPropertyChanged("AlteredSchedule");
             OnPropertyChanged("DailyHoursAreOk");
             OnPropertyChanged("IsSubjectOver");

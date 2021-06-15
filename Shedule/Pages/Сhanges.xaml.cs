@@ -20,6 +20,7 @@ using LearningProcessesAPIClient.api;
 using LearningProcessesAPIClient.model;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
+using LearningProcessesAPIClient.exceptions;
 
 namespace Shedule.Pages
 {
@@ -30,14 +31,18 @@ namespace Shedule.Pages
     {
 
         private List<MainSchedule> mainSchedules = new List<MainSchedule>();
+        private static Сhanges _instance;
+
+        public static Сhanges Instance { get => _instance;  }
+        private List<AlteredSchedule> allAlteredSchedulesBeforeUpdate { get; set; } = new List<AlteredSchedule>();
 
         DateTime lastDateChange;
 
-
         public Сhanges()
         {
+            _instance = this;
             InitializeComponent();
-            DatePicker.SelectedDate = DateTime.Parse("13.01.2020");
+            DatePicker.SelectedDate = DateTime.Parse("3.02.2020");
         }
 
         async Task loadSchedules()
@@ -64,7 +69,7 @@ namespace Shedule.Pages
                     a.MainSchedule = mainSchedules.First(m => m.Id == a.MainScheduleId);
                 }
 
-                
+                copyIntoBeforeUpdateState(altereds);
 
                 var query = altereds.GroupBy(a => a.MainSchedule.Semester.GroupId, a => a, (groupId, alters) => new
                 {
@@ -94,6 +99,23 @@ namespace Shedule.Pages
             });
         }
 
+        private void copyIntoBeforeUpdateState(List<AlteredSchedule> list)
+        {
+            allAlteredSchedulesBeforeUpdate.Clear();
+            allAlteredSchedulesBeforeUpdate.AddRange(list.Select(a => new AlteredSchedule() { 
+                Classroom = a.Classroom,
+                Date = a.Date,
+                Event = a.Event,
+                EventId = a.EventId,
+                Id = a.Id,
+                MainSchedule = a.MainSchedule,
+                MainScheduleId = a.MainScheduleId,
+                NewClassroomId = a.NewClassroomId,
+                NewTeachingId = a.NewTeachingId,
+                Teaching = a.Teaching
+            }));
+        }
+
         public void createNewGroupAlteredRow()
         {
             if (DatePicker.SelectedDate == null)
@@ -103,6 +125,43 @@ namespace Shedule.Pages
             control.DataContext = row;
             alteredRows.Items.Add(control);
             control.groups.SelectionChanged += Groups_SelectionChanged;
+        }
+
+        public void createNewGroupAlteredRow(int groupId,int highlightedColumn)
+        {
+            if((alteredRows.Items[alteredRows.Items.Count - 1] as AlteredGroupScheduleRowControl).groups.SelectedIndex == -1)
+            {
+                int index = ((alteredRows.Items[alteredRows.Items.Count - 1] as AlteredGroupScheduleRowControl).DataContext as AlteredScheduleRow).AvailableGroupsList.FindIndex(g => g.Id == groupId);
+                if(index >= 0)
+                {
+                    (alteredRows.Items[alteredRows.Items.Count - 1] as AlteredGroupScheduleRowControl).groups.SelectedIndex = index;
+                    if(highlightedColumn != -1)
+                    {
+                        (alteredRows.Items[alteredRows.Items.Count - 1] as AlteredGroupScheduleRowControl).addCellForHighlight(highlightedColumn);
+                    } 
+                }
+                else
+                {
+                    alteredRows.Items.Remove(alteredRows.Items[alteredRows.Items.Count - 1]);
+                    foreach(var row in alteredRows.Items)
+                    {
+                        if(((Group)(row as AlteredGroupScheduleRowControl).groups.SelectedValue).Id == groupId)
+                        {
+                            (row as AlteredGroupScheduleRowControl).addCellForHighlight(highlightedColumn);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                createNewGroupAlteredRow();
+                createNewGroupAlteredRow(groupId, highlightedColumn);
+            }
+        }
+
+        public void createNewGroupAlteredRow(int groupId)
+        {
+            createNewGroupAlteredRow(groupId, -1);
         }
 
         private void Groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -132,7 +191,23 @@ namespace Shedule.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            createNewGroupAlteredRow();
+            if(alteredRows.Items.Count < AlteredScheduleRow.GroupsList.Count)
+            {
+                createNewGroupAlteredRow();
+            }
+            else
+            {
+                MessageBox.Show("Использованы все существующие группы", "Изменение расписания", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+        }
+
+        //Вызывать перед загрузкой в бд
+        private List<AlteredSchedule> removeUnnecessaryAlteredSchedules(List<AlteredSchedule> list)
+        {
+            List<AlteredSchedule> altereds = new List<AlteredSchedule>();
+            altereds.AddRange(list);
+            altereds.RemoveAll(a => a.NewTeachingId == a.MainSchedule.TeachingId && a.NewClassroomId == a.MainSchedule.ClassroomId);
+            return altereds;
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -158,6 +233,136 @@ namespace Shedule.Pages
                 await loadGroups();
                 await loadSchedules();
             }, DispatcherPriority.Background);
+        }
+
+        private async Task saveAltereds()
+        {
+            saveButton.IsEnabled = false;
+            bool errorHappened = false;
+
+            List<AlteredSchedule> newAlteredSchedules = new List<AlteredSchedule>();
+            List<AlteredSchedule> updatedAlteredSchedules = new List<AlteredSchedule>();
+            List<AlteredSchedule> deletedAlteredSchedules = new List<AlteredSchedule>();
+
+            List<AlteredSchedule> allAlteredSchedules = removeUnnecessaryAlteredSchedules(AlteredScheduleRow.AllAlteredSchedules);
+            allAlteredSchedules.ForEach(a =>
+            {
+                if (a.Id == -1)
+                    newAlteredSchedules.Add(a);
+                else
+                {
+                    int index = allAlteredSchedulesBeforeUpdate.FindIndex(ai => ai.MainScheduleId == a.MainScheduleId);
+                    if(index == -1)
+                    {
+                        newAlteredSchedules.Add(a);
+                    }
+                    else
+                    {
+                        AlteredSchedule a2 = allAlteredSchedulesBeforeUpdate[index];
+                        if (a2.NewClassroomId != a.NewClassroomId || a2.NewTeachingId != a.NewTeachingId)
+                        {
+                            updatedAlteredSchedules.Add(a);
+                        }
+                    }
+                }
+            });
+
+            allAlteredSchedulesBeforeUpdate.ForEach(a => {
+                int index = allAlteredSchedules.FindIndex(ai => ai.MainScheduleId == a.MainScheduleId);
+                if(index == -1)
+                {
+                    deletedAlteredSchedules.Add(a);
+                }
+            });
+            await AppUtils.ProcessClientLibraryRequest(async () =>
+            {
+                if (newAlteredSchedules.Count > 0)
+                {
+                    newAlteredSchedules.ForEach(async n =>
+                    {
+                        AlteredSchedule added;
+                        if (n.NewTeachingId == null)
+                        {
+                            added = await LearningProcessesAPI.createAlteredScheduleCancel(n.MainSchedule, n.Date);
+                        }
+                        else
+                        {
+                            added = await LearningProcessesAPI.createAlteredScheduleChange(n.MainSchedule, n.Classroom, n.Date, n.Teaching);
+                        }
+                        if (added == null)
+                        {
+                            throw new ServerErrorException("Сервер вернул ошибку 404 при обновлении изменений");
+                        }
+                        //Не вижу необходимости заменять на данные их бд в этом случае
+                    });
+                    
+                }
+                if (updatedAlteredSchedules.Count > 0)
+                {
+                    updatedAlteredSchedules.ForEach(async u => { 
+                        var updated = await LearningProcessesAPI.updateAlteredScheduleItem(u.Id, u);
+                        if (updated == null)
+                        {
+                            throw new ServerErrorException("Сервер вернул ошибку 404 при обновлении изменений (не найдены обновляемые компоненты)");
+                        }
+                        allAlteredSchedules.First(a => a.MainScheduleId == u.MainScheduleId).Id = updated.Id;
+                        AlteredScheduleRow.AllAlteredSchedules.First(a => a.MainScheduleId == u.MainScheduleId).Id = updated.Id;
+                    });
+                }
+                if (deletedAlteredSchedules.Count > 0)
+                {
+                    deletedAlteredSchedules.ForEach(async u => {
+                        var updated = await LearningProcessesAPI.deleteAlteredScheduleItem(u.Id);
+                        if (!updated)
+                        {
+                            throw new ServerErrorException("Сервер вернул ошибку 404 при обновлении изменений (не найдены удаляемые компоненты)");
+                        }
+                    });
+                }
+                //Новое состояние. Мы сюда не доходим в случае throw
+                copyIntoBeforeUpdateState(allAlteredSchedules);
+                //allAlteredSchedulesBeforeUpdate = allAlteredSchedules.ToList();
+            });
+
+            if (!errorHappened)
+            {
+                MessageBox.Show($"Успешно сохранено ({newAlteredSchedules.Count} добавлено, {updatedAlteredSchedules.Count} обновлено, {deletedAlteredSchedules.Count} удалено)", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private bool validatePage()
+        {
+            bool isValid = true;
+            foreach (var el in alteredRows.Items)
+            {
+                foreach(var cell in (el as AlteredGroupScheduleRowControl).Grid.Children)
+                {
+                    if (!(cell is AlteredScheduleItemControl))
+                        continue;
+                    var teaching = (cell as AlteredScheduleItemControl).Teachings.SelectedIndex;
+                    var classroom = (cell as AlteredScheduleItemControl).Classrooms.SelectedIndex;
+                    if (teaching == -1 && classroom != -1 || teaching != -1 && classroom == -1)
+                    {
+                        isValid = false;
+                    }
+                }
+            }
+            return isValid;
+        }
+
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (validatePage())
+            {
+                Dispatcher.Invoke(async () => {
+                    await saveAltereds();
+                    saveButton.IsEnabled = true;
+                }, DispatcherPriority.Background);
+            }
+            else
+            {
+                MessageBox.Show("Необходимо установить аудиторию(и)", "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

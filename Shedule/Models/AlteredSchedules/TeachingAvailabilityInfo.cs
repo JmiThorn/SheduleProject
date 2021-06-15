@@ -92,12 +92,24 @@ namespace Shedule.Models.AlteredSchedules
             cachedTodayExtraHours = 0;
             alters.ToList().ForEach(a =>
             {
-                if (a.NewTeachingId == ExtendedTeaching.Id
-                && a.MainSchedule.TeachingId != ExtendedTeaching.Id)
-                    cachedTodayExtraHours++;
-                if (a.NewTeachingId != ExtendedTeaching.Id
-                && a.MainSchedule.TeachingId == ExtendedTeaching.Id)
-                    cachedTodayExtraHours--;
+                if (a.MainSchedule.TeachingId == ExtendedTeaching.Id)
+                {
+                    if (a.NewTeachingId == ExtendedTeaching.Id)
+                    {
+                        cachedTodayExtraHours++;
+                    }
+                    else
+                    {
+                        cachedTodayExtraHours--;
+                    }
+                }
+                else
+                {
+                    if (a.NewTeachingId == ExtendedTeaching.Id)
+                    {
+                        cachedTodayExtraHours++;
+                    }
+                }
             });
             cachedTodayExtraHours *= 2;
         }

@@ -1,8 +1,10 @@
 ﻿using Shedule.Models.AlteredSchedules;
+using Shedule.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +23,7 @@ namespace Shedule.Controls
     /// </summary>
     public partial class AlteredScheduleItemControl : UserControl
     {
+
         public AlteredScheduleItemControl()
         {
             InitializeComponent();
@@ -33,10 +36,11 @@ namespace Shedule.Controls
 
         private void AddChangeButtonClick(object sender, RoutedEventArgs e)
         {
-            ChangeContent.Visibility = Visibility.Visible;
-            NoChangeContent.Visibility = Visibility.Collapsed;
-            AlteredScheduleRow.createAlteredSchedule((DataContext as ClassAvailabilityInfoModel));
-            Teachings.ItemsSource = (DataContext as ClassAvailabilityInfoModel).getFeaturedTeachingModelsList();
+            if(AlteredScheduleRow.createAlteredSchedule((DataContext as ClassAvailabilityInfoModel)))
+            {
+                ChangeContent.Visibility = Visibility.Visible;
+                NoChangeContent.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void DeleteChangeButtonClick(object sender, RoutedEventArgs e)
@@ -53,7 +57,6 @@ namespace Shedule.Controls
                 {
                     ChangeContent.Visibility = Visibility.Visible;
                     NoChangeContent.Visibility = Visibility.Collapsed;
-                    Teachings.ItemsSource = (DataContext as ClassAvailabilityInfoModel).getFeaturedTeachingModelsList();
                 }
         }
 
@@ -63,6 +66,13 @@ namespace Shedule.Controls
             {
                 (DataContext as ClassAvailabilityInfoModel).AlteredSchedule.Teaching = (Teachings.SelectedItem as TeachingAvailabilityInfo).ExtendedTeaching;
                 Classrooms.ItemsSource = (Teachings.SelectedItem as TeachingAvailabilityInfo).getClassroomModels();
+                if((Teachings.SelectedItem as TeachingAvailabilityInfo).TeacherParallels.Count > 0)
+                {
+                    //Генерируем новые строки
+                    (Teachings.SelectedItem as TeachingAvailabilityInfo).TeacherParallels.ForEach(t => {
+                        Сhanges.Instance.createNewGroupAlteredRow(t.Item2.GroupId, Grid.GetColumn(this));
+                    });
+                }
             }
             else
             {
