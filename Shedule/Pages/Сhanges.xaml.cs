@@ -62,10 +62,17 @@ namespace Shedule.Pages
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
            List<AlteredSchedule> alterToDay = new List<AlteredSchedule>();
+            try
+            {
             alterToDay = await LearningProcessesAPI.getAlteredSchedules(date.SelectedDate.Value);
 
-
             AlterExport.ExportAlterShedule(alterToDay, date.SelectedDate.Value);
+            }
+            catch
+            {
+                MessageBox.Show("Gecnj");
+            }
+
         }
     }
 }

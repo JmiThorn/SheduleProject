@@ -1,8 +1,10 @@
-﻿using LearningProcessesAPIClient.model;
+﻿using LearningProcessesAPIClient.api;
+using LearningProcessesAPIClient.model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Word = Microsoft.Office.Interop.Word;
 
 
@@ -11,7 +13,7 @@ namespace Shedule.Utils
     class AlterExport
     {
 
-        static public void ExportAlterShedule(List<AlteredSchedule> alter, DateTime date)
+        public static async Task ExportAlterShedule(List<AlteredSchedule> alter, DateTime date)
         {
             var application = new Word.Application();
             Word.Document document = application.Documents.Add();
@@ -31,7 +33,7 @@ namespace Shedule.Utils
 
             Word.Paragraph tableParagraph = document.Paragraphs.Add();
             Word.Range tableRange = tableParagraph.Range;
-            Word.Table alterTable = document.Tables.Add(tableRange, 3, 7);
+            Word.Table alterTable = document.Tables.Add(tableRange, count + 1, 7);
             //alterTable.Range.Rows.Add
             alterTable.Borders.InsideLineStyle = alterTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
 
@@ -60,42 +62,48 @@ namespace Shedule.Utils
             int indexEnd = 1;
             int groupIndex = 2;
 
+
+
             foreach (var alt in alter)
             {
+                if (alt.Teaching.SpecialitySubject.Subject == null)
+                {
+                    alt.Teaching.SpecialitySubject.Subject = await LearningProcessesAPI.getSubject(alt.Teaching.SpecialitySubject.SubjectId);
+                }
                 switch (alt.MainSchedule.ClassNumber)
                 {
                     case 0:
-                        cellRange = alterTable.Cell(2, 1).Range;
-                        cellRange.Text = alt.Teaching.SpecialitySubject.Subject.Name + " "
-                                + alt.Teaching.Teacher.Surname + " " + alt.Teaching.Teacher.Name[0] + "."
-                                + alt.Teaching.Teacher.Patronymic[0] + "." + " " + alt.Classroom.Number;
-                        break;
-                    case 1:
                         cellRange = alterTable.Cell(2, 2).Range;
                         cellRange.Text = alt.Teaching.SpecialitySubject.Subject.Name + " "
                                 + alt.Teaching.Teacher.Surname + " " + alt.Teaching.Teacher.Name[0] + "."
                                 + alt.Teaching.Teacher.Patronymic[0] + "." + " " + alt.Classroom.Number;
                         break;
-                    case 2:
+                    case 1:
                         cellRange = alterTable.Cell(2, 3).Range;
                         cellRange.Text = alt.Teaching.SpecialitySubject.Subject.Name + " "
                                 + alt.Teaching.Teacher.Surname + " " + alt.Teaching.Teacher.Name[0] + "."
                                 + alt.Teaching.Teacher.Patronymic[0] + "." + " " + alt.Classroom.Number;
                         break;
-                    case 3:
+                    case 2:
                         cellRange = alterTable.Cell(2, 4).Range;
                         cellRange.Text = alt.Teaching.SpecialitySubject.Subject.Name + " "
                                 + alt.Teaching.Teacher.Surname + " " + alt.Teaching.Teacher.Name[0] + "."
                                 + alt.Teaching.Teacher.Patronymic[0] + "." + " " + alt.Classroom.Number;
                         break;
-                    case 4:
+                    case 3:
                         cellRange = alterTable.Cell(2, 5).Range;
                         cellRange.Text = alt.Teaching.SpecialitySubject.Subject.Name + " "
                                 + alt.Teaching.Teacher.Surname + " " + alt.Teaching.Teacher.Name[0] + "."
                                 + alt.Teaching.Teacher.Patronymic[0] + "." + " " + alt.Classroom.Number;
                         break;
-                    case 5:
+                    case 4:
                         cellRange = alterTable.Cell(2, 6).Range;
+                        cellRange.Text = alt.Teaching.SpecialitySubject.Subject.Name + " "
+                                + alt.Teaching.Teacher.Surname + " " + alt.Teaching.Teacher.Name[0] + "."
+                                + alt.Teaching.Teacher.Patronymic[0] + "." + " " + alt.Classroom.Number;
+                        break;
+                    case 5:
+                        cellRange = alterTable.Cell(2, 7).Range;
                         cellRange.Text = alt.Teaching.SpecialitySubject.Subject.Name + " "
                                 + alt.Teaching.Teacher.Surname + " " + alt.Teaching.Teacher.Name[0] + "."
                                 + alt.Teaching.Teacher.Patronymic[0] + "." + " " + alt.Classroom.Number;
