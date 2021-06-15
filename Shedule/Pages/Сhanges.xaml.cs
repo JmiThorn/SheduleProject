@@ -391,7 +391,7 @@ namespace Shedule.Pages
             }
             catch
             {
-                MessageBox.Show("Gecnj");
+                MessageBox.Show("Некорректная дата");
             }
 
         }
