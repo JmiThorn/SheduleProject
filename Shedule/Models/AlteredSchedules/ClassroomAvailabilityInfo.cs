@@ -98,17 +98,17 @@ namespace Shedule.Models.AlteredSchedules
                 && m.DayOfWeekId == DayOfWeekId
                 && m.IsRedWeek == IsRedWeek
             ).ToList().ForEach(m => {
-                if (m.ClassroomId == Classroom.Id)
+                AlteredSchedule alteredSchedule = AlteredScheduleRow.AllAlteredSchedules.FirstOrDefault(a => a.MainScheduleId == m.Id);
+                if (alteredSchedule == null)
                 {
-                    if (AlteredScheduleRow.AllAlteredSchedules.Count(a => a.MainScheduleId == m.Id && a.NewClassroomId != m.ClassroomId && a.NewTeachingId != Teaching.Id && a.Date == Date) == 0)
+                    if (m.ClassroomId == Classroom.Id && m.TeachingId != Teaching.Id)
                     {
                         classes.Add(m.Teaching);
                     }
                 }
                 else
                 {
-                    AlteredSchedule alteredSchedule;
-                    if ((alteredSchedule = AlteredScheduleRow.AllAlteredSchedules.Find(a => a.MainScheduleId == m.Id && a.NewClassroomId == Classroom.Id && a.NewTeachingId != Teaching.Id && a.Date == Date)) != null)
+                    if (alteredSchedule.NewClassroomId == Classroom.Id && alteredSchedule.NewTeachingId != Teaching.Id)
                     {
                         classes.Add(alteredSchedule.Teaching);
                     }

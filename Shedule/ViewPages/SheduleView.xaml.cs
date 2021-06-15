@@ -636,8 +636,12 @@ namespace Shedule.ViewPages
                     {
                         throw new ServerErrorException("Сервер вернул ошибку 404 при обновлении расписания");
                     }
-                    added.ForEach(a =>
+                    added.ForEach(async a =>
                     {
+                        if (a.TeachingId != null)
+                        {
+                            a.Teaching = await LearningProcessesAPI.getTeaching((int)a.TeachingId);
+                        }
                         allMainSchedules[allMainSchedules.FindIndex(u1 =>
                             u1.ClassNumber == a.ClassNumber
                             && u1.DayOfWeekId == a.DayOfWeekId
@@ -652,8 +656,12 @@ namespace Shedule.ViewPages
                     {
                         throw new ServerErrorException("Сервер вернул ошибку 404 при обновлении расписания (не найдены обновляемые компоненты)");
                     }
-                    updated.Values.ToList().ForEach(u =>
+                    updated.Values.ToList().ForEach(async u =>
                     {
+                        if(u.TeachingId != null)
+                        {
+                            u.Teaching = await LearningProcessesAPI.getTeaching((int)u.TeachingId);
+                        }
                         allMainSchedules[allMainSchedules.FindIndex(u2 => u2 == u)] = u;
                     });
                 }

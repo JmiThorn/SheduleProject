@@ -40,7 +40,7 @@
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsSubjectOver}" Value="True">
                                         <Setter Property="Source" Value="/Image\Timer.png"/>
-                                        <Setter Property="ToolTip" Value="Основной предмет окончен\nРекомендуется установить замену"/>
+                                        <Setter Property="ToolTip" Value="Основной предмет окончен Рекомендуется установить замену"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsPracticeAtTheSameTime}" Value="True">
                                         <Setter Property="Source" Value="/Image\Group.png"/>
@@ -153,8 +153,8 @@
                                     <TextBlock.Text>
                                         <MultiBinding  StringFormat="{}{0} {1}" TargetNullValue="X">
                                             <Binding Path="Classroom.Number"/>
-                                            <Binding Path="Classroom.Building" Converter="{StaticResource BuildingConverter}"/>
-                                        </MultiBinding>
+                                                <Binding Path="Classroom.Building" Converter="{StaticResource BuildingConverter}"/>
+                                            </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
                                 <ItemsControl BorderBrush="white" ItemsSource = "{Binding TeachingsAtTheSameTime}">

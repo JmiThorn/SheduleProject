@@ -233,10 +233,17 @@ namespace Shedule.Pages
             if (color == WeeksColoringUtils.WeekColors.BLUE)
             {
                 week.Fill = Brushes.Blue;
+                week.ToolTip = null;
+            }
+            else if(color == WeeksColoringUtils.WeekColors.RED)
+            {
+                week.Fill = Brushes.Red;
+                week.ToolTip = null;
             }
             else
             {
-                week.Fill = Brushes.Red;
+                week.Fill = Brushes.DarkGray;
+                week.ToolTip = "День находится вне границ учебного года";
             }
             Dispatcher.Invoke(async () =>
             {
@@ -378,12 +385,9 @@ namespace Shedule.Pages
               
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-           List<AlteredSchedule> alterToDay = new List<AlteredSchedule>();
             try
             {
-            alterToDay = await LearningProcessesAPI.getAlteredSchedules(DatePicker.SelectedDate.Value);
-
-            AlterExport.ExportAlterShedule(alterToDay, DatePicker.SelectedDate.Value);
+                AlterExport.ExportAlterShedule(AlteredScheduleRow.AllAlteredSchedules, DatePicker.SelectedDate.Value);
             }
             catch
             {

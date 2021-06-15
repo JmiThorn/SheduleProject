@@ -4,6 +4,7 @@ using Shedule.Models.AlteredSchedules;
 using Shedule.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -138,6 +139,8 @@ namespace Shedule.Controls
                         int classNumber = Grid.GetColumn(item as UIElement) - 1;
                         (item as AlteredScheduleItemControl).DataContext = (DataContext as AlteredScheduleRow).getClassModel(classNumber);
                         (item as AlteredScheduleItemControl).Teachings.ItemsSource = ((item as AlteredScheduleItemControl).DataContext as ClassAvailabilityInfoModel).getTeachingModels();
+                        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView((item as AlteredScheduleItemControl).Teachings.ItemsSource);
+                        view.SortDescriptions.Add(new SortDescription("RecommendationLevel", ListSortDirection.Ascending));
                     }
                 });
             }

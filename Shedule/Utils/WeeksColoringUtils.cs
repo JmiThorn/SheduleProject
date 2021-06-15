@@ -82,10 +82,10 @@ namespace Shedule.Utils
             TimeSpan dateDiff;
             if (date.Month < 9)
             {
-                dateDiff = date.Subtract(getFirstWorkDayH1(date.Year-1))
+                dateDiff = date.Subtract(getFirstWorkDayH1(date.Year - 1));
                     //Каникулы не учитываются при смене цвета недели
                     //Tакже предполагается, что учеба идет до 31 декабря
-                    .Subtract(TimeSpan.FromDays(H2_DAYS_OFFSET));
+                    //.Subtract(TimeSpan.FromDays(H2_DAYS_OFFSET));
                 if(getFirstWorkDayH1(date.Year - 1).DayOfWeek != DayOfWeek.Monday)
                 {
                     dateDiff = dateDiff.Add(

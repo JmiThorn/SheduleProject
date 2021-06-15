@@ -2,6 +2,7 @@
 using Shedule.Pages;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -66,7 +67,9 @@ namespace Shedule.Controls
             {
                 (DataContext as ClassAvailabilityInfoModel).AlteredSchedule.Teaching = (Teachings.SelectedItem as TeachingAvailabilityInfo).ExtendedTeaching;
                 Classrooms.ItemsSource = (Teachings.SelectedItem as TeachingAvailabilityInfo).getClassroomModels();
-                if((Teachings.SelectedItem as TeachingAvailabilityInfo).TeacherParallels.Count > 0)
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(Classrooms.ItemsSource);
+                view.SortDescriptions.Add(new SortDescription("RecommendationLevel", ListSortDirection.Ascending));
+                if ((Teachings.SelectedItem as TeachingAvailabilityInfo).TeacherParallels.Count > 0)
                 {
                     //Генерируем новые строки
                     (Teachings.SelectedItem as TeachingAvailabilityInfo).TeacherParallels.ForEach(t => {

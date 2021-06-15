@@ -44,6 +44,7 @@ namespace Shedule.Utils
                         {
                             sheet.Cells[$"A{groupRedIndex}"].Value = m.Semester.Group.Codename;
                             sheet.Cells[$"B{groupRedIndex}"].Value = m.Semester.Number;
+                            sheet.Cells[$"C{groupRedIndex}"].Value = "Красная";
                             sheet.Cells[$"A{groupRedIndex + 1}"].Value = "Пн";
                             sheet.Cells[$"B{groupRedIndex + 1}"].Value = "Вт";
                             sheet.Cells[$"C{groupRedIndex + 1}"].Value = "Ср";
@@ -138,7 +139,10 @@ namespace Shedule.Utils
                         {
                             sheet.Cells[$"G{groupBlueIndex}"].Value = m.Semester.Group.Codename;
                             sheet.Cells[$"H{groupBlueIndex}"].Value = m.Semester.Number;
-                            sheet.Cells[$"H{groupBlueIndex}"].Value = m.IsRedWeek;
+                            if (!m.IsRedWeek)
+                            {
+                                sheet.Cells[$"I{groupBlueIndex}"].Value = "Синяя";
+                            }
                             sheet.Cells[$"G{groupBlueIndex + 1}"].Value = "Пн";
                             sheet.Cells[$"H{groupBlueIndex + 1}"].Value = "Вт";
                             sheet.Cells[$"I{groupBlueIndex + 1}"].Value = "Ср";
