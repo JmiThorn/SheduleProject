@@ -21,6 +21,7 @@ using System.Globalization;
 using Shedule.Controls;
 using Shedule.Utils;
 using System.Windows.Media.Animation;
+using Shedule.Models.MainSchedules;
 
 namespace Shedule.ViewPages
 {

@@ -119,21 +119,31 @@
     <Compile Include="AddPage\AddGroupTeachingView.xaml.cs">
       <DependentUpon>AddGroupTeachingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AlteredRowItemControl.xaml.cs">
-      <DependentUpon>AlteredRowItemControl.xaml</DependentUpon>
+    <Compile Include="Controls\AlteredGroupScheduleRowControl.xaml.cs">
+      <DependentUpon>AlteredGroupScheduleRowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AlteredScheduleItemControl.xaml.cs">
+      <DependentUpon>AlteredScheduleItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\MainScheduleItemControl.xaml.cs">
       <DependentUpon>MainScheduleItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClassroomAvailabilityInfo.cs" />
+    <Compile Include="Models\AlteredSchedules\AlteredScheduleLiveModel.cs" />
+    <Compile Include="Models\AlteredSchedules\AlteredScheduleRow.cs" />
+    <Compile Include="Models\AlteredSchedules\AlteredSchedulesObserver.cs" />
+    <Compile Include="Models\AlteredSchedules\ClassAvailabilityInfoModel.cs" />
+    <Compile Include="Models\AlteredSchedules\ClassroomAvailabilityInfo.cs" />
+    <Compile Include="Models\AlteredSchedules\ExtendedTeaching.cs" />
+    <Compile Include="Models\AlteredSchedules\TeachingAvailabilityInfo.cs" />
+    <Compile Include="Models\MainSchedules\ClassroomAvailabilityInfo.cs" />
     <Compile Include="Models\CurriculumFillingInfoModel.cs" />
-    <Compile Include="Models\MainScheduleLiveModel.cs" />
+    <Compile Include="Models\MainSchedules\MainScheduleLiveModel.cs" />
     <Compile Include="Models\Parsing\GroupModel.cs" />
     <Compile Include="Utils\AlterExport.cs" />
     <Compile Include="Utils\ParsingUtils.cs" />
     <Compile Include="Models\Parsing\SemesterModel.cs" />
     <Compile Include="Models\Parsing\SubjectModel.cs" />
-    <Compile Include="Models\TeachingAvailabilityInfo.cs" />
+    <Compile Include="Models\MainSchedules\TeachingAvailabilityInfo.cs" />
     <Compile Include="Models\TeachingModel.cs" />
     <Compile Include="Utils\AppUtils.cs" />
     <Compile Include="Utils\SheduleExport.cs" />
@@ -204,7 +214,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\AlteredRowItemControl.xaml">
+    <Page Include="Controls\AlteredGroupScheduleRowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AlteredScheduleItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
