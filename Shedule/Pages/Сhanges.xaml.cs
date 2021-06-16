@@ -217,7 +217,7 @@ namespace Shedule.Pages
             if (DateTime.Now.Subtract(lastDateChange).Milliseconds < 100)
                 return;
             lastDateChange = DateTime.Now;
-            //TODO clear all rows
+            
             if(alteredRows.Items.Count > 0)
             {
                 if(MessageBox.Show("Очистить изменения?","Смена дня",MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)

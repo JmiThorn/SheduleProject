@@ -146,7 +146,7 @@ namespace Shedule.ViewPages
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var sub = await LearningProcessesAPI.getSpecialitySubjects(((Semester)DataContext).Group.SpecialityId);
-                sub = sub.AsQueryable().Except(currentCurriculums.Select(c => c.SpecialitySubject), new spec()).ToList();
+                sub = sub.AsQueryable().Where(s => !s.Subject.IsPractise).Except(currentCurriculums.Select(c => c.SpecialitySubject), new spec()).ToList();
                 specSub.ItemsSource = sub;
                 specSub.Items.Refresh();
             });

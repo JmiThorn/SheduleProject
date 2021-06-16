@@ -265,9 +265,10 @@ namespace Shedule.Utils
                 var ExportPath = saveFileDialog.FileName;
                 document.SaveAs2(ExportPath);
                 document.Close();
+                application.Quit();
             }
             }
-
+        
 
     }
 }

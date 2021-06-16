@@ -19,7 +19,7 @@
                 <Label Padding="0" VerticalContentAlignment="Center" HorizontalAlignment="Left">Назад</Label>
             </StackPanel>
         </DataTemplate>
-        
+
         <Style x:Key="FocusVisual">
                 <Setter Property="Control.Template">
                     <Setter.Value>
@@ -280,6 +280,7 @@
                 </ControlTemplate.Triggers>
             </ControlTemplate>
             <Style TargetType="{x:Type ComboBox}">
+                <Setter Property="ToolTip" Value="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
                 <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
                 <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}"/>
                 <Setter Property="BorderBrush" Value="{StaticResource ComboBox.Static.Border}"/>

@@ -3,6 +3,7 @@ using LearningProcessesAPIClient.exceptions;
 using LearningProcessesAPIClient.model;
 using Shedule.Controls;
 using Shedule.Models;
+using Shedule.Models.MainSchedules;
 using Shedule.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,6 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Xml;
-using System;
-using LearningProcessesAPIClient.exceptions;
-using System.Globalization;
-using Shedule.Controls;
-using Shedule.Utils;
-using System.Windows.Media.Animation;
-using Shedule.Models.MainSchedules;
 
 namespace Shedule.ViewPages
 {
@@ -61,248 +55,22 @@ namespace Shedule.ViewPages
         private List<Teaching> currentTeachings = new List<Teaching>();
 
 
-        //TODO вынести число рабочих дней в настройки
         const int DAYS = 5;
         //const int DAYS = Convert.ToInt32(Properties.Settings.Default.WorkDays);
 
         public SheduleView()
         {
             InitializeComponent();
-            #region old staff
-            /*           string gridXaml = @"<StackPanel Grid.Row=\"2\" Grid.Column=\"1\" xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:s=\"clr-namespace:System;assembly=mscorlib\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"> " +
-                       "<ComboBox SelectedValue =\"{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" Margin=\"10,0\" IsEditable = \"False\" FontSize = \"18\" Height = \"50\" FontFamily = \"Global User Interface\" SelectedValuePath = \"Teaching.Id\"> " +
-                   "<ComboBox.ItemTemplate> " +
-                       "<DataTemplate> " +
-                               "<StackPanel Orientation=\"Horizontal\">                                                                                                                               " +
-                           "<StackPanel> " +
-                               "<TextBlock> " +
-                                   "<TextBlock.Text> " +
-                                       "<MultiBinding  StringFormat=\"{}{0} {1:C}\"> " +
-                                           "<Binding Path=\"Teaching.SpecialitySubject.Subject.Name\"/> " +
-                                           "<Binding Path=\"Teaching.Teacher.Surname\"/> " +
-                                       "</MultiBinding> " +
-                                   "</TextBlock.Text> " +
-                               "</TextBlock> " +
-                               "<ListBox BorderBrush=\"white\" ItemsSource = \"{Binding MainSchedulesInTheSameTime}\">"+
-                               "<ListBox.ItemTemplate>"+
-                                   "<DataTemplate>"+
-                                       "<StackPanel Orientation = \"Horizontal\">"+
-                                        "<TextBlock>"+
-                                          // "<Run Text=\"{Binding Teaching.SpecialitySubject.Subject.Name}\"/>" +
-                                           "<Run Text=\"{Binding ClassNumber}\"/>" + " " +
-                                           //"<Run Text=\"{Binding Teaching.Teacher.Surname}\"/>" +                
-                                           "<Run Text=\"{Binding Teaching.TeacherId}\"/>" +                
-                                           //"<Run Text=\"{Binding Teaching.Teacher.Name}\"/>" +                
-                                         "</TextBlock>"+
-                                       "</StackPanel>" +
-                                   "</DataTemplate>"+
-                               "</ListBox.ItemTemplate>"+
-                            "</ListBox >"+
-                            "</StackPanel>" +
-                            "<StackPanel>" +
-                            "<Image Margin=\"10,0,0,0\" Width=\"20\" Height=\"20\">" +
-                               "                <Image.Style>" +
-                               "                    <Style TargetType=\"{x:Type Image}\">" +
-                                                   " <Setter Property=\"Source\" Value=\"/Image\\bad.png\"/> " +
-                               "                        <Style.Triggers>" +
-                               "                            <DataTrigger Binding=\"{Binding RecommendationLevel}\" Value=\"0\">                                                          " +
-                               "                                <Setter Property=\"Source\" Value=\"/Image\\good.png\"/>                                                                  " +
-                               "                            </DataTrigger>                                                                                                           " +
-                               "                        </Style.Triggers>                                                                                                            " +
-                               "                    </Style>                                                                                                                         " +
-                               "                </Image.Style>                                                                                                                       " +
-                               "            </Image>  " +
-                            "</StackPanel>" +
 
-                               "</StackPanel>                                                                                                                               " +
-                           "</DataTemplate>" +
-                   "</ComboBox.ItemTemplate>" +
-               "</ComboBox> " +
-               "<ComboBox SelectedValue =\"{Binding ClassroomId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" Padding=\"0\" SelectedValuePath = \"Classroom.Id\" DisplayMemberPath = \"Classroom.Number\" IsEditable=\"False\" MinWidth = \"60\" FontSize = \"18\" Height = \"20\" Margin = \"0\" FontFamily = \"Global User Interface\" HorizontalContentAlignment = \"Center\" VerticalContentAlignment = \"Center\" HorizontalAlignment = \"Center\"> " +
-               "</ComboBox> " +
-               "<ComboBox.ItemTemplate>
-                                   <DataTemplate>
-                                       <StackPanel Orientation="Horizontal">
-                                       <StackPanel Orientation="Vertical">
-                                           <TextBlock>
-                                           <MultiBinding  StringFormat="{}{0} {1:C}">
-                                               <Binding Path="ClassNumber"/>
-                                               <Binding Path="Building"/>
-                                           </MultiBinding>
-                                           </TextBlock>
-                                           <TextBlock>
-                                           <MultiBinding  StringFormat="{}{0} {1:C}">
-                                               <Binding Path="Teaching.SpecialitySubject.Subject.Name"/>
-                                               <Binding Path="Teaching.Group.Codename"/>
-                                           </MultiBinding>
-                                           </TextBlock>
-                                       </StackPanel>
-                                       <StackPanel>
-                                           <Image Width="20" Height="20" Source="/Image\bad.png">
-                                               <Image.Style>
-                                                   <Style>
-                                                       <Style.Triggers>
-                                                           <DataTrigger Binding="{Binding RecommendationLevel}" Value="0">
-                                                               <Setter Property="Source" Value="/Image\good.png"/>
-                                                           </DataTrigger>
-                                                       </Style.Triggers>
-                                                   </Style>
-                                               </Image.Style>
-                                           </Image>
-                                       </StackPanel>
-                                       </StackPanel>
-                                   </DataTemplate>
-                               </ComboBox.ItemTemplate>"+
-           "</StackPanel> ";*/
-
-            //            string gridXaml = @"
-            //<StackPanel Grid.Row=""2"" Grid.Column=""1"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" xmlns:s=""clr-namespace:System;assembly=mscorlib"" xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"">
-            //        <ComboBox SelectedValue =""{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"" Margin=""10,0"" IsEditable = ""False"" FontSize = ""18"" Height = ""50"" FontFamily = ""Global User Interface"" SelectedValuePath = ""Teaching.Id"">
-            //            <ComboBox.ItemTemplate>
-            //                <DataTemplate>
-            //                    <StackPanel Orientation=""Horizontal"">
-            //                        <StackPanel>
-            //                            <TextBlock>
-            //                                <TextBlock.Text>
-            //                                    <MultiBinding  StringFormat=""{}{0} {1:C}"">
-            //                                        <Binding Path=""Teaching.SpecialitySubject.Subject.Name""/>
-            //                                        <Binding Path=""Teaching.Teacher.Surname""/>
-            //                                    </MultiBinding>
-            //                                </TextBlock.Text>
-            //                            </TextBlock>
-            //                            <ItemsControl BorderBrush=""white"" ItemsSource = ""{Binding MainSchedulesInTheSameTime}"">
-            //                                    <ItemsControl.ItemTemplate>
-            //                                        <DataTemplate>
-            //                                            <StackPanel Orientation = ""Horizontal"">
-            //                                                <TextBlock>
-            //                                        <Run Text=""{Binding Teaching.SpecialitySubject.Subject.Name}""/>
-            //                                        <Run Text=""{Binding ClassNumber}""/>
-            //                                        <Run Text=""{Binding Teaching.Teacher.Surname}""/>                
-            //                                        <Run Text=""{Binding Teaching.TeacherId}""/>                
-            //                                        <Run Text=""{Binding Teaching.Teacher.Name}""/>
-            //                                                </TextBlock>
-            //                                            </StackPanel>
-            //                                        </DataTemplate>
-            //                                    </ItemsControl.ItemTemplate>
-            //                                </ItemsControl >
-            //                        </StackPanel>
-            //                        <StackPanel>
-            //                            <Image Margin=""10,0,0,0"" Width=""20"" Height=""20"">
-            //                                <Image.Style>
-            //                                    <Style TargetType=""{x:Type Image}"">
-            //                                        <Setter Property=""Source"" Value=""/Image\bad.png""/>
-            //                                        <Style.Triggers>
-            //                                            <DataTrigger Binding=""{Binding RecommendationLevel}"" Value=""0"">
-            //                                                <Setter Property=""Source"" Value=""/Image\good.png""/>
-            //                                            </DataTrigger>
-            //                                        </Style.Triggers>
-            //                                    </Style>
-            //                                </Image.Style>
-            //                            </Image>
-            //                        </StackPanel>
-            //                    </StackPanel>
-            //                </DataTemplate>
-            //            </ComboBox.ItemTemplate>
-            //        </ComboBox>
-            //        <ComboBox 
-            //        SelectedValue =""{Binding ClassroomId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"" 
-            //        Padding=""0"" 
-            //        SelectedValuePath = ""Classroom.Id"" 
-            //        IsEditable=""False"" 
-            //        MinWidth = ""60"" 
-            //        FontSize = ""18"" 
-            //        Height = ""20"" 
-            //        Margin = ""0"" 
-            //        FontFamily = ""Global User Interface"" 
-            //        HorizontalContentAlignment = ""Center"" 
-            //        VerticalContentAlignment = ""Center"" 
-            //        HorizontalAlignment = ""Center"">
-            //            <ComboBox.ItemTemplate>
-            //                <DataTemplate>
-            //                    <StackPanel Orientation=""Horizontal"">
-            //                            <StackPanel Orientation=""Vertical"">
-            //                                <TextBlock>
-            //                                    <TextBlock.Text>
-            //                                        <MultiBinding  StringFormat=""{}{0} {1}"">
-            //                                            <Binding Path=""Classroom.Number""/>
-            //                                            <Binding Path=""Classroom.Building""/>
-            //                                        </MultiBinding>
-            //                                    </TextBlock.Text>
-            //                                </TextBlock>
-            //                                <ItemsControl BorderBrush=""white"" ItemsSource = ""{Binding MainSchedulesInTheSameClassroom}"">
-            //                                    <ItemsControl.ItemTemplate>
-            //                                        <DataTemplate>
-            //                                            <StackPanel Orientation = ""Horizontal"">
-            //                                                <TextBlock>
-            //                                                    <TextBlock.Text>
-            //                                                        <MultiBinding  StringFormat=""{}{0} {1}"">
-            //                                                            <Binding Path=""Teaching.Id""/>
-            //                                                            <Binding Path=""Teaching.SpecialitySubject.Subject.Name""/>
-            //                                                            <Binding Path=""Teaching.Group.Codename""/>
-            //                                                        </MultiBinding>
-            //                                                    </TextBlock.Text>
-            //                                                </TextBlock>
-            //                                            </StackPanel>
-            //                                        </DataTemplate>
-            //                                    </ItemsControl.ItemTemplate>
-            //                                </ItemsControl >
-            //                            </StackPanel>
-            //                            <Image Margin=""10,0,0,0"" Width=""20"" Height=""20"">
-            //                                <Image.Style>
-            //                                    <Style TargetType=""{x:Type Image}"">
-            //                                        <Setter Property=""Source"" Value=""/Image\bad.png""/>
-            //                                        <Style.Triggers>
-            //                                            <DataTrigger Binding=""{Binding RecommendationLevel}"" Value=""0"">
-            //                                                <Setter Property=""Source"" Value=""/Image\good.png""/>
-            //                                            </DataTrigger>
-            //                                            <DataTrigger Binding=""{Binding RecommendationLevel}"" Value=""1"">
-            //                                                <Setter Property=""Source"" Value=""{x:Null}""/>
-            //                                            </DataTrigger>
-            //                                        </Style.Triggers>
-            //                                    </Style>
-            //                                </Image.Style>
-            //                            </Image>
-            //                        </StackPanel>
-            //                </DataTemplate>
-            //            </ComboBox.ItemTemplate>
-            //        </ComboBox>
-            //        </StackPanel>
-            //";
-            #endregion
-            //"<TextBlock.Text>" +
-            //                        "<MultiBinding  StringFormat=\"{}{0} {1:C,}\">" +
-            //                            "<Binding Path=\"Teaching.SpecialitySubject.Subject.Name\"/>" +
-            //                            "<Binding Path=\"ClassNumber\"/>" +
-            //                            "<Binding Path=\"Teaching.Teacher.Surname\"/>" +
-            //                            "<Binding Path=\"Teaching.Teacher.Name\"/>" +
-            //                        "</MultiBinding>" +
-            //                    "</TextBlock.Text>" +
             string stacXaml = XamlWriter.Save(Frame.Children[Frame.Children.Count - 1]);
             Frame.Children.Remove(Frame.Children[Frame.Children.Count - 1]);
             //Генерация пар в сетке на основе шаблона
-            //string gridXaml = XamlWriter.Save(Frame.Children[Frame.Children.Count - 1]);
 
             for (int x = 1; x < Frame.ColumnDefinitions.Count; x++)
             {
                 for (int y = 2; y < Frame.RowDefinitions.Count - 1; y++)
                 {
-                    //StringReader stringReader = new StringReader(gridXaml);
-                    //XmlReader xmlReader = XmlReader.Create(stringReader);
-                    //StackPanel newStPnl = (StackPanel)XamlReader.Load(xmlReader);
                     MainScheduleItemControl newStPnl = new MainScheduleItemControl();
-                    ////Биндинги таким методом не переносятся, так что пересоздаем их вручную
-                    //Binding binding1 = new Binding()
-                    //{
-                    //    Path = new PropertyPath("TeachingId")
-                    //};
-
-                    //Binding binding2 = new Binding()
-                    //{
-                    //    Path = new PropertyPath("ClassroomId")
-                    //};
-
-                    //((ComboBox)newStPnl.Children[0]).SetBinding(ComboBox.SelectedValueProperty, binding1);
-                    //((ComboBox)newStPnl.Children[1]).SetBinding(ComboBox.SelectedValueProperty, binding2);
 
                     ((ComboBox)newStPnl.StackPanel.Children[0]).SelectionChanged += TeachingSelectionChanged;
                     ((ComboBox)newStPnl.StackPanel.Children[1]).SelectionChanged += ClassroomgSelectionChanged;
@@ -350,7 +118,6 @@ namespace Shedule.ViewPages
 
         #region Обработка данных
         //вызывать при создании страницы или после сохранения
-        //TODO не вызывать посе сохранения
         private async Task loadCommonData()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
@@ -513,7 +280,6 @@ namespace Shedule.ViewPages
                     && m.Semester?.StartDate >= info.SemesterStart
                     && m.Semester?.StartDate < info.SemesterEnd
                     && m.SemesterId != ((Semester)semesters.SelectedItem).Id
-                //TODO настроить фильтр по семестру
                 ).ToList();
                 info.MainSchedulesInTheSameClassroom = mainSchedules;
                 result.Add(info);
@@ -658,7 +424,7 @@ namespace Shedule.ViewPages
                     }
                     updated.Values.ToList().ForEach(async u =>
                     {
-                        if(u.TeachingId != null)
+                        if (u.TeachingId != null)
                         {
                             u.Teaching = await LearningProcessesAPI.getTeaching((int)u.TeachingId);
                         }
@@ -678,6 +444,7 @@ namespace Shedule.ViewPages
 
         //Вызывать при любом обновлении тичингов?
         //TODO понять не слишком ли дорого циклы постоянно гонять?
+        //ОТВЕТ: Дорого
         private void recalculateSpecialityHours()
         {
             if (semesters.SelectedItem == null)
@@ -700,7 +467,7 @@ namespace Shedule.ViewPages
 
             for (int week = 0; week < ((Semester)semesters.SelectedItem).WeeksCount; week++)
             {
-                for(int day = 0; day < DAYS; day++)
+                for (int day = 0; day < DAYS; day++)
                 {
                     DateTime date = ((Semester)semesters.SelectedItem).StartDate.AddDays((7 * week) + day);
                     //Скипаем практики в подсчете часов
@@ -724,7 +491,7 @@ namespace Shedule.ViewPages
                                         continue;
                                     specialityHoursItemsSource[ssId].AllocatedHours += 2;
                                     //Конец для четного и нечетного общего числа часов
-                                    if(specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == -1 || specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == 0)
+                                    if (specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == -1 || specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == 0)
                                     {
                                         specialityHoursItemsSource[ssId].LastDayFact = date;
                                     }
@@ -739,7 +506,7 @@ namespace Shedule.ViewPages
                         {
                             if (m.TeachingId == null)
                                 return;
-                            if(m.DayOfWeekId == day)
+                            if (m.DayOfWeekId == day)
                             {
                                 int ssId = m.Teaching.SpecialitySubjectId;
                                 if (!specialityHoursItemsSource.Keys.Contains(ssId))
@@ -753,7 +520,7 @@ namespace Shedule.ViewPages
                                 }
                             }
                         });
-                    }   
+                    }
                 }
                 takeFromGrid = !takeFromGrid;
             }
@@ -909,7 +676,8 @@ namespace Shedule.ViewPages
             }
             //TODO подтянуть модель
             hoursInfo[dayOfWeek].Content = hours;
-            if (hours > (groupsList.SelectedItem as Group).Speciality.MaxDailyHours) {
+            if (hours > (groupsList.SelectedItem as Group).Speciality.MaxDailyHours)
+            {
                 hoursInfo[dayOfWeek].Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
                 hoursInfo[dayOfWeek].ToolTip = "Вы привысили максимально возможно количество часов в день для данной группы";
             }
@@ -918,7 +686,7 @@ namespace Shedule.ViewPages
                 current.Background = Brushes.White;
                 current.ToolTip = null;
             }
-            
+
             int sum = 0;
             foreach (KeyValuePair<int, Label> keyValue in hoursInfo)
             {
@@ -1046,7 +814,7 @@ namespace Shedule.ViewPages
                                 setControlsEnabled(true, InfluenceLevel.WEEK_COLOR_SELECTION);
                             }, DispatcherPriority.Background);
 
-                            
+
                         }
                         else
                         {
@@ -1142,7 +910,7 @@ namespace Shedule.ViewPages
                 classroomsCB.SelectedIndex = -1;
                 classroomsCB.IsDropDownOpen = true;
 
-               
+
             }
 
         }
@@ -1177,7 +945,6 @@ namespace Shedule.ViewPages
 
         private void setValid(ComboBox comboBox, bool isValid)
         {
-            //TODO проверить на другой машине
             comboBox.Background = isValid ? Brushes.Transparent : Brushes.Red;
             comboBox.Focus();
             //comboBox.IsDropDownOpen = true;
@@ -1194,7 +961,7 @@ namespace Shedule.ViewPages
 
         private void romb_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-           
+
         }
 
         private async void Export_Click(object sender, RoutedEventArgs e)

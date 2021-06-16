@@ -23,7 +23,7 @@
             <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Преподаватель" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,87,0,0" Width="244" Height="50" FontSize="24"/>
 
             <ComboBox  x:Name="name" SelectedValue="{Binding SpecialitySubjectId , Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="Subject.Name" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,12,0,0" VerticalAlignment="Top" Width="400" FontSize="36"/>
-            <ComboBox x:Name="teacherCB" SelectedValue="{Binding TeacherId, Mode=TwoWay}" SelectedValuePath="Id" Margin="260,87,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left">
+            <ComboBox ToolTip="{x:Null}" x:Name="teacherCB" SelectedValue="{Binding TeacherId, Mode=TwoWay}" SelectedValuePath="Id" Margin="260,87,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>

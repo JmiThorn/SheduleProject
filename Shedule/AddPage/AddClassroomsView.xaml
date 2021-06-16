@@ -26,7 +26,7 @@
                 <ComboBoxItem>Старый</ComboBoxItem>
                 <ComboBoxItem>Новый</ComboBoxItem>
             </ComboBox>
-            <ComboBox PreviewMouseRightButtonDown="building_PreviewMouseRightButtonDown" x:Name="affiliationCB" SelectedValue="{Binding TeacherId, Mode=TwoWay}" SelectedValuePath="Id" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,144,0,0"  VerticalAlignment="Top" Width="400" FontSize="36">
+            <ComboBox ToolTip="{x:Null}" PreviewMouseRightButtonDown="building_PreviewMouseRightButtonDown" x:Name="affiliationCB" SelectedValue="{Binding TeacherId, Mode=TwoWay}" SelectedValuePath="Id" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,144,0,0"  VerticalAlignment="Top" Width="400" FontSize="36">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
