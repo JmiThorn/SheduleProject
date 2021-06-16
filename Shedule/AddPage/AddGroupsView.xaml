@@ -26,7 +26,7 @@
             <TextBox PreviewTextInput="DigitCheck_PreviewTextInput" x:Name="course" Text="{Binding Course}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,79,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
             <ComboBox x:Name="specialityCB" SelectedValue="{Binding SpecialityId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="Name" Margin="260,144,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left"/>
             <Button ContentTemplate="{StaticResource ResourceKey=save}" x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,273,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
-            <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+            <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" IsCancel="True" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
         </Grid>
     </Grid>
 </Page>

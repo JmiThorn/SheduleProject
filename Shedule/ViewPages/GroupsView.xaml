@@ -27,12 +27,12 @@
             <ComboBox x:Name="specialityCB" SelectedValue="{Binding SpecialityId, Mode=TwoWay,UpdateSourceTrigger=Explicit}" SelectedValuePath="Id" DisplayMemberPath="Name" IsEnabled="False" Margin="260,217,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left"/>
             <Button x:Name="edit_butt" Click="edit_butt_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Width="94" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="&#9998; Изменить" VerticalAlignment="Center" FontFamily="Global User Interface" Margin="260,274,0,12" HorizontalAlignment="Left"/>
             <Button ContentTemplate="{StaticResource ResourceKey=save}" x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,273,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
-            <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+            <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" IsCancel="True" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
         </Grid>
         <TabControl Grid.Row="2" FontSize="20" FontFamily="Global User Interface">
             <TabItem Header="Семестры">
                 <Grid Background="white">
-                    <ListView x:Name="SemesterListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0">
+                    <ListView x:Name="SemesterListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0" MouseDoubleClick="SemesterListView_MouseDoubleClick">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Номер семестра">
@@ -40,7 +40,7 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <Button Margin="0,0,20,0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="✖" Click="Button_Click" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="15"/>
-                                                <TextBlock x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding Number}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                                <TextBlock x:Name="OneStr"  Text="{Binding Number}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -48,14 +48,14 @@
                                 <GridViewColumn  Width="250" Header="Дата начала">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding StartDate, StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                                            <TextBlock  x:Name="OneStr" Text="{Binding StartDate, StringFormat='{}{0:dd.MM.yyyy}'}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Width="250"  Header="Количество недель">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding WeeksCount}"/>
+                                            <TextBlock  x:Name="OneStr"  Text="{Binding WeeksCount}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -102,7 +102,7 @@
             </TabItem>
             <TabItem Header="Изучаемые дисциплины" FontSize="20" FontFamily="Global User Interface">
                 <Grid Background="#FFE5E5E5">
-                    <ListView x:Name="TeachingListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0">
+                    <ListView x:Name="TeachingListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0" MouseDoubleClick="TeachingListView_MouseDoubleClick">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="400px" Header="Код предмета">
@@ -110,7 +110,7 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <Button Margin="0,0,20,0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="✖" Click="delete_teaching" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="15"/>
-                                                <TextBlock x:Name="OneStr" MouseDown="TwoStr_MouseDown"  Text="{Binding SpecialitySubject.SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                                <TextBlock x:Name="OneStr"  Text="{Binding SpecialitySubject.SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -119,7 +119,7 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                 <TextBlock x:Name="OneStr" MouseDown="TwoStr_MouseDown"  Text="{Binding SpecialitySubject.Subject.Name}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                                 <TextBlock x:Name="OneStr"   Text="{Binding SpecialitySubject.Subject.Name}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -128,9 +128,9 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Margin="0,0,10,0" x:Name="OneStr" MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Surname}"/>
-                                                <TextBlock  Margin="0,0,10,0" MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Name}"/>
-                                                <TextBlock MouseDown="TwoStr_MouseDown"  Text="{Binding Teacher.Patronymic}"/>
+                                                <TextBlock Margin="0,0,10,0" x:Name="OneStr" Text="{Binding Teacher.Surname}"/>
+                                                <TextBlock  Margin="0,0,10,0" Text="{Binding Teacher.Name}"/>
+                                                <TextBlock  Text="{Binding Teacher.Patronymic}"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>

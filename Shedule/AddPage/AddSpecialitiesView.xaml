@@ -30,7 +30,7 @@
             <TextBox PreviewTextInput="day_PreviewTextInput" ToolTip="Дневная нагрузка может быть в пределах от 0 до 24 часов" x:Name="day" Text="{Binding MaxDailyHours}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,286,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
             <TextBox PreviewTextInput="week_PreviewTextInput" ToolTip="Дневная нагрузка может быть в пределах от 0 до 168 часов" x:Name="week" Text="{Binding MaxWeeklyHours}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="259,354,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
             <Button ContentTemplate="{StaticResource ResourceKey=save}" x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,413,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
-            <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,413,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+            <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" IsCancel="True" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,413,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
         </Grid>
     </Grid>
 </Page>

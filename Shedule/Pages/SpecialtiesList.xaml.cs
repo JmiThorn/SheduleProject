@@ -56,14 +56,6 @@ namespace Shedule.Pages
             }
         }
 
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-            {
-                MainWindow.Instance.MainFrame.Navigate(new SpecialitiesView((Speciality)SpecialtiesListView.SelectedItem,sss)); ;
-                //MessageBox.Show("fgfgfg");
-            }
-        }
         public async Task deleteSpeciality(Speciality speciality)
         {
             //LearningProcessesAPI.updateTeacher();
@@ -91,6 +83,14 @@ namespace Shedule.Pages
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.MainFrame.Navigate(new AddSpecialitiesView(sss));
+        }
+
+        private void SpecialtiesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (SpecialtiesListView.SelectedItem != null)
+            {
+                MainWindow.Instance.MainFrame.Navigate(new SpecialitiesView((Speciality)SpecialtiesListView.SelectedItem, sss));
+            }
         }
     }
 }

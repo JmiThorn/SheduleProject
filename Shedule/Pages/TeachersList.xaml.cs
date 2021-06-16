@@ -34,8 +34,6 @@ namespace Shedule.Pages
 
         }
 
-        
-
         public async Task sss()
         {
             await AppUtils.ProcessClientLibraryRequest(async () => {
@@ -48,14 +46,6 @@ namespace Shedule.Pages
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
-        }
-
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-            {
-                MainWindow.Instance.MainFrame.Navigate(new TeachersView((Teacher)TeacherListView.SelectedItem));
-            }
         }
         private void search_box_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -113,16 +103,11 @@ namespace Shedule.Pages
             MainWindow.Instance.MainFrame.Navigate(new AddTeachersView(sss));
         }
 
-        private void TeacherListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TeacherListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
-        }
-        void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var item = ((FrameworkElement)e.OriginalSource).DataContext as Track;
-            if (item != null)
+            if (TeacherListView.SelectedItem != null)
             {
-                MessageBox.Show("Item's Double Click handled!");
+                MainWindow.Instance.MainFrame.Navigate(new TeachersView((Teacher)TeacherListView.SelectedItem));
             }
         }
     }

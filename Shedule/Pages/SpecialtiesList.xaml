@@ -23,7 +23,7 @@
             </StackPanel>
         </Border>
         <Label Content="Список специальностей" FontWeight="Bold" FontSize="64" Height="100" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <ListView x:Name="SpecialtiesListView" Grid.Row="2" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,0,0,55">
+        <ListView x:Name="SpecialtiesListView" Grid.Row="2" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,0,0,55" MouseDoubleClick="SpecialtiesListView_MouseDoubleClick">
             <!--<ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -36,7 +36,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                 <Button Margin="0,0,20,0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="&#10006;" Click="Button_Click" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="15"/>
-                                <TextBlock x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding Code}"/>
+                                <TextBlock x:Name="OneStr"  Text="{Binding Code}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -44,7 +44,7 @@
                     <GridViewColumn Header="Наименование">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="OneStr" MouseDown="OneStr_MouseDown" Text="{Binding Name}"/>
+                                <TextBlock x:Name="OneStr" Text="{Binding Name}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

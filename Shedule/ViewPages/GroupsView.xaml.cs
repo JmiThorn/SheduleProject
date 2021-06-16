@@ -158,26 +158,10 @@ namespace Shedule.ViewPages
             MainWindow.Instance.MainFrame.Navigate(new AddSemestersView((Group)DataContext));
         }
 
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-                {
-                    MainWindow.Instance.MainFrame.Navigate(new SemestersView((Semester)SemesterListView.SelectedItem));
-                }
-            
-        }
 
         private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
-        }
-
-        private void TwoStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-            {
-                MainWindow.Instance.MainFrame.Navigate(new GroupTeachingView((Teaching)TeachingListView.SelectedItem, loadTeachings));
-            }
         }
 
         private void addNew_teaching(object sender, RoutedEventArgs e)
@@ -200,6 +184,22 @@ namespace Shedule.ViewPages
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SemesterListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (SemesterListView.SelectedItem != null)
+            {
+                MainWindow.Instance.MainFrame.Navigate(new SemestersView((Semester)SemesterListView.SelectedItem));
+            }
+        }
+
+        private void TeachingListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(TeachingListView.SelectedItem != null)
+            {
+                MainWindow.Instance.MainFrame.Navigate(new GroupTeachingView((Teaching)TeachingListView.SelectedItem, loadTeachings));
             }
         }
     }

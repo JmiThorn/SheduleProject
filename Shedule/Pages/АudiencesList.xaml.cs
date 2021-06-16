@@ -39,14 +39,6 @@ namespace Shedule.Pages
             });
         }
 
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-            {
-                MainWindow.Instance.MainFrame.Navigate(new ClassroomsView((Classroom)ClassroomsListView.SelectedItem,sss));
-                //MessageBox.Show("fgfgfg");
-            }
-        }
 
         public async Task deleteClassroom(Classroom classroom)
         {
@@ -97,5 +89,12 @@ namespace Shedule.Pages
             || ((Classroom)x).Teacher?.Patronymic.IndexOf(search_box.Text, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
+        private void ClassroomsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ClassroomsListView.SelectedItem != null)
+            {
+                MainWindow.Instance.MainFrame.Navigate(new ClassroomsView((Classroom)ClassroomsListView.SelectedItem, sss));
+            }
+        }
     }
 }

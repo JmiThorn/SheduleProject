@@ -133,15 +133,6 @@ namespace Shedule.ViewPages
             });
         }
 
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-            {
-                MainWindow.Instance.MainFrame.Navigate(new SpecialitiesSubjectView((SpecialitySubject)SpecSubjectView.SelectedItem, updateManually));
-            }
-
-        }
-
         private void Page_GotFocus(object sender, RoutedEventArgs e)
         {
 
@@ -157,6 +148,14 @@ namespace Shedule.ViewPages
             var buf = DataContext;
             DataContext = null;
             DataContext = buf;
+        }
+
+        private void SpecSubjectView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(SpecSubjectView.SelectedItem != null)
+            {
+                MainWindow.Instance.MainFrame.Navigate(new SpecialitiesSubjectView((SpecialitySubject)SpecSubjectView.SelectedItem, updateManually));
+            }
         }
     }
 }

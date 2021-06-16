@@ -77,15 +77,6 @@ namespace Shedule.Pages
             }
         }
 
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-            {
-                MainWindow.Instance.MainFrame.Navigate(new GroupsView((Group)GroupsListView.SelectedItem));
-                //MessageBox.Show("fgfgfg");
-            }
-        }
-
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.MainFrame.Navigate(new AddGroupsView(sss));
@@ -100,6 +91,14 @@ namespace Shedule.Pages
             || ((Group)x).Course.ToString().IndexOf(search_box.Text, StringComparison.OrdinalIgnoreCase) >= 0
             || ((Group)x).Subgroup?.ToString().IndexOf(search_box.Text, StringComparison.OrdinalIgnoreCase) >= 0;
           
+        }
+
+        private void GroupsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(GroupsListView.SelectedItem != null)
+            {
+                MainWindow.Instance.MainFrame.Navigate(new GroupsView((Group)GroupsListView.SelectedItem));
+            }
         }
     }
 }

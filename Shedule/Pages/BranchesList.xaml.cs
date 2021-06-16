@@ -4,18 +4,10 @@ using Shedule.Utils;
 using Shedule.ViewPages;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Shedule.Pages
 {
@@ -45,7 +37,8 @@ namespace Shedule.Pages
         public async Task deleteDepartment(Department department)
         {
             //LearningProcessesAPI.updateTeacher();
-            await AppUtils.ProcessClientLibraryRequest(async () => {
+            await AppUtils.ProcessClientLibraryRequest(async () =>
+            {
                 List<Department> list = (List<Department>)DepartmentListView.ItemsSource;
                 var result = await LearningProcessesAPI.deleteDepartment(department.Id);
                 list.Remove(department);
@@ -70,17 +63,9 @@ namespace Shedule.Pages
 
             }
 
-           
+
         }
 
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-            {
-                MainWindow.Instance.MainFrame.Navigate(new DepartmentsView((Department)DepartmentListView.SelectedItem));
-                //MessageBox.Show("fgfgfg");
-            }
-        }
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
@@ -99,5 +84,12 @@ namespace Shedule.Pages
             }
         }
 
+        private void DepartmentListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DepartmentListView.SelectedItem != null)
+            {
+                MainWindow.Instance.MainFrame.Navigate(new DepartmentsView((Department)DepartmentListView.SelectedItem));
+            }
+        }
     }
 }

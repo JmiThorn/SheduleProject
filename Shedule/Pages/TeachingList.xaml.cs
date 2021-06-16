@@ -24,5 +24,10 @@ namespace Shedule.Pages
         {
             InitializeComponent();
         }
+
+        private void TeachList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

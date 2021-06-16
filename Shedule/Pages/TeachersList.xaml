@@ -30,9 +30,8 @@
                   Background="#FFF6F6FC"
                   Opacity="1"
                   IsSynchronizedWithCurrentItem="True"
-                  MouseDown="OneStr_MouseDown"
                   Margin="0,0,0,55"
-                  SelectionChanged="TeacherListView_SelectionChanged">
+                  MouseDoubleClick="TeacherListView_MouseDoubleClick">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -40,11 +39,11 @@
             </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel HorizontalAlignment="Stretch" MouseDown="OneStr_MouseDown">
+                    <DockPanel HorizontalAlignment="Stretch">
                         <Button Margin="0,0,20,0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Width="40" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="&#10006;" Click="Button_Click" VerticalAlignment="Center" FontFamily="Global User Interface" FontSize="15"/>
-                        <TextBlock  x:Name="OneStr" Text="{Binding Surname}" MouseDown="OneStr_MouseDown"/>
-                        <TextBlock  x:Name="TwoStr" Text="{Binding Name}" MouseDown="OneStr_MouseDown" Margin="10,0,0,0"/>
-                        <TextBlock  x:Name="TreeStr" Text="{Binding Patronymic}" MouseDown="OneStr_MouseDown" Margin="10,0,0,0"/>
+                        <TextBlock  x:Name="OneStr" Text="{Binding Surname}"/>
+                        <TextBlock  x:Name="TwoStr" Text="{Binding Name}" Margin="10,0,0,0"/>
+                        <TextBlock  x:Name="TreeStr" Text="{Binding Patronymic}" Margin="10,0,0,0"/>
                     </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

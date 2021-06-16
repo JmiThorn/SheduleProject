@@ -4,18 +4,10 @@ using Shedule.Utils;
 using Shedule.ViewPages;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Shedule.Pages
 {
@@ -41,7 +33,7 @@ namespace Shedule.Pages
             });
         }
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-        {         
+        {
         }
 
         public async Task deleteSubject(Subject subject)
@@ -60,13 +52,6 @@ namespace Shedule.Pages
             //MessageBox.Show(result.Count + "");
         }
 
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-            {
-                MainWindow.Instance.MainFrame.Navigate(new SubjectsView((Subject)DisciplinesListView.SelectedItem));
-            }
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -75,7 +60,7 @@ namespace Shedule.Pages
             {
                 deleteSubject((Subject)((Button)sender).DataContext);
             }
-          
+
         }
 
         private void addNew_Click(object sender, RoutedEventArgs e)
@@ -85,9 +70,17 @@ namespace Shedule.Pages
 
         private void search_box_TextChanged(object sender, TextChangedEventArgs e)
         {
-                DisciplinesListView.Items.Filter = x => ((Subject)x).Name.ToString().IndexOf(search_box.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+            DisciplinesListView.Items.Filter = x => ((Subject)x).Name.ToString().IndexOf(search_box.Text, StringComparison.OrdinalIgnoreCase) >= 0;
             DisciplinesListView.Items.Refresh();
             totalCount.Content = DisciplinesListView.Items.Count;
+        }
+
+        private void DisciplinesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DisciplinesListView.SelectedItem != null)
+            {
+                MainWindow.Instance.MainFrame.Navigate(new SubjectsView((Subject)DisciplinesListView.SelectedItem));
+            }
         }
     }
 }
