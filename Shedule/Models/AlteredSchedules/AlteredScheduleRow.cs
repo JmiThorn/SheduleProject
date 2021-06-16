@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -39,7 +38,7 @@ namespace Shedule.Models.AlteredSchedules
         private readonly DateTime currentDate;
         private readonly List<Curriculum> curriculums = new List<Curriculum>();
         private List<ExtendedTeaching> extendedTeachings = new List<ExtendedTeaching>();
-        private readonly Dictionary<int,ClassAvailabilityInfoModel> classAvailabilityModels = new Dictionary<int, ClassAvailabilityInfoModel>();
+        private readonly Dictionary<int, ClassAvailabilityInfoModel> classAvailabilityModels = new Dictionary<int, ClassAvailabilityInfoModel>();
 
 
         //Таск, который создается при установке новой группы
@@ -54,7 +53,7 @@ namespace Shedule.Models.AlteredSchedules
             set
             {
                 selectedGroup = value;
-                if(value != null)
+                if (value != null)
                 {
                     Semester = selectedGroup.Semesters.First(s => s.StartDate <= currentDate && s.StartDate.AddDays(7 * s.WeeksCount) >= currentDate);
                 }
@@ -78,8 +77,9 @@ namespace Shedule.Models.AlteredSchedules
             }
         }
 
-        private List<ExtendedTeaching> ExtendedTeachings { 
-            get 
+        private List<ExtendedTeaching> ExtendedTeachings
+        {
+            get
             {
                 return extendedTeachings;
             }
@@ -171,18 +171,37 @@ namespace Shedule.Models.AlteredSchedules
         #endregion
 
         #region Получение моделей
-        public ClassAvailabilityInfoModel getClassModel(int classNumber)
+        public async Task<ClassAvailabilityInfoModel> getClassModel(int classNumber)
         {
-            if(SelectedGroup == null)
+            if (SelectedGroup == null)
             {
                 return null;
             }
-            if (!classAvailabilityModels.ContainsKey(classNumber)) {
+            if (!classAvailabilityModels.ContainsKey(classNumber))
+            {
                 var mainSch = AllMainSchedules.FirstOrDefault(m =>
                     m.SemesterId == Semester.Id
                     && m.IsRedWeek == (WeeksColoringUtils.getWeekColor(currentDate) == WeeksColoringUtils.WeekColors.RED)
                     && m.DayOfWeekId == WeeksColoringUtils.convertDayOfWeekToInt(currentDate.DayOfWeek)
                     && m.ClassNumber == classNumber);
+
+                if (mainSch == null)
+                {
+                    //Если нет маина, то создаем пустой
+                    await AppUtils.ProcessClientLibraryRequest(async () =>
+                    {
+                        mainSch = await LearningProcessesAPI.createMainSchedule(
+                            classNumber,
+                            (WeeksColoringUtils.getWeekColor(currentDate) == WeeksColoringUtils.WeekColors.RED),
+                            null,
+                            WeeksColoringUtils.convertDayOfWeekToInt(currentDate.DayOfWeek),
+                            Semester.Id,
+                            null);
+                        if (mainSch != null)
+                            AllMainSchedules.Add(mainSch);
+                        //Если тут mainSch - null, то это баг, но по идее, он никогда не станет null
+                    });
+                }
                 var curriculum = Curriculums.FirstOrDefault(c =>
                     c.SemesterId == Semester.Id
                     && c.SpecialitySubjectId == mainSch?.Teaching?.SpecialitySubjectId);
@@ -190,11 +209,11 @@ namespace Shedule.Models.AlteredSchedules
                     c.SemesterId == Semester.Id
                     && c.PracticeSchedule?.StartDate <= currentDate
                     && c.PracticeSchedule?.EndDate >= currentDate);
-                var altered = AllAlteredSchedules.FirstOrDefault(a => 
+                var altered = AllAlteredSchedules.FirstOrDefault(a =>
                     a.MainScheduleId == mainSch?.Id
                     && a.Date == currentDate);
                 var model = new ClassAvailabilityInfoModel(SelectedGroup, currentDate, mainSch, curriculum, practiceCurriculum, ref extendedTeachings);
-                if(altered != null)
+                if (altered != null)
                 {
                     model.AlteredSchedule = altered;
                 }
@@ -208,7 +227,8 @@ namespace Shedule.Models.AlteredSchedules
         #region Обновление Замен
         public static bool createAlteredSchedule(ClassAvailabilityInfoModel model)
         {
-            if(model.MainSchedule == null) {
+            if (model.MainSchedule == null)
+            {
                 MessageBox.Show("Отсутствует основное расписание для выбранной пары!", "Ошибка наполнения", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }

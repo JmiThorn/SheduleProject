@@ -131,13 +131,12 @@ namespace Shedule.Controls
                 }
             } else {
                 await AppUtils.ProcessClientLibraryRequest(async () => {
-                    
                     foreach(var item in Grid.Children)
                     {
                         if (!(item is AlteredScheduleItemControl))
                             continue;
                         int classNumber = Grid.GetColumn(item as UIElement) - 1;
-                        (item as AlteredScheduleItemControl).DataContext = (DataContext as AlteredScheduleRow).getClassModel(classNumber);
+                        (item as AlteredScheduleItemControl).DataContext = await (DataContext as AlteredScheduleRow).getClassModel(classNumber);
                         (item as AlteredScheduleItemControl).Teachings.ItemsSource = ((item as AlteredScheduleItemControl).DataContext as ClassAvailabilityInfoModel).getTeachingModels();
                         CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView((item as AlteredScheduleItemControl).Teachings.ItemsSource);
                         view.SortDescriptions.Add(new SortDescription("RecommendationLevel", ListSortDirection.Ascending));

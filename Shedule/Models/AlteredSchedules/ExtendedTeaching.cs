@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shedule.Models.AlteredSchedules
 {
+    
     public class ExtendedTeaching : Teaching, INotifyPropertyChanged
     {
         private int allocatedFromMainScheduleHoursPlan = 0;
