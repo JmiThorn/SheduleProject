@@ -30,7 +30,12 @@ namespace Shedule.ViewPages
             InitializeComponent();
             UpdateParent += updater;
         }
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
+        }
+
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {

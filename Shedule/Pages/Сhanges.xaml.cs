@@ -385,15 +385,22 @@ namespace Shedule.Pages
               
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                AlterExport.ExportAlterShedule(AlteredScheduleRow.AllAlteredSchedules, DatePicker.SelectedDate.Value);
+            if (validatePage()) {
+                try
+                {
+                    var list = removeUnnecessaryAlteredSchedules(AlteredScheduleRow.AllAlteredSchedules);
+                    AlterExport.ExportAlterShedule(list, DatePicker.SelectedDate.Value);
+                }
+                catch
+                {
+                    MessageBox.Show("Некорректная дата");
+                }
             }
-            catch
+            else
             {
-                MessageBox.Show("Некорректная дата");
+                MessageBox.Show("Необходимо установить аудиторию(и)", "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-        }
+}
     }
 }

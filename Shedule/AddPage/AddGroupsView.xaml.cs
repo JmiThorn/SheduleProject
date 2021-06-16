@@ -48,7 +48,12 @@ namespace Shedule.ViewPages
             });
         }
 
-        private async void save_butt_Click(object sender, RoutedEventArgs e)
+        private void save_butt_Click(object sender, RoutedEventArgs e)
+        {
+            save();
+        }
+
+        private async Task save()
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
@@ -67,6 +72,7 @@ namespace Shedule.ViewPages
                 }
             });
         }
+
         private void DigitCheck_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if ((e.Text) == null || !(e.Text).All(char.IsDigit) || (sender as TextBox).Text.Length >= 1)
