@@ -4,11 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Shedule.Controls"
+             xmlns:utils="clr-namespace:Shedule.Utils"
              mc:Ignorable="d" 
              Background="Transparent" d:DesignHeight="450" d:DesignWidth="800" Grid.Row="2" Grid.Column="1" DataContextChanged="UserControl_DataContextChanged">
     <UserControl.Resources>
         <local:FirstLetterFromStrConverter x:Key="FirstLetterFromStrConverter"/>
-        <local:BuildingConverter x:Key="BuildingConverter"/>
+        <utils:BuildingConverter x:Key="BuildingConverter"/>
     </UserControl.Resources>
     <Border BorderThickness="1" BorderBrush="#cfcfcf">
     <StackPanel VerticalAlignment="Center">

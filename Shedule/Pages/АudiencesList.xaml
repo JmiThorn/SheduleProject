@@ -4,10 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Shedule.Pages"
+      xmlns:utils="clr-namespace:Shedule.Utils"
       mc:Ignorable="d" 
      d:DesignHeight="750" d:DesignWidth="1200"
       Title="АudiencesList" SizeChanged="Page_SizeChanged">
-
+    <Page.Resources>
+        <utils:BuildingConverter x:Key="BuildingConverter"/>
+    </Page.Resources>
     <Grid  x:Name="Grid" Background="#F6F6FC" Visibility="Visible">
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
@@ -41,7 +44,7 @@
                         <GridViewColumn Header="Корпус">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock x:Name="OneStr"  Text="{Binding Building}"/>
+                                    <TextBlock x:Name="OneStr"  Text="{Binding Building, Converter={StaticResource BuildingConverter}}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

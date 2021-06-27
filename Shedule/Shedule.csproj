@@ -140,6 +140,7 @@
     <Compile Include="Models\MainSchedules\MainScheduleLiveModel.cs" />
     <Compile Include="Models\Parsing\GroupModel.cs" />
     <Compile Include="Utils\AlterExport.cs" />
+    <Compile Include="Utils\BuildingConverter.cs" />
     <Compile Include="Utils\ParsingUtils.cs" />
     <Compile Include="Models\Parsing\SemesterModel.cs" />
     <Compile Include="Models\Parsing\SubjectModel.cs" />

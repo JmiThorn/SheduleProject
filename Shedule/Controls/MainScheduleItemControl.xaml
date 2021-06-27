@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:Shedule.Controls"
+             xmlns:utils="clr-namespace:Shedule.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Grid.Row="2" Grid.Column="1">
     <UserControl.Resources>
         <local:FirstLetterFromStrConverter x:Key="FirstLetterFromStrConverter"/>
-        <local:BuildingConverter x:Key="BuildingConverter"/>
+        <utils:BuildingConverter x:Key="BuildingConverter"/>
     </UserControl.Resources>
     <StackPanel x:Name="StackPanel" x:FieldModifier="public">
         <ComboBox ToolTip="{x:Null}" SelectedValue ="{Binding TeachingId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0" IsEditable = "False" FontSize = "16" Height = "50" FontFamily = "Global User Interface" SelectedValuePath = "Teaching.Id" PreviewMouseRightButtonDown="ComboBox_MouseRightButtonDown">
