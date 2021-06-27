@@ -40,6 +40,7 @@ namespace Shedule.ViewPages
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createSubject(name.Text, (bool)IsPractice.IsChecked);
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Предмет успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
             });

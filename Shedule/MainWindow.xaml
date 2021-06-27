@@ -8,6 +8,7 @@
         Title="Главная" MinHeight="950" MinWidth="1650"
         Icon="Image\logo.ico"
         WindowState="Maximized" Width="1515" Height="944"
+        KeyDown="Window_KeyDown"
         >
 
     <Grid>
@@ -59,7 +60,7 @@
         <Image Grid.Row="0" Grid.Column="0" Source="image 2.png" Margin="85,35"/>
 
         <Border BorderBrush="#2D2D2D" Opacity="0.7" BorderThickness="4,0,0,0" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="2">
-            <Frame Background="#F6F6FC" x:Name="MainFrame" Grid.Row="0" Grid.Column="1" NavigationUIVisibility="Hidden" Content="" Grid.RowSpan="17" Margin="6,0,-6,0"/>
+            <Frame Background="#F6F6FC" x:Name="MainFrame" Grid.Row="0" Grid.Column="1" NavigationUIVisibility="Hidden" Content="" Grid.RowSpan="17" Margin="6,0,-6,0" Navigating="MainFrame_Navigating"/>
         </Border>
     </Grid>
 </Window>

@@ -52,6 +52,7 @@ namespace Shedule.ViewPages
                 teacherCB.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
                 Teaching teaching = (Teaching)DataContext;
                 var result = await LearningProcessesAPI.updateTeaching(teaching.Id, teaching);
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
             });
@@ -63,6 +64,7 @@ namespace Shedule.ViewPages
         private void edit_butt_Click(object sender, RoutedEventArgs e)
         {
             teacherCB.IsEnabled = true;
+            AppUtils.PageContentAreSaved = false;
         }
     }
 }

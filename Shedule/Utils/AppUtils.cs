@@ -13,6 +13,8 @@ namespace Shedule.Utils
     public class AppUtils
     {
 
+        public static bool PageContentAreSaved { get; set; } = true;
+
         public static async Task ProcessClientLibraryRequest(Func<Task> action)
         {
             try
@@ -68,6 +70,8 @@ namespace Shedule.Utils
             }
             
         }
+
+
 
     }
 }

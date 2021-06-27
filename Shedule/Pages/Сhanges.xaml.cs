@@ -39,6 +39,7 @@ namespace Shedule.Pages
 
         async Task loadSchedules()
         {
+            AppUtils.PageContentAreSaved = false;
             if (DatePicker.SelectedDate == null)
                 return;
             await AppUtils.ProcessClientLibraryRequest(async () =>
@@ -349,6 +350,7 @@ namespace Shedule.Pages
 
             if (!errorHappened)
             {
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show($"Успешно сохранено ({newAlteredSchedules.Count} добавлено, {updatedAlteredSchedules.Count} обновлено, {deletedAlteredSchedules.Count} удалено)", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }

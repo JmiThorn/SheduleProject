@@ -70,7 +70,14 @@ namespace Shedule.ViewPages
                 );
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
+                AppUtils.PageContentAreSaved = true;
             });
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsLoaded)
+                AppUtils.PageContentAreSaved = false;
         }
     }
 }

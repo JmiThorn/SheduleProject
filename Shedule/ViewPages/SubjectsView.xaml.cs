@@ -32,6 +32,7 @@ namespace Shedule.ViewPages
         private void edit_butt_Click(object sender, RoutedEventArgs e)
         {
             name.IsEnabled = true;
+            AppUtils.PageContentAreSaved = false;
         }
         private async Task save()
         {
@@ -40,6 +41,7 @@ namespace Shedule.ViewPages
                 name.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 Subject subject = (Subject)DataContext;
                 var result = await LearningProcessesAPI.updateSubject(subject.Id, subject);
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }

@@ -60,6 +60,7 @@ namespace Shedule.ViewPages
                     MessageBox.Show("Специльность успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateParent?.Invoke();
                 }
+                AppUtils.PageContentAreSaved = true;
             });
         }
 
@@ -92,6 +93,12 @@ namespace Shedule.ViewPages
                 {
                     e.Handled = true;
             }
+        }
+
+        private void departmentCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsLoaded)
+                AppUtils.PageContentAreSaved = false;
         }
     }
 }

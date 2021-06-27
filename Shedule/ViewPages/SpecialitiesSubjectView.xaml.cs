@@ -35,6 +35,7 @@ namespace Shedule.ViewPages
         {
             code.IsEnabled = true;
             nameCB.IsEnabled = true;
+            AppUtils.PageContentAreSaved = false;
         }
 
         private void back_Click(object sender, RoutedEventArgs e)
@@ -50,6 +51,7 @@ namespace Shedule.ViewPages
                 SpecialitySubject specialitySubject = (SpecialitySubject)DataContext;
                 var result = await LearningProcessesAPI.updateSpicialitySubject(specialitySubject.Id, specialitySubject);
                 specialitySubject.Subject = result.Subject;
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
             });

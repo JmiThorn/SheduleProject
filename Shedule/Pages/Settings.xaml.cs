@@ -1,6 +1,7 @@
 ﻿using LearningProcessesAPIClient.api;
 using Microsoft.Win32;
 using Shedule.Models.Parsing;
+using Shedule.Utils;
 using System;
 using System.IO;
 using System.Windows;
@@ -60,6 +61,7 @@ namespace Shedule.Pages
                 var login = Properties.Settings.Default.Login;
                 var password = Properties.Settings.Default.Password;
                 LearningProcessesAPI.setCredentionals(login, password);
+                AppUtils.PageContentAreSaved = true;
             }
             catch (Exception ex)
             {

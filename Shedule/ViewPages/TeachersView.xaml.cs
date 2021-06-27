@@ -37,6 +37,7 @@ namespace Shedule.ViewPages
             surname.IsEnabled = true;
             patronymic.IsEnabled = true;
             departmentsCB.IsEnabled = true;
+            AppUtils.PageContentAreSaved = false;
         }
 
         public async Task loadDepartments()
@@ -58,6 +59,7 @@ namespace Shedule.ViewPages
                 Teacher teacher = (Teacher)DataContext;
                 //teacher.DepartmentId = 1;
                 var result = await LearningProcessesAPI.updateTeacher(teacher.Id, teacher);
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }

@@ -51,6 +51,7 @@ namespace Shedule.ViewPages
             building.IsEnabled = true;
             number.IsEnabled = true;
             affiliationCB.IsEnabled = true;
+            AppUtils.PageContentAreSaved = false;
         }
         private async Task save()
         {
@@ -62,6 +63,7 @@ namespace Shedule.ViewPages
                 Classroom classroom = (Classroom)DataContext;
                 classroom.Building = building.SelectedIndex + 1;
                 var result = await LearningProcessesAPI.updateClassroom(classroom.Id, classroom);
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
             });

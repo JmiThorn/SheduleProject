@@ -41,6 +41,7 @@ namespace Shedule.ViewPages
             course.IsEnabled = true;
             subgroup.IsEnabled = true;
             specialityCB.IsEnabled = true;
+            AppUtils.PageContentAreSaved = false;
         }
         public async Task loadSpeciality()
         {
@@ -96,6 +97,7 @@ namespace Shedule.ViewPages
                 var result = await LearningProcessesAPI.updateGroup(group.Id, group);
                 codename.Text = result.Codename;
                 codename.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }

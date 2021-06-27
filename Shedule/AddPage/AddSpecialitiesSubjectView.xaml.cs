@@ -49,9 +49,16 @@ namespace Shedule.ViewPages
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createSpecialitySubject(((Speciality)(DataContext)).Id, Convert.ToInt32(nameCB.SelectedValue), code.Text);
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Дисциплина успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
             });
+        }
+
+        private void nameCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsLoaded)
+                AppUtils.PageContentAreSaved = false;
         }
     }
 }

@@ -40,6 +40,7 @@ namespace Shedule.ViewPages
             startdate.IsEnabled = true;
             number.IsEnabled = true;
             //groupCB.IsEnabled = true;
+            AppUtils.PageContentAreSaved = false;
         }
         public async Task loadSpeciality(Semester speciality)
         {
@@ -74,6 +75,7 @@ namespace Shedule.ViewPages
                 {
                     MessageBox.Show("Семестр не найден!", "Ошбика обновления данных", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+                AppUtils.PageContentAreSaved = true;
             });
         }
         private void save_butt_Click(object sender, RoutedEventArgs e)

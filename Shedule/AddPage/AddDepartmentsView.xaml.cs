@@ -44,6 +44,7 @@ namespace Shedule.ViewPages
             {
                 var result = await LearningProcessesAPI.createDepartment(name.Text);
                 MessageBox.Show("Отделение успешно добавлено", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                AppUtils.PageContentAreSaved = true;
                 UpdateParent?.Invoke();
             });
         }

@@ -53,6 +53,7 @@ namespace Shedule.ViewPages
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createTeacher(name.Text, surname.Text, patronymic.Text, Convert.ToInt32(departmentsCB.SelectedValue));
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Преподаватель успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateParent?.Invoke();
             });
@@ -61,6 +62,12 @@ namespace Shedule.ViewPages
         private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void departmentsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsLoaded)
+                AppUtils.PageContentAreSaved = false;
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LearningProcessesAPIClient.api;
 using Shedule.Pages;
+using Shedule.Utils;
 using Shedule.ViewPages;
 
 namespace Shedule
@@ -117,5 +118,33 @@ namespace Shedule
         {
 
         }
+
+        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            
+        }
+
+        private void MainFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (!AppUtils.PageContentAreSaved)
+            {
+                if(MessageBox.Show("Внесеенные изменения не будут сохранены.\nПокинуть страницу?", "Покинуть страницу?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    AppUtils.PageContentAreSaved = true;
+                }
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key != Key.Escape && e.Key != Key.Tab)
+            {
+                AppUtils.PageContentAreSaved = false;
+            }
+        }
     }
-    }
+ }

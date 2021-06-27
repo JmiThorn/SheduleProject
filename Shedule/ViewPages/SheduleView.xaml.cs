@@ -112,6 +112,7 @@ namespace Shedule.ViewPages
 
                 if (groupsList.Items.Count > 0)
                     groupsList.SelectedIndex = 0;
+                AppUtils.PageContentAreSaved = false;
             }, DispatcherPriority.Background);
         }
 
@@ -136,7 +137,7 @@ namespace Shedule.ViewPages
 
                 //Группы
                 var groups = await LearningProcessesAPI.getAllGroups();
-                groupsList.ItemsSource = groups;
+                groupsList.ItemsSource = groups.Where(g => g.IsFullTime);
             });
         }
 
@@ -438,6 +439,7 @@ namespace Shedule.ViewPages
 
             if (!errorHappened)
             {
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show($"Успешно сохранено ({newMainSchedules.Count} добавлено, {updatedMainSchedules.Count} обновлено)", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
@@ -758,6 +760,7 @@ namespace Shedule.ViewPages
                                 await loadGroupData();
                                 rebeindAndUpdateCellsContent();
                             }, DispatcherPriority.Background);
+                            setControlsEnabled(true, InfluenceLevel.GROUPS_SELECTION);
                             //Очистка экрана
 
                             //TODO предложить создать их на месте или перейти в нужное окно

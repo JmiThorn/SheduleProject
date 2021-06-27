@@ -41,6 +41,7 @@ namespace Shedule.ViewPages
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var result = await LearningProcessesAPI.createSemester(Convert.ToInt32(weekscount.Text), (DateTime)startdate.SelectedDate, Convert.ToInt32(number.Text), Convert.ToInt32(((Group)DataContext).Id));
+                AppUtils.PageContentAreSaved = true;
                 MessageBox.Show("Семестр успешно добавлен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
@@ -63,6 +64,12 @@ namespace Shedule.ViewPages
         private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void startdate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsLoaded)
+                AppUtils.PageContentAreSaved = false;
         }
     }
 }

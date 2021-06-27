@@ -53,6 +53,7 @@ namespace Shedule.ViewPages
                     departmentCB.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
                     Speciality speciality = (Speciality)DataContext;
                     var result = await LearningProcessesAPI.updateSpeciality(speciality.Id, speciality);
+                    AppUtils.PageContentAreSaved = true;
                     MessageBox.Show("Данные успешно обновлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     DataContext = result;
                     UpdateParent?.Invoke();
@@ -72,6 +73,7 @@ namespace Shedule.ViewPages
             departmentCB.IsEnabled = true;
             day.IsEnabled = true;
             week.IsEnabled = true;
+            AppUtils.PageContentAreSaved = false;
         }
         private void day_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

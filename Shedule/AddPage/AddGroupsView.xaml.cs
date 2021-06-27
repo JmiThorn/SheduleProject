@@ -70,6 +70,7 @@ namespace Shedule.ViewPages
                     MessageBox.Show("Группа добавлена успешно", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateParent?.Invoke();
                 }
+                AppUtils.PageContentAreSaved = true;
             });
         }
 
@@ -84,6 +85,12 @@ namespace Shedule.ViewPages
         private void back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void specialityCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsLoaded)
+                AppUtils.PageContentAreSaved = false;
         }
     }
 }

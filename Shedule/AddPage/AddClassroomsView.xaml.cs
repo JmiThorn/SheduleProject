@@ -58,6 +58,7 @@ namespace Shedule.ViewPages
                     var result = await LearningProcessesAPI.createClassroom(Convert.ToInt32(number.Text), Convert.ToInt32(building.SelectedIndex) + 1, Convert.ToInt32(affiliationCB.SelectedValue));
                     MessageBox.Show("Аудитория успешно добавлена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+                AppUtils.PageContentAreSaved = true;
             });
         }
 
@@ -82,6 +83,12 @@ namespace Shedule.ViewPages
         private void building_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             affiliationCB.SelectedIndex = -1;
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(IsLoaded)
+                AppUtils.PageContentAreSaved = false;
         }
     }
 }
