@@ -27,6 +27,9 @@
             <ComboBox x:Name="specialityCB" SelectedValue="{Binding SpecialityId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="Name" Margin="260,144,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left" SelectionChanged="specialityCB_SelectionChanged"/>
             <Button ContentTemplate="{StaticResource ResourceKey=save}" x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,273,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
             <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" IsCancel="True" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+            <RadioButton x:Name="full" GroupName="FormEduc" FontWeight="DemiBold" Foreground="#595959"  VerticalContentAlignment="Center" Content="Очная" HorizontalAlignment="Left" Margin="260,217,0,0" VerticalAlignment="Top" FontSize="30" FontFamily="Global User Interface"/>
+            <RadioButton GroupName="FormEduc"  FontWeight="DemiBold" Foreground="#595959"  VerticalContentAlignment="Center" Content="Заочная" HorizontalAlignment="Left" Margin="386,217,0,0" VerticalAlignment="Top" FontSize="30" FontFamily="Global User Interface"/>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Форма обучения" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,208,0,0" Width="244" Height="50" FontSize="24"/>
         </Grid>
     </Grid>
 </Page>

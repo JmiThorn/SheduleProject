@@ -198,20 +198,26 @@ namespace Shedule.ViewPages
 
         private void addNew_Click(object sender, RoutedEventArgs e)
         {
-
-            Curriculum curriculum = new Curriculum()
+            if (specSub.SelectedIndex != -1)
             {
-                PlannedHours = 0,
-                UsedHours = 0,
-                Semester = (Semester)DataContext,
-                SemesterId = ((Semester)DataContext).Id,
-                SpecialitySubjectId = ((SpecialitySubject)specSub.SelectedItem).Id,
-                SpecialitySubject = (SpecialitySubject)specSub.SelectedItem
-            };
-            currentCurriculums.Add(curriculum);
-            CurriculumsListView.ItemsSource = currentCurriculums;
-            CurriculumsListView.Items.Refresh();
-            loadSpecSubjects();
+                Curriculum curriculum = new Curriculum()
+                {
+                    PlannedHours = 0,
+                    UsedHours = 0,
+                    Semester = (Semester)DataContext,
+                    SemesterId = ((Semester)DataContext).Id,
+                    SpecialitySubjectId = ((SpecialitySubject)specSub.SelectedItem).Id,
+                    SpecialitySubject = (SpecialitySubject)specSub.SelectedItem
+                };
+                currentCurriculums.Add(curriculum);
+                CurriculumsListView.ItemsSource = currentCurriculums;
+                CurriculumsListView.Items.Refresh();
+                loadSpecSubjects();
+            }
+            else
+            {
+                MessageBox.Show("Добавляема дисциплина не может быть пустой, выбирете одну из имеющихся и нажмите кнопку \"Добавить\" ещё раз. ", "Ошибка добавления", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void addNewPractice_Click(object sender, RoutedEventArgs e)

@@ -59,7 +59,7 @@ namespace Shedule.ViewPages
             {
                 if (subgroup.Text == "")
                 {
-                    var result = await LearningProcessesAPI.createGroup(Convert.ToInt32(course.Text), null, true, Convert.ToInt32(specialityCB.SelectedValue));
+                    var result = await LearningProcessesAPI.createGroup(Convert.ToInt32(course.Text), Convert.ToInt32(subgroup.Text), (bool)full.IsChecked, Convert.ToInt32(specialityCB.SelectedValue));
                     MessageBox.Show("Группа добавлена успешно", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateParent?.Invoke();
                 }

@@ -5,17 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Shedule.ViewPages"
       mc:Ignorable="d" 
-       d:DesignHeight="750" d:DesignWidth="1200"
+       d:DesignHeight="1050" d:DesignWidth="1200"
       Title="GroupsView">
 
     <Grid x:Name="Grid" Background="#F6F6FC" Visibility="Visible" OpacityMask="{x:Null}">
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
-            <RowDefinition Height="373"/>
+            <RowDefinition Height="420"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Content="Группы" FontWeight="Bold" FontSize="64" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Grid Margin="0,0,0,0.2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="326" Width="695">
+        <Grid Margin="252,10" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="400" Width="696">
             <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Кодовое имя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,20,0,0" Width="244" Height="50" FontSize="24"/>
             <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Подгруппа" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,87,0,0" Width="244" Height="50" FontSize="24"/>
             <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Курс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,152,0,0" Width="244" Height="50" FontSize="24"/>
@@ -25,9 +25,15 @@
             <TextBox TextInput="DigitCheck_PreviewTextInput" x:Name="subgroup" IsEnabled="False" Text="{Binding Subgroup,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,79,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
             <TextBox TextInput="DigitCheck_PreviewTextInput" x:Name="course" IsEnabled="False" Text="{Binding Course,UpdateSourceTrigger=Explicit}" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2" HorizontalAlignment="Left" Height="50" Margin="260,144,0,0"  VerticalAlignment="Top" Width="400" FontSize="36"/>
             <ComboBox x:Name="specialityCB" SelectedValue="{Binding SpecialityId, Mode=TwoWay,UpdateSourceTrigger=Explicit}" SelectedValuePath="Id" DisplayMemberPath="Name" IsEnabled="False" Margin="260,217,0,0" Height="50" FontWeight="DemiBold" Background="#F6F6FC" BorderThickness="0,0,0,2"  VerticalAlignment="Top" FontSize="36" Width="400" HorizontalAlignment="Left"/>
-            <Button x:Name="edit_butt" Click="edit_butt_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Width="94" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="&#9998; Изменить" VerticalAlignment="Center" FontFamily="Global User Interface" Margin="260,274,0,12" HorizontalAlignment="Left"/>
-            <Button ContentTemplate="{StaticResource ResourceKey=save}" x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,273,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
-            <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" IsCancel="True" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+            <Button x:Name="edit_butt" Click="edit_butt_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Width="94" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40"  Content="&#9998; Изменить" VerticalAlignment="Top" FontFamily="Global User Interface" Margin="260,340,0,0" HorizontalAlignment="Left"/>
+            <Button ContentTemplate="{StaticResource ResourceKey=save}" x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,340,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
+            <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" IsCancel="True" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,340,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
+            <CheckBox IsChecked="{Binding IsFullTime}" x:Name="IsFull" ToolTip="Снимите галочку, если данная группа является заочной" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="258,285,0,0" VerticalAlignment="Top" Height="23" FontFamily="Global User Interface" Width="23">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <Label FontWeight="DemiBold" Foreground="#595959" HorizontalContentAlignment="Right" Content="Очная форма" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,283,0,0" Width="243" Height="50" FontSize="24"/>
         </Grid>
         <TabControl Grid.Row="2" FontSize="20" FontFamily="Global User Interface">
             <TabItem Header="Семестры">
@@ -63,7 +69,7 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Orientation="Horizontal">
-                    <Button
+                        <Button
                         Width="144"
                         Padding="0"
                         Height="40"
@@ -80,7 +86,7 @@
                         HorizontalContentAlignment="Center" 
                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
                     />
-                    <Button
+                        <Button
                         Width="144"
                         Padding="0"
                         Height="40"
@@ -119,7 +125,7 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                 <TextBlock x:Name="OneStr"   Text="{Binding SpecialitySubject.Subject.Name}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                                <TextBlock x:Name="OneStr"   Text="{Binding SpecialitySubject.Subject.Name}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>

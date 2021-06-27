@@ -182,6 +182,7 @@ namespace Shedule.ViewPages
                     await ParsingUtils.ParseFile(openFileDialog.FileName, ((DataContext as Group).Id));
                     loadSemesters((Group)DataContext);
                 }
+                MessageBox.Show("Импорт успешно выполнен, не забудьте проставить даты начала семестров","Уведомление",MessageBoxButton.OK,MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
