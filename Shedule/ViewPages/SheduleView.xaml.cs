@@ -972,8 +972,6 @@ namespace Shedule.ViewPages
             DateTime semesterStart = ((Semester)semesters.SelectedItem).StartDate;
             await Utils.SheduleExport.Export(allMainSchedules, semesterStart);
         }
+
     }
-
-
-
 }

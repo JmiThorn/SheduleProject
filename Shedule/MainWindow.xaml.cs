@@ -51,11 +51,13 @@ namespace Shedule
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new SheduleView());
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new TeachersList());
         }
 
@@ -66,41 +68,37 @@ namespace Shedule
 
         private void Chang_but_Click(object sender, RoutedEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new Сhanges());
         }
 
         private void Settings_butt_Click(object sender, RoutedEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new Settings());
         }
 
         private void spec_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new SpecialtiesList());
-        }
-
-        private void teachers_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MainFrame.Navigate(new TeachingList());
         }
 
         private void aud_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new АudiencesList());
         }
 
         private void groups_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new GroupsList());
-        }
-
-        private void plan_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MainFrame.Navigate(new Сhanges());
         }
 
         private void disciplines_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new DisciplinesList());
         }
 
@@ -111,17 +109,8 @@ namespace Shedule
 
         private void department_butt_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            clearJournal();
             MainFrame.Navigate(new BranchesList());
-        }
-
-        private void TextBlock_MouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
-        {
-            
         }
 
         private void MainFrame_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -131,6 +120,7 @@ namespace Shedule
                 if(MessageBox.Show("Внесеенные изменения не будут сохранены.\nПокинуть страницу?", "Покинуть страницу?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.No)
                 {
                     e.Cancel = true;
+                    return;
                 }
                 else
                 {
@@ -146,5 +136,15 @@ namespace Shedule
                 AppUtils.PageContentAreSaved = false;
             }
         }
+
+        //Очистка журнала во избежание утечек памяти
+        private void clearJournal()
+        {
+            while (MainFrame.CanGoBack)
+            {
+                MainFrame.RemoveBackEntry();
+            }
+        }
+
     }
  }

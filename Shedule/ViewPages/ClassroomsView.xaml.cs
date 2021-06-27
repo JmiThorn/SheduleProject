@@ -72,7 +72,7 @@ namespace Shedule.ViewPages
         {
             save();
         }
-
+        
         private void number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if ((e.Text) == null || !(e.Text).All(char.IsDigit) || number.Text.Length >= 3)
