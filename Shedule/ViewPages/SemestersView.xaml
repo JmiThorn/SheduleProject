@@ -116,7 +116,7 @@
                     <ListView x:Name="CurriculumsPracticeListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Код предмета" Width="250">
+                                <GridViewColumn Header="Код предмета" Width="200">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -144,17 +144,33 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="250"  Header="Часов по плану">
+                                <GridViewColumn Width="220"  Header="Часов по плану">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}"  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding PlannedHours, Mode=TwoWay}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="250"  Header="Отпрактиковано часов">
+                                <GridViewColumn Width="270"  Header="Использовано часов">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding UsedHours, Mode=TwoWay}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="220"  Header="Начало практики">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <!--<TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding UsedHours, Mode=TwoWay}"/>-->
+                                            <DatePicker/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="220"  Header="Конец практики">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <!--<TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding UsedHours, Mode=TwoWay}"/>-->
+                                            <DatePicker/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
