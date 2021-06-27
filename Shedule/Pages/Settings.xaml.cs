@@ -19,7 +19,7 @@ namespace Shedule.Pages
             InitializeComponent();
             ConnectionString.Text = Properties.Settings.Default.ConnectionString;
             Login_field.Text = Properties.Settings.Default.Login;
-            Password_field.Text = Properties.Settings.Default.Password;
+            Password_field.Password = Properties.Settings.Default.Password;
 
             //string days = Properties.Settings.Default.WorkDays;
             //WorkDays.Items.Add("4");
@@ -35,7 +35,7 @@ namespace Shedule.Pages
             {
                 Properties.Settings.Default.ConnectionString = ConnectionString.Text;
                 Properties.Settings.Default.Login = Login_field.Text;
-                Properties.Settings.Default.Password = Password_field.Text;
+                Properties.Settings.Default.Password = Password_field.Password;
                 //Properties.Settings.Default.WorkDays = WorkDays.SelectionBoxItem.ToString();
                 Properties.Settings.Default.Save();
                 MessageBox.Show("Данные успешно обновлены");
