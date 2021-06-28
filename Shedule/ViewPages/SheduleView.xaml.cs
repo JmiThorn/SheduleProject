@@ -493,9 +493,13 @@ namespace Shedule.ViewPages
                                         continue;
                                     specialityHoursItemsSource[ssId].AllocatedHours += 2;
                                     //Конец для четного и нечетного общего числа часов
-                                    if (specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == -1 || specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == 0)
+                                    if (specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours <= 0)
                                     {
                                         specialityHoursItemsSource[ssId].LastDayFact = date;
+                                    }
+                                    else
+                                    {
+                                        specialityHoursItemsSource[ssId].LastDayFact = null;
                                     }
                                 }
                             }
@@ -516,9 +520,13 @@ namespace Shedule.ViewPages
                                 //По идее, здесь должны быть все предметы (если только в бд нет несоответвтвий куррикулумов и присутсвующих MainSchedule)
                                 specialityHoursItemsSource[ssId].AllocatedHours += 2;
                                 //Конец для четного и нечетного общего числа часов
-                                if (specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == -1 || specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours == 0)
+                                if (specialityHoursItemsSource[ssId].AbsoluteNotAllocatedHours <= 0)
                                 {
                                     specialityHoursItemsSource[ssId].LastDayFact = date;
+                                }
+                                else
+                                {
+                                    specialityHoursItemsSource[ssId].LastDayFact = null;
                                 }
                             }
                         });

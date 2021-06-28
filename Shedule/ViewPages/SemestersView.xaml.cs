@@ -26,6 +26,7 @@ namespace Shedule.ViewPages
     {
 
         List<Curriculum> currentCurriculums = new List<Curriculum>();
+
         public SemestersView(Semester semester)
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace Shedule.ViewPages
             loadSpeciality(semester);
             loadCurriculum(semester);
         }
+
         private void edit_butt_Click(object sender, RoutedEventArgs e)
         {
             weekscount.IsEnabled = true;
