@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Shedule.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="1200"
-      Title="AddTeachersView">
+      Title="Добавление преподавателя">
 
     <Grid x:Name="Grid" Background="#F6F6FC" Visibility="Visible" OpacityMask="{x:Null}">
         <Grid.RowDefinitions>

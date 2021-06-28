@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Shedule.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Settings">
+      Title="Настройки">
 
     <Grid x:Name="Grid" Background="#F6F6FC" Visibility="Visible">
         <Grid.ColumnDefinitions>

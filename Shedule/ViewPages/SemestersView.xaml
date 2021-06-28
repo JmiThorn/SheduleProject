@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Shedule.ViewPages"
       mc:Ignorable="d" 
        d:DesignHeight="750" d:DesignWidth="1200"
-      Title="SemestersView" SizeChanged="Page_SizeChanged">
+      Title="Изменение семестра" SizeChanged="Page_SizeChanged">
 
     <Grid x:Name="Grid" Background="#F6F6FC" Visibility="Visible" OpacityMask="{x:Null}">
         <Grid.RowDefinitions>
@@ -32,8 +32,8 @@
             <Button ContentTemplate="{StaticResource ResourceKey=save}" x:Name="save_butt" Click="save_butt_Click" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Content="Сохранить" HorizontalAlignment="Left" Margin="566,273,0,0" VerticalAlignment="Top" Width="94" Height="40"/>
             <Button ContentTemplate="{StaticResource ResourceKey=back}" x:Name="back" IsCancel="True" Click="back_Click" Content="Назад" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="#e9e9e9" Background="#F6F6FC" Margin="467,273,0,0" VerticalAlignment="Top" Width="94" Height="40" FontFamily="Global User Interface"/>
         </Grid>
-        <TabControl Grid.Row="2" FontSize="20" FontFamily="Global User Interface">
-            <TabItem Header="Учебный план на семестр">
+        <TabControl x:Name="tabControl" Grid.Row="2" FontSize="20" FontFamily="Global User Interface">
+            <TabItem x:Name="commonCurriculumsTab" Header="Учебный план на семестр">
                 <Grid Background="white">
                     <ListView x:Name="CurriculumsListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0">
                         <ListView.View>
@@ -54,7 +54,7 @@
                                                         VerticalAlignment="Center" 
                                                         FontFamily="Global User Interface" 
                                                         FontSize="15"/>
-                                                <TextBlock x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding SpecialitySubject.SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                                <TextBlock x:Name="OneStr" Text="{Binding SpecialitySubject.SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -62,21 +62,21 @@
                                 <GridViewColumn  Width="250" Header="Предмет">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding SpecialitySubject.Subject.Name}"/>
+                                            <TextBlock  x:Name="OneStr" Text="{Binding SpecialitySubject.Subject.Name}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Width="250"  Header="Часов по плану">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}"  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding PlannedHours, Mode=TwoWay}"/>
+                                            <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}"  x:Name="OneStr" Text="{Binding PlannedHours, Mode=TwoWay}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Width="250"  Header="Вычитанно часов">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding UsedHours, Mode=TwoWay}"/>
+                                            <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" Text="{Binding UsedHours, Mode=TwoWay}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -111,7 +111,7 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Учебный план практик">
+            <TabItem x:Name="practiceCurriculumsTab" Header="Учебный план практик">
                 <Grid Background="white">
                     <ListView x:Name="CurriculumsPracticeListView" FontSize="25" BorderBrush="#FFC5C7CD" Background="#FFF6F6FC" Opacity="1" Margin="0,40,0,0">
                         <ListView.View>
@@ -132,7 +132,7 @@
                                                         VerticalAlignment="Center" 
                                                         FontFamily="Global User Interface" 
                                                         FontSize="15"/>
-                                                <TextBlock x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding SpecialitySubject.SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
+                                                <TextBlock x:Name="OneStr" Text="{Binding SpecialitySubject.SubjectIndex}" VerticalAlignment="Center" FontFamily="Global User Interface"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -140,37 +140,36 @@
                                 <GridViewColumn  Width="250" Header="Предмет">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding SpecialitySubject.Subject.Name}"/>
+                                            <TextBlock  x:Name="OneStr" Text="{Binding SpecialitySubject.Subject.Name}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Width="220"  Header="Часов по плану">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}"  x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding PlannedHours, Mode=TwoWay}"/>
+                                            <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}"  x:Name="OneStr" Text="{Binding PlannedHours, Mode=TwoWay}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Width="270"  Header="Использовано часов">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding UsedHours, Mode=TwoWay}"/>
+                                            <TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" Text="{Binding UsedHours, Mode=TwoWay}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Width="220"  Header="Начало практики">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <!--<TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding UsedHours, Mode=TwoWay}"/>-->
-                                            <DatePicker/>
+                                            <!--<TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" Text="{Binding UsedHours, Mode=TwoWay}"/>-->
+                                            <DatePicker IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" SelectedDate="{Binding PracticeSchedule.StartDate, Mode=TwoWay}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Width="220"  Header="Конец практики">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <!--<TextBox IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" x:Name="OneStr" MouseDown="OneStr_MouseDown"  Text="{Binding UsedHours, Mode=TwoWay}"/>-->
-                                            <DatePicker/>
+                                            <DatePicker IsEnabled="{Binding  ElementName=number, Path=IsEnabled}" SelectedDate="{Binding PracticeSchedule.EndDate, Mode=TwoWay}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -195,6 +194,13 @@
                         HorizontalContentAlignment="Center" 
                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
                     />
+                        <ComboBox 
+                            x:Name="practiceSpecSub"
+                            DisplayMemberPath="Subject.Name"
+                            SelectedValuePath="Id" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" 
+                            Width="200" Height="40"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

@@ -93,6 +93,12 @@ namespace Shedule.Pages
                         }
                     }
                 }
+
+                //Автоматически добавляем строки для заочников
+                foreach(var group in AlteredScheduleRow.GroupsList.Where(g => !g.IsFullTime))
+                {
+                    createNewGroupAlteredRow(group.Id);
+                }
             });
         }
 
@@ -127,6 +133,10 @@ namespace Shedule.Pages
 
         public void createNewGroupAlteredRow(int groupId, int highlightedColumn)
         {
+            if(alteredRows.Items.Count == 0)
+            {
+                createNewGroupAlteredRow();
+            }
             if ((alteredRows.Items[alteredRows.Items.Count - 1] as AlteredGroupScheduleRowControl).groups.SelectedIndex == -1)
             {
                 int index = ((alteredRows.Items[alteredRows.Items.Count - 1] as AlteredGroupScheduleRowControl).DataContext as AlteredScheduleRow).AvailableGroupsList.FindIndex(g => g.Id == groupId);

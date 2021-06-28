@@ -32,7 +32,6 @@ namespace Shedule.ViewPages
             DataContext = semester;
             loadSpeciality(semester);
             loadCurriculum(semester);
-            loadCurriculumPractice(semester);
         }
         private void edit_butt_Click(object sender, RoutedEventArgs e)
         {
@@ -66,6 +65,16 @@ namespace Shedule.ViewPages
                             await LearningProcessesAPI.createCommonCurriculumItem(cur.PlannedHours, cur.UsedHours, cur.SemesterId, cur.SpecialitySubjectId);
                         }
                     }
+
+                    foreach (Curriculum cur in CurriculumsPracticeListView.Items)
+                    {
+                        var cur_result = await LearningProcessesAPI.updatePracticeCurriculum(cur.Id, cur);
+                        if (cur_result == null)
+                        {
+                            await LearningProcessesAPI.createPracticeCurriculumItem(cur.PlannedHours, cur.UsedHours, cur.SemesterId, cur.SpecialitySubjectId, cur.PracticeSchedule.StartDate, cur.PracticeSchedule.EndDate);
+                        }
+                    }
+
                     ((Semester)DataContext).Group = result.Group;
                     ((Semester)DataContext).Curricula = result.Curricula;
                     ((Semester)DataContext).MainSchedules = result.MainSchedules;
@@ -78,10 +87,12 @@ namespace Shedule.ViewPages
                 AppUtils.PageContentAreSaved = true;
             });
         }
+
         private void save_butt_Click(object sender, RoutedEventArgs e)
         {
             save();
         }
+
         private void DigitCheck_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if ((e.Text) == null || !(e.Text).All(char.IsDigit) || number.Text.Length >= 2)
@@ -135,9 +146,9 @@ namespace Shedule.ViewPages
 
                     n.SpecialitySubject = await LearningProcessesAPI.getSpecialitySubject(n.SpecialitySubjectId);
                 }
-                cur = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise != true);
 
-                CurriculumsListView.ItemsSource = cur;
+                CurriculumsListView.ItemsSource = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise == false);
+                CurriculumsPracticeListView.ItemsSource = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise == true);
                 currentCurriculums = cur;
                 loadSpecSubjects();
             });
@@ -148,25 +159,11 @@ namespace Shedule.ViewPages
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
                 var sub = await LearningProcessesAPI.getSpecialitySubjects(((Semester)DataContext).Group.SpecialityId);
-                sub = sub.AsQueryable().Where(s => !s.Subject.IsPractise).Except(currentCurriculums.Select(c => c.SpecialitySubject), new spec()).ToList();
-                specSub.ItemsSource = sub;
+                sub = sub.AsQueryable().Except(currentCurriculums.Select(c => c.SpecialitySubject), new spec()).ToList();
+                specSub.ItemsSource = sub.FindAll(s => s.Subject.IsPractise == false);
                 specSub.Items.Refresh();
-            });
-        }
-
-        public async Task loadCurriculumPractice(Semester semester)
-        {
-            await AppUtils.ProcessClientLibraryRequest(async () =>
-            {
-                var cur = await LearningProcessesAPI.getCurriculaForSemester(semester.Id);
-                foreach (var n in cur)
-                {
-
-                    n.SpecialitySubject = await LearningProcessesAPI.getSpecialitySubject(n.SpecialitySubjectId);
-                }
-                cur = cur.FindAll(n => n.SpecialitySubject.Subject.IsPractise == true);
-
-                CurriculumsPracticeListView.ItemsSource = cur;
+                practiceSpecSub.ItemsSource = sub.FindAll(s => s.Subject.IsPractise == true);
+                practiceSpecSub.Items.Refresh();
             });
         }
 
@@ -174,13 +171,34 @@ namespace Shedule.ViewPages
         {
             await AppUtils.ProcessClientLibraryRequest(async () =>
             {
-                List<Curriculum> list = (List<Curriculum>)CurriculumsListView.ItemsSource;
-                var result = await LearningProcessesAPI.deleteCurriculum(curriculum.Id);
-                list.Remove(curriculum);
-                CurriculumsListView.Items.Refresh();
-            });
+                List<Curriculum> list;
+                if (tabControl.SelectedItem == commonCurriculumsTab)
+                {
+                    list = (List<Curriculum>)CurriculumsListView.ItemsSource;
+                }
+                else
+                {
+                    list = (List<Curriculum>)CurriculumsPracticeListView.ItemsSource;
+                }
 
-            //MessageBox.Show(result.Count + "");
+                var result = await LearningProcessesAPI.deleteCurriculum(curriculum.Id);
+                
+                currentCurriculums.Remove(curriculum);
+                list.Remove(curriculum);
+
+                if (tabControl.SelectedItem == commonCurriculumsTab)
+                {
+
+                    CurriculumsListView.Items.Refresh();
+                }
+                else
+                {
+                    CurriculumsPracticeListView.Items.Refresh();
+                }
+                loadSpecSubjects();
+                
+
+            });
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -189,11 +207,6 @@ namespace Shedule.ViewPages
             {
                 deleteCurriculum((Curriculum)((Button)sender).DataContext);
             }
-        }
-
-        private void OneStr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
         }
 
         private void addNew_Click(object sender, RoutedEventArgs e)
@@ -210,7 +223,7 @@ namespace Shedule.ViewPages
                     SpecialitySubject = (SpecialitySubject)specSub.SelectedItem
                 };
                 currentCurriculums.Add(curriculum);
-                CurriculumsListView.ItemsSource = currentCurriculums;
+                CurriculumsListView.ItemsSource = currentCurriculums.FindAll(n => n.SpecialitySubject.Subject.IsPractise == false);
                 CurriculumsListView.Items.Refresh();
                 loadSpecSubjects();
             }
@@ -222,7 +235,31 @@ namespace Shedule.ViewPages
 
         private void addNewPractice_Click(object sender, RoutedEventArgs e)
         {
-
+            if (practiceSpecSub.SelectedIndex != -1)
+            {
+                Curriculum curriculum = new Curriculum()
+                {
+                    PlannedHours = 0,
+                    UsedHours = 0,
+                    Semester = (Semester)DataContext,
+                    SemesterId = ((Semester)DataContext).Id,
+                    SpecialitySubjectId = ((SpecialitySubject)practiceSpecSub.SelectedItem).Id,
+                    SpecialitySubject = (SpecialitySubject)practiceSpecSub.SelectedItem,
+                    PracticeSchedule = new PracticeSchedule()
+                    {
+                        StartDate = null,
+                        EndDate = null
+                    }
+                };
+                currentCurriculums.Add(curriculum);
+                CurriculumsPracticeListView.ItemsSource = currentCurriculums.FindAll(n => n.SpecialitySubject.Subject.IsPractise == true);
+                CurriculumsPracticeListView.Items.Refresh();
+                loadSpecSubjects();
+            }
+            else
+            {
+                MessageBox.Show("Добавляема дисциплина не может быть пустой, выбирете одну из имеющихся и нажмите кнопку \"Добавить\" ещё раз. ", "Ошибка добавления", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 

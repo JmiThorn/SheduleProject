@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Shedule.ViewPages"
       mc:Ignorable="d" 
          d:DesignHeight="750" d:DesignWidth="1200"
-      Title="AddSubjectsView">
+      Title="Добавление дисциплины">
 
     <Grid x:Name="Grid" Background="#F6F6FC" Visibility="Visible" OpacityMask="{x:Null}">
         <Grid.RowDefinitions>

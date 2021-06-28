@@ -7,7 +7,7 @@
       xmlns:utils="clr-namespace:Shedule.Utils"
       mc:Ignorable="d" 
      d:DesignHeight="750" d:DesignWidth="1200"
-      Title="АudiencesList" SizeChanged="Page_SizeChanged">
+      Title="Список аудиторий" SizeChanged="Page_SizeChanged">
     <Page.Resources>
         <utils:BuildingConverter x:Key="BuildingConverter"/>
     </Page.Resources>

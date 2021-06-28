@@ -41,6 +41,7 @@ namespace Shedule.ViewPages
             course.IsEnabled = true;
             subgroup.IsEnabled = true;
             specialityCB.IsEnabled = true;
+            IsFull.IsEnabled = true;
             AppUtils.PageContentAreSaved = false;
         }
         public async Task loadSpeciality()
